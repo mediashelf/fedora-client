@@ -1,3 +1,4 @@
+
 package com.yourmediashelf.fedora.client.request;
 
 import java.io.File;
@@ -9,15 +10,20 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
-public class AddDatastream extends FedoraMethod {
+public class AddDatastream
+        extends FedoraMethod {
+
     private final String pid;
+
     private final String dsId;
+
     private Object content;
 
     /**
-     *
-     * @param pid persistent identifier of the digital object
-     * @param dsId datastream identifier
+     * @param pid
+     *        persistent identifier of the digital object
+     * @param dsId
+     *        datastream identifier
      */
     public AddDatastream(String pid, String dsId) {
         this.pid = pid;
@@ -42,9 +48,9 @@ public class AddDatastream extends FedoraMethod {
     }
 
     /**
-     *
-     * @param controlGroup one of "X", "M", "R", or "E" (Inline *X*ML, *M*anaged
-     *        Content, *R*edirect, or *E*xternal Referenced)
+     * @param controlGroup
+     *        one of "X", "M", "R", or "E" (Inline *X*ML, *M*anaged Content,
+     *        *R*edirect, or *E*xternal Referenced)
      * @return
      */
     public AddDatastream controlGroup(String controlGroup) {
@@ -58,8 +64,8 @@ public class AddDatastream extends FedoraMethod {
     }
 
     /**
-     *
-     * @param dsLocation location of managed or external datastream content
+     * @param dsLocation
+     *        location of managed or external datastream content
      * @return
      */
     public AddDatastream dsLocation(String dsLocation) {
@@ -68,8 +74,8 @@ public class AddDatastream extends FedoraMethod {
     }
 
     /**
-     *
-     * @param dsState one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
+     * @param dsState
+     *        one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
      * @return
      */
     public AddDatastream dsState(String dsState) {
@@ -98,11 +104,19 @@ public class AddDatastream extends FedoraMethod {
     }
 
     /**
-     *
-     * @param content the datastream content (File or String)
+     * @param content the datastream content (XML)
      * @return
      */
-    public AddDatastream content(Object content) {
+    public AddDatastream content(String content) {
+        this.content = content;
+        return this;
+    }
+
+    /**
+     * @param content the datastream content (File)
+     * @return
+     */
+    public AddDatastream content(File content) {
         this.content = content;
         return this;
     }
@@ -127,7 +141,7 @@ public class AddDatastream extends FedoraMethod {
             }
             response = wr.type(mediaType).post(ClientResponse.class, content);
         } else if (content instanceof File) {
-            File f = (File)content;
+            File f = (File) content;
             if (mimeType == null) {
                 mediaType = MediaType.valueOf(fedora.getMimeType(f));
             } else {

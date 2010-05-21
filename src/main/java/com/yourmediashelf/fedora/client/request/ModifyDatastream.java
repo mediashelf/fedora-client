@@ -62,6 +62,11 @@ public class ModifyDatastream extends FedoraMethod {
         return this;
     }
 
+    public ModifyDatastream ignoreContent(boolean ignoreContent) {
+        addQueryParam("ignoreContent", Boolean.toString(ignoreContent));
+        return this;
+    }
+
     public ModifyDatastream logMessage(String logMessage) {
         addQueryParam("logMessage", logMessage);
         return this;
@@ -72,7 +77,12 @@ public class ModifyDatastream extends FedoraMethod {
         return this;
     }
 
-    public ModifyDatastream content(Object content) {
+    public ModifyDatastream content(File content) {
+        this.content = content;
+        return this;
+    }
+
+    public ModifyDatastream content(String content) {
         this.content = content;
         return this;
     }
@@ -90,14 +100,14 @@ public class ModifyDatastream extends FedoraMethod {
 
         ClientResponse response = null;
         if (content == null) {
-            response = wr.post(ClientResponse.class);
+            response = wr.put(ClientResponse.class);
         } else if (content instanceof String) {
-            response = wr.type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class,
+            response = wr.type(MediaType.TEXT_XML_TYPE).put(ClientResponse.class,
                                                              content);
         } else if (content instanceof File) {
             File f = (File) content;
             String mimeType = fedora.getMimeType(f);
-            response = wr.type(mimeType).post(ClientResponse.class, f);
+            response = wr.type(mimeType).put(ClientResponse.class, f);
         } else {
             throw new IllegalArgumentException("unknown request content type");
         }

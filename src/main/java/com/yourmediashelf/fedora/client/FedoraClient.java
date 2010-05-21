@@ -13,6 +13,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.yourmediashelf.fedora.client.request.FedoraRequest;
 
@@ -78,7 +79,7 @@ public class FedoraClient {
         wr
                 .addFilter(new HTTPBasicAuthFilter(fc.getUsername(), fc
                         .getPassword()));
-        //wr.addFilter(new LoggingFilter(System.out));
+        wr.addFilter(new LoggingFilter(System.out));
         return wr;
     }
 

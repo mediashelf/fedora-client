@@ -1,13 +1,11 @@
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.request.FedoraRequest.addDatastream;
 import static com.yourmediashelf.fedora.client.request.FedoraRequest.ingest;
+import static com.yourmediashelf.fedora.client.request.FedoraRequest.purgeDatastream;
 import static com.yourmediashelf.fedora.client.request.FedoraRequest.purgeObject;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.net.URL;
 
 import org.junit.After;
@@ -17,24 +15,21 @@ import org.junit.Test;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClient;
-import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.FedoraCredentials;
 
-public class AddDatastreamTest {
 
+
+public class PurgeDatastreamTest {
     private static FedoraCredentials credentials;
-
-    private FedoraClient fedora;
-
     private static String testPid = "test-rest:1";
+    private FedoraClient fedora;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         String baseUrl = System.getProperty("fedora.test.baseUrl");
         String username = System.getProperty("fedora.test.username");
         String password = System.getProperty("fedora.test.password");
-        credentials =
-                new FedoraCredentials(new URL(baseUrl), username, password);
+        credentials = new FedoraCredentials(new URL(baseUrl), username, password);
     }
 
     @Before
@@ -49,27 +44,15 @@ public class AddDatastreamTest {
     }
 
     @Test
-    public void testDefaultValues() throws Exception {
+    public void testPurgeDatastream() throws Exception {
         String content = "<foo>bar</foo>";
         ClientResponse response =
                 fedora.execute(addDatastream(testPid, "baz").content(content)
                         .dsLabel(null).build());
         assertEquals(201, response.getStatus());
-    }
 
-    @Test
-    public void testManagedContent() throws Exception {
-        File f = new File("src/test/resources/21.edit.essay.zip");
-        assertTrue(f.exists());
-        ClientResponse response =
-                fedora.execute(addDatastream(testPid, "MANAGED_DS")
-                        .controlGroup("M").content(f).build());
-        assertEquals(201, response.getStatus());
-    }
-
-    @Test(expected=FedoraClientException.class)
-    public void testMissingContent() throws Exception {
-        fedora.execute(addDatastream(testPid, "MANAGED_DS")
-                    .controlGroup("M").build());
+        // now delete it
+        response = fedora.execute(purgeDatastream(testPid, "baz").build());
+        assertEquals(204, response.getStatus());
     }
 }

@@ -54,9 +54,42 @@ public class FedoraRequest {
         return new AddDatastream(pid, dsId);
     }
 
+    public static AddRelationship addRelationship(String pid) {
+        return new AddRelationship(pid);
+    }
+
+    public static Export export(String pid) {
+        return new Export(pid);
+    }
+
+    public static FindObjects findObjects() {
+        return new FindObjects();
+    }
+
+    public static GetDatastream getDatastream(String pid, String dsId) {
+        return new GetDatastream(pid, dsId);
+    }
+
+    public static GetDatastreamDissemination getDatastreamDissemination(String pid, String dsId) {
+        return new GetDatastreamDissemination(pid, dsId);
+    }
+
+    public static GetDissemination getDissemination(String pid, String sdefPid, String method) {
+        return new GetDissemination(pid, sdefPid, method);
+    }
+
+    public static GetNextPID getNextPID() {
+        return new GetNextPID();
+    }
+
+    public static GetRelationships getRelationships(String pid) {
+        return new GetRelationships(pid);
+    }
+
     /**
      *
-     * @param pid
+     * @param pid persistent identifier of the object to be created or null for
+     *        a server-assigned pid
      * @return
      * @see Ingest
      */
@@ -64,20 +97,24 @@ public class FedoraRequest {
         return new Ingest(pid);
     }
 
+    public static ListDatastreams listDatastreams(String pid) {
+        return new ListDatastreams(pid);
+    }
+
     public static ModifyDatastream modifyDatastream(String pid, String dsId) {
         return new ModifyDatastream(pid, dsId);
     }
 
+    public static ModifyObject modifyObject(String pid) {
+        return new ModifyObject(pid);
+    }
+
+    public static PurgeDatastream purgeDatastream(String pid, String dsId) {
+        return new PurgeDatastream(pid, dsId);
+    }
+
     public static PurgeObject purgeObject(String pid) {
         return new PurgeObject(pid);
-    }
-
-    public static GetRelationships getRelationships(String pid) {
-        return new GetRelationships(pid);
-    }
-
-    public static AddRelationship addRelationship(String pid) {
-        return new AddRelationship(pid);
     }
 
     public static PurgeRelationship purgeRelationship(String pid) {

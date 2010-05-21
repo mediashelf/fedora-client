@@ -27,7 +27,7 @@ with something like the following:
     
     apim.addDatastream("test:pid", "DS3", null, null, true, "text/xml", null, 
     "http://localhost:8080/fedora/get/fedora-system:ContentModel-3.0/DC", "M", 
-    "A", null, null, null) ;
+    "A", null, null, null);
 
 
 Requirements
