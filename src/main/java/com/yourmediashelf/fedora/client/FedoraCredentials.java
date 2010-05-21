@@ -5,7 +5,7 @@ import java.net.URL;
 
 /**
  * Authentication credentials for a Fedora repository instance.
- * 
+ *
  * @author Edwin Shin
  *
  */
@@ -13,9 +13,9 @@ public class FedoraCredentials {
 	private URL baseUrl;
 	private String username;
 	private String password;
-	
+
 	/**
-	 * 
+	 *
 	 * @param baseUrl e.g., http://localhost:8080/fedora
 	 * @param username e.g., fedoraAdmin
 	 * @param password e.g., fedoraAdmin
@@ -37,26 +37,26 @@ public class FedoraCredentials {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	public FedoraCredentials(String baseUrl, String username, String password) throws MalformedURLException {
 		this(new URL(baseUrl), username, password);
 	}
-	
+
 	/**
-	 * Returns the Fedora base url, e.g. "http://example.org:8080/fedora".
+	 * Gets the Fedora base url, e.g. "http://example.org:8080/fedora".
 	 * The url never includes a trailing slash.
-	 * 
-	 * @return
+	 *
+	 * @return The Fedora base url, e.g. "http://example.org:8080/fedora".
 	 */
 	public URL getBaseUrl() {
 		return baseUrl;
 	}
 
 	/**
-	 * Sets the Fedora base url, e.g. "http://example.org:8080/fedora". 
-	 * Any trailing slash will be removed (e.g. "http://example.org/fedora/" 
+	 * Sets the Fedora base url, e.g. "http://example.org:8080/fedora".
+	 * Any trailing slash will be removed (e.g. "http://example.org/fedora/"
 	 * will be replaced with "http://example.org/fedora").
-	 * 
+	 *
 	 * @param baseUrl
 	 */
 	public void setBaseUrl(URL baseUrl) {

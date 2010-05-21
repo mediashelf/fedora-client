@@ -45,9 +45,9 @@ public class FedoraRequest {
 
     /**
      *
-     * @param pid
-     * @param dsId
-     * @return
+     * @param pid the persistent identifier
+     * @param dsId the datastream identifier
+     * @return builder for the AddDatastream method
      * @see AddDatastream
      */
     public static AddDatastream addDatastream(String pid, String dsId) {
@@ -90,7 +90,7 @@ public class FedoraRequest {
      *
      * @param pid persistent identifier of the object to be created or null for
      *        a server-assigned pid
-     * @return
+     * @return builder for the Ingest method
      * @see Ingest
      */
     public static Ingest ingest(String pid) {

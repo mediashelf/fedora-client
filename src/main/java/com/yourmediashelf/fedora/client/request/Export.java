@@ -5,6 +5,12 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
+/**
+ * Builder for the Export method.
+ *
+ * @author Edwin Shin
+ *
+ */
 public class Export
         extends FedoraMethod {
 
@@ -22,7 +28,7 @@ public class Export
      *
      * @param format The XML format to export. Defaults to
      *               "info:fedora/fedora-system:FOXML-1.1".
-     * @return
+     * @return this builder
      */
     public Export format(String format) {
         addQueryParam("format", format);
@@ -34,7 +40,7 @@ public class Export
      * @param context The export context, which determines how datastream URLs
      *        and content are represented. One of "public", "migrate", "archive".
      *        Defaults to "public".
-     * @return
+     * @return this builder
      */
     public Export context(String context) {
         addQueryParam("context", context);
@@ -45,7 +51,7 @@ public class Export
      *
      * @param encoding The preferred encoding of the exported XML. Defaults to
      *                 "UTF-8".
-     * @return
+     * @return this builder
      */
     public Export encoding(String encoding) {
         addQueryParam("encoding", encoding);

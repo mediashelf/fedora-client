@@ -10,6 +10,12 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
+/**
+ * Builder for the AddDatastream method.
+ *
+ * @author Edwin Shin
+ *
+ */
 public class AddDatastream
         extends FedoraMethod {
 
@@ -51,7 +57,7 @@ public class AddDatastream
      * @param controlGroup
      *        one of "X", "M", "R", or "E" (Inline *X*ML, *M*anaged Content,
      *        *R*edirect, or *E*xternal Referenced)
-     * @return
+     * @return this builder
      */
     public AddDatastream controlGroup(String controlGroup) {
         addQueryParam("controlGroup", controlGroup);
@@ -66,7 +72,7 @@ public class AddDatastream
     /**
      * @param dsLocation
      *        location of managed or external datastream content
-     * @return
+     * @return this builder
      */
     public AddDatastream dsLocation(String dsLocation) {
         addQueryParam("dsLocation", dsLocation);
@@ -76,7 +82,7 @@ public class AddDatastream
     /**
      * @param dsState
      *        one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
-     * @return
+     * @return this builder
      */
     public AddDatastream dsState(String dsState) {
         addQueryParam("dsState", dsState);
@@ -105,7 +111,7 @@ public class AddDatastream
 
     /**
      * @param content the datastream content (XML)
-     * @return
+     * @return this builder
      */
     public AddDatastream content(String content) {
         this.content = content;
@@ -114,7 +120,7 @@ public class AddDatastream
 
     /**
      * @param content the datastream content (File)
-     * @return
+     * @return this builder
      */
     public AddDatastream content(File content) {
         this.content = content;

@@ -29,7 +29,7 @@ public class GetDissemination
      *
      * @param key
      * @param value
-     * @return
+     * @return this builder
      */
     public GetDissemination methodParam(String key, String value) {
         addQueryParam("key", value);
