@@ -1,0 +1,37 @@
+    ---
+    Usage
+    ---
+    Edwin Shin
+    ---
+
+Usage
+
+    Create an instance of FedoraClient
+    
++--
+FedoraCredentials credentials = 
+    new FedoraCredentials("username", "password", "http://example.org/fedora");
+FedoraClient fedora = new FedoraClient(credentials);
++--
+
+    Build a request object
+    
++--
+FedoraRequest ingest = FedoraRequest.ingest("test:pid").build();
++--
+
+    Execute the request
+    
++--
+fedora.execute(ingest);
++--
+
+    Using static imports, you can use a more abbreviated syntax
+    
++--
+import static com.yourmediashelf.fedora.client.request.FedoraRequest.*;
+
+...
+
+    fedora.execute(ingest("test:pid").build());
++--
