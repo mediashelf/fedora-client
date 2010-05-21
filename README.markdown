@@ -1,3 +1,5 @@
+![MediaShelf logo](http://www.yourmediashelf.com/images/Logo-April2008.jpg)
+
 MediaShelf FedoraClient
 =======================
 
@@ -14,7 +16,8 @@ Or, to add a datastream:
                      .controlGroup("M").content(f).build());
                      
 Optional properties are just that: optional. And when you do need one, it's 
-clearly indicated and not lost in an opaque series of null arguments. Compare:
+at your fingertips rather than lost in an opaque series of null arguments. 
+Compare:
 
     fedora.execute(addDatastream("test:pid", "DS2").controlGroup("M")
       .dsLocation("http://localhost:8080/fedora/get/fedora-system:ContentModel-3.0/DC")
