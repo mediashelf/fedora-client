@@ -1,7 +1,31 @@
-FedoraClient
-============
+MediaShelf FedoraClient
+=======================
 
-A Java client for the Fedora REST API.
+A developer-friendly Java client for the Fedora Commons Repository REST API.
+
+Create a new Fedora object as easily as:
+
+    fedora.execute(ingest("test:pid").build());
+    
+Or, to add a datastream:
+    
+    File f = new File("/tmp/Hyperballad.mp3");
+    fedora.execute(addDatastream("test:pid", "DS1")
+                     .controlGroup("M").content(f).build());
+                     
+Optional properties are just that: optional. And when you do need one, it's 
+clearly indicated and not lost in an opaque series of null arguments. Compare:
+
+    fedora.execute(addDatastream("test:pid", "DS2").controlGroup("M")
+      .dsLocation("http://localhost:8080/fedora/get/fedora-system:ContentModel-3.0/DC")
+      .mimeType("text/xml").build());
+    
+with something like the following:
+    
+    apim.addDatastream("test:pid", "DS3", null, null, true, "text/xml", null, 
+    "http://localhost:8080/fedora/get/fedora-system:ContentModel-3.0/DC", "M", 
+    "A", null, null, null) ;
+
 
 Requirements
 ------------
@@ -21,9 +45,9 @@ Installation
         cd fedora-client
         mvn install
         
-   fedora-client ships with a number of integration tests that require a 
-   running instance of Fedora. Set the testing properties (e.g. username, 
-   password) in pom.xml, or to skip the tests:
+    fedora-client ships with a number of integration tests that require a 
+    running instance of Fedora. Set the testing properties (e.g. username, 
+    password) in pom.xml, or to skip the tests:
    
         mvn install -DskipTests
         
