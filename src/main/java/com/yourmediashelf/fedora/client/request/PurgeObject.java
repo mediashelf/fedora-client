@@ -16,7 +16,7 @@ public class PurgeObject extends FedoraMethod {
         return this;
     }
 
-    public PurgeObject ignoreMime(boolean force) {
+    public PurgeObject force(boolean force) {
         addQueryParam("force", Boolean.toString(force));
         return this;
     }
