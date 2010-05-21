@@ -7,5 +7,12 @@
 Introduction
 
     MediaShelf {{{http://www.github.com/mediashelf/fedora-client}fedora-client}} 
-    is a Java client for the 
-{{{http://www.fedora-commons.org/}Fedora Commons Repository}} REST API.
+is a Java client for the {{{http://www.fedora-commons.org/}Fedora}} REST API.
+
+    It provides convenience methods for constructing FedoraRequest objects that 
+map to individual Fedora API requests. A FedoraRequest object, in turn, can be 
+executed by an instance of FedoraClient.
+
+    For examples of how to use fedora-client, see the Usage section and the 
+included JUnit integration tests.
+    

@@ -58,7 +58,7 @@
       <artifactId>xmlunit</artifactId>
     </dependency>
   </dependencies>
-  
+
   <licenses>
     <license>
       <name>GNU Lesser General Public License, Version 3.0</name>
@@ -80,7 +80,7 @@
       <timezone>+1</timezone>
     </developer>
   </developers>
-  
+
   <organization>
     <name>MediaShelf</name>
     <url>http://www.yourmediashelf.com/</url>
@@ -95,6 +95,16 @@
   </scm>
 
   <distributionManagement>
+      <repository>
+        <id>duraspace-thirdparty</id>
+        <name>Duraspace Thirdparty Maven Repository</name>
+        <url>https://fedora-commons.org/m2/content/repositories/thirdparty</url>
+      </repository>
+      <snapshotRepository>
+        <id>duraspace-snapshots</id>
+        <name>DuraSpace Snapshots Maven Repository</name>
+        <url>https://fedora-commons.org/m2/content/repositories/snapshots</url>
+      </snapshotRepository>
     <site>
       <id>gh-pages</id>
       <url>gitsite:git@github-mshlf/mediashelf/fedora-client.git</url>
@@ -130,14 +140,14 @@
       </plugin>
     </plugins>
   </reporting>
-  
+
   <pluginRepositories>
     <pluginRepository>
       <id>apache.snapshots</id>
       <url>http://repository.apache.org/snapshots/</url>
     </pluginRepository>
   </pluginRepositories>
-  
+
   <build>
     <plugins>
       <plugin>
