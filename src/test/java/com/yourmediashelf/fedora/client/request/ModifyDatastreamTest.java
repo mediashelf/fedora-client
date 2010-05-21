@@ -53,6 +53,6 @@ public class ModifyDatastreamTest {
         // now modify it
         content = "<bar>baz</bar>";
         response = fedora.execute(modifyDatastream(testPid, "baz").content(content).dsLabel(null).build());
-        assertEquals(201, response.getStatus());
+        assertEquals(200, response.getStatus());
     }
 }
