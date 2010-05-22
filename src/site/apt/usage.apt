@@ -39,7 +39,7 @@ import static com.yourmediashelf.fedora.client.request.FedoraRequest.*;
 
 * Including fedora-client in your Maven2 project
 
-Add the following to your pom.xml:
+    Add the following to your pom.xml:
     
 +--
 <repository>
