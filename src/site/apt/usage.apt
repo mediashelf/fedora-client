@@ -37,17 +37,20 @@ import static com.yourmediashelf.fedora.client.request.FedoraRequest.*;
 +--
 
 
-    Including fedora-client in your Maven2 project
+* Including fedora-client in your Maven2 project
+
+Add the following to your pom.xml:
     
 +--
 <repository>
-  <id>duraspace-thirdparty</id>
-  <name>Duraspace Thirdparty Maven Repository</name>
-  <url>https://fedora-commons.org/m2/content/repositories/thirdparty</url>
+    <id>duraspace-thirdparty</id>
+    <name>Duraspace Thirdparty Maven Repository</name>
+    <url>https://fedora-commons.org/m2/content/repositories/thirdparty</url>
 </repository>
+
 <dependency>
-  <groupId>com.yourmediashelf.fedora.client</groupId>
-   <artifactId>fedora-client</artifactId>
-   <version>0.0.2</version>
+    <groupId>com.yourmediashelf.fedora.client</groupId>
+    <artifactId>fedora-client</artifactId>
+    <version>0.0.2</version>
 </dependency>
 +--
