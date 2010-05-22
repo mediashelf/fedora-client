@@ -74,6 +74,10 @@ public class FedoraRequest {
         return new GetDatastreamDissemination(pid, dsId);
     }
 
+    public static GetDatastreamHistory getDatastreamHistory(String pid, String dsId) {
+        return new GetDatastreamHistory(pid, dsId);
+    }
+
     public static GetDissemination getDissemination(String pid, String sdefPid, String method) {
         return new GetDissemination(pid, sdefPid, method);
     }
