@@ -86,6 +86,10 @@ public class FedoraRequest {
         return new GetNextPID();
     }
 
+    public static GetObjectHistory getObjectHistory(String pid) {
+        return new GetObjectHistory(pid);
+    }
+
     public static GetObjectProfile getObjectProfile(String pid) {
         return new GetObjectProfile(pid);
     }
@@ -111,6 +115,14 @@ public class FedoraRequest {
 
     public static ListDatastreams listDatastreams(String pid) {
         return new ListDatastreams(pid);
+    }
+
+    public static ListMethods listMethods(String pid) {
+        return new ListMethods(pid);
+    }
+
+    public static ListMethods listMethods(String pid, String sdefPid) {
+        return new ListMethods(pid, sdefPid);
     }
 
     public static ModifyDatastream modifyDatastream(String pid, String dsId) {
