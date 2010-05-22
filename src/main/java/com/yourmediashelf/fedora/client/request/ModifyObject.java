@@ -21,13 +21,18 @@ public class ModifyObject extends FedoraMethod {
         return this;
     }
 
+    public ModifyObject logMessage(String logMessage) {
+        addQueryParam("logMessage", logMessage);
+        return this;
+    }
+
     public ModifyObject ownerId(String ownerId) {
         addQueryParam("ownerId", ownerId);
         return this;
     }
 
-    public ModifyObject logMessage(String logMessage) {
-        addQueryParam("logMessage", logMessage);
+    public ModifyObject state(String state) {
+        addQueryParam("state", state);
         return this;
     }
 

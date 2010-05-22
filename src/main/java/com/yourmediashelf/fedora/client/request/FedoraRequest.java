@@ -86,6 +86,14 @@ public class FedoraRequest {
         return new GetNextPID();
     }
 
+    public static GetObjectProfile getObjectProfile(String pid) {
+        return new GetObjectProfile(pid);
+    }
+
+    public static GetObjectXML getObjectXML(String pid) {
+        return new GetObjectXML(pid);
+    }
+
     public static GetRelationships getRelationships(String pid) {
         return new GetRelationships(pid);
     }
