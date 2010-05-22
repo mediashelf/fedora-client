@@ -21,7 +21,7 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
 
 
 
-public class FedoraMethodBaseTest {
+public abstract class FedoraMethodBaseTest {
     private FedoraCredentials credentials;
     private FedoraClient fedora;
     public final String testPid = "test-rest:1";
