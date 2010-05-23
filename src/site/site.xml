@@ -27,9 +27,11 @@
         <item name="Source Repository" href="source-repository.html"/>
     </menu>
     <menu name="Project Reports">
+    <!-- commented out until changelog plugin 2.2 release
         <item name="Change Log" href="changelog.html"/>
         <item name="Developer Activity" href="dev-activity.html"/>
         <item name="File Activity" href="file-activity.html"/>
+    -->
         <item name="JavaDocs" href="apidocs/index.html"/>
         <item name="Browse Source Code" href="xref/index.html"/>
         <item name="Test Results" href="surefire-report.html"/>
