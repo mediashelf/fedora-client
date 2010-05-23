@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4-SNAPSHOT</version>
   <name>MediaShelf ${project.artifactId}</name>
   <url>http://mediashelf.github.com/fedora-client</url>
   <description>Java client library for Fedora</description>
