@@ -1,3 +1,4 @@
+
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.request.FedoraRequest.ingest;
@@ -19,11 +20,12 @@ import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.FedoraCredentials;
 
-
-
 public abstract class FedoraMethodBaseTest {
+
     private FedoraCredentials credentials;
+
     private FedoraClient fedora;
+
     public final String testPid = "test-rest:1";
 
     @Before
@@ -41,7 +43,8 @@ public abstract class FedoraMethodBaseTest {
             String baseUrl = System.getProperty("fedora.test.baseUrl");
             String username = System.getProperty("fedora.test.username");
             String password = System.getProperty("fedora.test.password");
-            credentials = new FedoraCredentials(new URL(baseUrl), username, password);
+            credentials =
+                    new FedoraCredentials(new URL(baseUrl), username, password);
         }
         return credentials;
     }
@@ -70,9 +73,11 @@ public abstract class FedoraMethodBaseTest {
     }
 
     public XpathEngine getXpathEngine(Map<String, String> nsMap) {
-        NamespaceContext ctx = new SimpleNamespaceContext(nsMap);
         XpathEngine engine = XMLUnit.newXpathEngine();
-        engine.setNamespaceContext(ctx);
+        if (nsMap != null) {
+            NamespaceContext ctx = new SimpleNamespaceContext(nsMap);
+            engine.setNamespaceContext(ctx);
+        }
         return engine;
     }
 

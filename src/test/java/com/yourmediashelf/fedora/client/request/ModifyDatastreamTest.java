@@ -8,10 +8,12 @@ import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import com.sun.jersey.api.client.ClientResponse;
+import com.yourmediashelf.fedora.client.FedoraClientException;
 
 
 
@@ -84,5 +86,16 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
         assertXpathEvaluatesTo("", "/datastreamProfile/dsLocationType", datastreamProfile);
         assertXpathEvaluatesTo("DISABLED", "/datastreamProfile/dsChecksumType", datastreamProfile);
         assertXpathEvaluatesTo("none", "/datastreamProfile/dsChecksum", datastreamProfile);
+    }
+
+    @Test
+    public void testOptimisticLocking() throws Exception {
+        // attempt to modify with a bogus lastModifiedDate
+        String lastModifiedDate = "1970-01-01T00:00:00Z";
+        try {
+            fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate).build());
+            fail("modifyDatastream succeeded, but should have failed");
+        } catch (FedoraClientException expected) {
+        }
     }
 }

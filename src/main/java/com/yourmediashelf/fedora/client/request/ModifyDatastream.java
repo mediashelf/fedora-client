@@ -67,6 +67,11 @@ public class ModifyDatastream extends FedoraMethod {
         return this;
     }
 
+    public ModifyDatastream lastModifiedDate(String lastModifiedDate) {
+        addQueryParam("lastModifiedDate", lastModifiedDate);
+        return this;
+    }
+
     public ModifyDatastream logMessage(String logMessage) {
         addQueryParam("logMessage", logMessage);
         return this;
