@@ -21,6 +21,11 @@ public class ModifyObject extends FedoraMethod {
         return this;
     }
 
+    public ModifyObject lastModifiedDate(String lastModifiedDate) {
+        addQueryParam("lastModifiedDate", lastModifiedDate);
+        return this;
+    }
+
     public ModifyObject logMessage(String logMessage) {
         addQueryParam("logMessage", logMessage);
         return this;
