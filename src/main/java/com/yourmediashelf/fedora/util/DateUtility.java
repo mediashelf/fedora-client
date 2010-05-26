@@ -121,8 +121,8 @@ public class DateUtility {
             hour = Integer.parseInt(m.group(6));
             minute = Integer.parseInt(m.group(7));
             second = Integer.parseInt(m.group(8));
-            if (m.group(10) != null && !m.group(10).isEmpty()) {
-                millis = Integer.parseInt(m.group(10));
+            if (m.group(9) != null && !m.group(9).isEmpty()) {
+                millis = (int)(Float.parseFloat(m.group(9)) * 1000);
             }
         }
 
@@ -146,15 +146,21 @@ public class DateUtility {
      *
      * @param date
      * @return An xsd:dateTime (in UTC) representation of date.
+     * @see http://www.w3.org/TR/xmlschema11-2/#dateTime
      */
     public static String getXSDDateTime(Date date) {
         return getXSDDateTime(new DateTime(date));
     }
 
     /**
+     * FIXME: remove trailing zeroes from fractional seconds.
+     *        e.g., .010 should be .01
+     * FIXME: currently fractional seconds are 3 digits (e.g. .001), do we
+     * (can we?) need to support more (e.g. 0000000001)?
      *
      * @param date
      * @return An xsd:dateTime (in UTC) representation of date.
+     * @see http://www.w3.org/TR/xmlschema11-2/#dateTime
      */
     public static String getXSDDateTime(DateTime date) {
         if (date.getMillis() == 0) {
