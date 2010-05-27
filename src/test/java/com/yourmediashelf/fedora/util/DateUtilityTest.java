@@ -17,7 +17,7 @@ public class DateUtilityTest {
     public void testFormatting() throws Exception {
         String s = "1986-11-05T05:57:17.3Z";
         DateTime dt = DateUtility.parseXSDDateTime(s);
-        System.out.println("f: " + DateUtility.getXSDDateTime(dt));
+        assertEquals(s, DateUtility.getXSDDateTime(dt));
     }
 
     @Test
@@ -44,17 +44,19 @@ public class DateUtilityTest {
 
     @Test
     public void testMillis() throws Exception {
-        String m1 = "1999-12-31T22:33:44.500Z";
-        DateTime dt1 = DateUtility.parseXSDDateTime(m1);
-        assertEquals(m1, DateUtility.getXSDDateTime(dt1));
+        String lex1 = "1999-12-31T22:33:44.500Z";
+        String can1 = "1999-12-31T22:33:44.5Z";
+        DateTime dt1 = DateUtility.parseXSDDateTime(lex1);
+        assertEquals(can1, DateUtility.getXSDDateTime(dt1));
 
-        String m2 = "1999-12-31T22:33:44.050Z";
-        DateTime dt2 = DateUtility.parseXSDDateTime(m2);
-        assertEquals(m2, DateUtility.getXSDDateTime(dt2));
+        String lex2 = "1999-12-31T22:33:44.050Z";
+        String can2 = "1999-12-31T22:33:44.05Z";
+        DateTime dt2 = DateUtility.parseXSDDateTime(lex2);
+        assertEquals(can2, DateUtility.getXSDDateTime(dt2));
 
-        String m3 = "1999-12-31T22:33:44.005Z";
-        DateTime dt3 = DateUtility.parseXSDDateTime(m3);
-        assertEquals(m3, DateUtility.getXSDDateTime(dt3));
+        String lex3 = "1999-12-31T22:33:44Z";
+        String can3 = lex3;
+        DateTime dt3 = DateUtility.parseXSDDateTime(lex3);
+        assertEquals(can3, DateUtility.getXSDDateTime(dt3));
     }
-
 }
