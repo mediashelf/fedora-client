@@ -39,7 +39,7 @@ import static com.yourmediashelf.fedora.client.request.FedoraRequest.*;
     Create a new object with a RELS-EXT datastream
     
 +--
-String pid = client.getNextPid("test"); // generate a new PID with namespace "test"
+String pid = fedora.getNextPid("test"); // generate a new PID with namespace "test"
 fedora.execute(ingest(pid).build());    // create a new object
 String cmodel = "info:fedora/foo:bar";  // uri for a Content Model
 String relsExt = new RelsExt.Builder(pid)
