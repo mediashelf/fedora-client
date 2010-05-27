@@ -1,9 +1,13 @@
 package com.yourmediashelf.fedora.client.request;
 
+import static com.yourmediashelf.fedora.util.DateUtility.getXSDDateTime;
+
 import java.io.File;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
+
+import org.joda.time.DateTime;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -64,6 +68,11 @@ public class ModifyDatastream extends FedoraMethod<ModifyDatastream> {
 
     public ModifyDatastream ignoreContent(boolean ignoreContent) {
         addQueryParam("ignoreContent", Boolean.toString(ignoreContent));
+        return this;
+    }
+
+    public ModifyDatastream lastModifiedDate(DateTime lastModifiedDate) {
+        addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
         return this;
     }
 
