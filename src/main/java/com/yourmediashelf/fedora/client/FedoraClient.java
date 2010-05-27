@@ -1,11 +1,21 @@
 
 package com.yourmediashelf.fedora.client;
 
+import static com.yourmediashelf.fedora.client.request.FedoraRequest.getDatastream;
+import static com.yourmediashelf.fedora.client.request.FedoraRequest.getNextPID;
+import static com.yourmediashelf.fedora.client.request.FedoraRequest.getObjectXML;
+
 import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.SSLContext;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.joda.time.DateTime;
+import org.xml.sax.InputSource;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -15,6 +25,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.yourmediashelf.fedora.client.request.FedoraRequest;
+import com.yourmediashelf.fedora.util.DateUtility;
+import com.yourmediashelf.fedora.util.NamespaceContextImpl;
 
 import eu.medsea.mimeutil.MimeUtil2;
 
@@ -34,8 +46,12 @@ public class FedoraClient {
 
     private final MimeUtil2 mimeUtil;
 
+    private final NamespaceContextImpl nsCtx;
+
     public FedoraClient(FedoraCredentials fc) {
         this.fc = fc;
+        nsCtx = new NamespaceContextImpl();
+        nsCtx.addNamespace("f", "info:fedora/fedora-system:def/foxml#");
         mimeUtil = new MimeUtil2();
         mimeUtil
                 .registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
@@ -85,5 +101,47 @@ public class FedoraClient {
     public String getMimeType(File file) {
         return MimeUtil2.getMostSpecificMimeType(mimeUtil.getMimeTypes(file))
                 .toString();
+    }
+
+    public DateTime getLastModifiedDate(String pid) throws FedoraClientException {
+        ClientResponse response = execute(getObjectXML(pid).build());
+
+        String expr = "//f:objectProperties/f:property[@NAME='info:fedora/fedora-system:def/view#lastModifiedDate']/@VALUE";
+        String lastModifiedDate;
+        try {
+            lastModifiedDate = getXPath().evaluate(expr, new InputSource(response.getEntityInputStream()));
+        } catch (XPathExpressionException e) {
+            throw new FedoraClientException(e.getMessage(), e);
+        }
+        return DateUtility.parseXSDDateTime(lastModifiedDate);
+    }
+
+    public DateTime getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
+        ClientResponse response = execute(getDatastream(pid, dsId).format("xml").build());
+        String expr = "/datastreamProfile/dsCreateDate";
+        String lastModifiedDate;
+        try {
+            lastModifiedDate = getXPath().evaluate(expr, new InputSource(response.getEntityInputStream()));
+        } catch (XPathExpressionException e) {
+            throw new FedoraClientException(e.getMessage(), e);
+        }
+        return DateUtility.parseXSDDateTime(lastModifiedDate);
+    }
+
+    public String getNextPid(String namespace) throws FedoraClientException {
+        ClientResponse response = execute(getNextPID().namespace(namespace).format("xml").build());
+        String expr = "/pidList/pid";
+        try {
+            return getXPath().evaluate(expr, new InputSource(response.getEntityInputStream()));
+        } catch (XPathExpressionException e) {
+            throw new FedoraClientException(e.getMessage(), e);
+        }
+    }
+
+    private XPath getXPath() {
+        XPathFactory factory = XPathFactory.newInstance();
+        XPath xpath = factory.newXPath();
+        xpath.setNamespaceContext(nsCtx);
+        return xpath;
     }
 }
