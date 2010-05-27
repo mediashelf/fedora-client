@@ -1,7 +1,7 @@
-![MediaShelf logo](http://www.yourmediashelf.com/images/Logo-April2008.jpg)
+![MediaShelf fedora-client logo](http://mediashelf.github.com/fedora-client/images/fedora-client.png)
 
-MediaShelf FedoraClient
-=======================
+MediaShelf fedora-client
+========================
 
 A developer-friendly Java client for the Fedora Commons Repository REST API.
 
@@ -16,7 +16,7 @@ Or, to add a datastream:
                      .controlGroup("M").content(f).build());
                      
 Optional properties are just that: optional. And when you do need one, it's 
-at your fingertips rather than lost in an opaque series of null arguments. 
+clearly labeled rather than lost in an opaque series of null arguments. 
 Compare:
 
     fedora.execute(addDatastream("test:pid", "DS2").controlGroup("M")
