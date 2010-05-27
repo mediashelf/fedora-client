@@ -128,6 +128,27 @@ public class AddDatastream
     }
 
     @Override
+    public FedoraRequest build() {
+        // special handling for RELS-EXT and RELS-INT
+        if (dsId.equals("RELS-EXT") || dsId.equals("RELS-INT")) {
+            String mimeType = getFirstQueryParam("mimeType");
+            if (mimeType == null) {
+                addQueryParam("mimeType", "application/rdf+xml");
+            }
+
+            String formatURI = getFirstQueryParam("formatURI");
+            if (formatURI == null) {
+                if (dsId.equals("RELS-EXT")) {
+                    addQueryParam("formatURI", "info:fedora/fedora-system:FedoraRELSExt-1.0");
+                } else if (dsId.equals("RELS-INT")) {
+                    addQueryParam("formatURI", "info:fedora/fedora-system:FedoraRELSInt-1.0");
+                }
+            }
+        }
+        return super.build();
+    }
+
+    @Override
     protected ClientResponse execute(FedoraClient fedora) {
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
