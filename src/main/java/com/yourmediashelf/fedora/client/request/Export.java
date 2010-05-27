@@ -12,7 +12,7 @@ import com.yourmediashelf.fedora.client.FedoraClient;
  *
  */
 public class Export
-        extends FedoraMethod {
+        extends FedoraMethod<Export> {
 
     private final String pid;
 

@@ -12,7 +12,7 @@ import com.yourmediashelf.fedora.client.FedoraClient;
  * @since 0.0.3
  */
 public class GetObjectXML
-        extends FedoraMethod {
+        extends FedoraMethod<GetObjectXML> {
 
     private final String pid;
 

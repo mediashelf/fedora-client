@@ -27,9 +27,9 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
  * @version $Id$
  */
 public class FedoraRequest {
-    private final FedoraMethod method;
+    private final FedoraMethod<?> method;
 
-    protected FedoraRequest(FedoraMethod method) {
+    protected FedoraRequest(FedoraMethod<?> method) {
         this.method = method;
     }
 

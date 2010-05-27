@@ -4,7 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
-public class PurgeDatastream extends FedoraMethod {
+public class PurgeDatastream extends FedoraMethod<PurgeDatastream> {
     private final String pid;
     private final String dsId;
 

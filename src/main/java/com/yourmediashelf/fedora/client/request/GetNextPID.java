@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
 public class GetNextPID
-        extends FedoraMethod {
+        extends FedoraMethod<GetNextPID> {
 
     public GetNextPID() {
     }

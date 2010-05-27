@@ -10,7 +10,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
 
-public class ModifyDatastream extends FedoraMethod {
+public class ModifyDatastream extends FedoraMethod<ModifyDatastream> {
     private final String pid;
     private final String dsId;
     private Object content;

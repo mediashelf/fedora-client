@@ -12,9 +12,8 @@ import com.yourmediashelf.fedora.client.FedoraClient;
  *
  *
  * @author Edwin Shin
- * @version $Id$
  */
-public class Ingest extends FedoraMethod {
+public class Ingest extends FedoraMethod<Ingest> {
     private final String pid;
     private Object content;
 

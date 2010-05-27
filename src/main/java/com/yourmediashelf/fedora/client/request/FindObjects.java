@@ -4,7 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
-public class FindObjects extends FedoraMethod {
+public class FindObjects extends FedoraMethod<FindObjects> {
 
     public FindObjects() {
     }

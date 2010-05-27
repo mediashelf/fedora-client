@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
 public class GetObjectProfile
-        extends FedoraMethod {
+        extends FedoraMethod<GetObjectProfile> {
 
     private final String pid;
 

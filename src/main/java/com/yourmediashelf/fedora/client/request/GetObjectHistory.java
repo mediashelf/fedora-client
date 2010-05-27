@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
 public class GetObjectHistory
-        extends FedoraMethod {
+        extends FedoraMethod<GetObjectHistory> {
 
     private final String pid;
 

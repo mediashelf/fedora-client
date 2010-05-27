@@ -4,7 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
-public class GetRelationships extends FedoraMethod {
+public class GetRelationships extends FedoraMethod<GetRelationships> {
     private final String pid;
 
     public GetRelationships(String pid) {

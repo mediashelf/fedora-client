@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
 public class GetDissemination
-        extends FedoraMethod {
+        extends FedoraMethod<GetDissemination> {
 
     private final String pid;
     private final String sdefPid;

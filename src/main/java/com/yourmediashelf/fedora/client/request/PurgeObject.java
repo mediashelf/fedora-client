@@ -4,7 +4,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
-public class PurgeObject extends FedoraMethod {
+public class PurgeObject extends FedoraMethod<PurgeObject> {
     private final String pid;
 
     public PurgeObject(String pid) {

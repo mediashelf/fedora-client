@@ -6,7 +6,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 
 public class GetDatastreamDissemination
-        extends FedoraMethod {
+        extends FedoraMethod<GetDatastreamDissemination> {
 
     private final String pid;
     private final String dsId;

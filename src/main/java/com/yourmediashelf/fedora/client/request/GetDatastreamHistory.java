@@ -12,7 +12,7 @@ import com.yourmediashelf.fedora.client.FedoraClient;
  * @since 0.0.3
  */
 public class GetDatastreamHistory
-        extends FedoraMethod {
+        extends FedoraMethod<GetDatastreamHistory> {
 
     private final String pid;
     private final String dsId;
