@@ -10,9 +10,14 @@ Introduction
 is a Java client for the 
 {{{http://www.fedora-commons.org/confluence/display/FCR30/REST+API}Fedora REST API}}.
 
-    It provides convenience methods for constructing FedoraRequest objects that 
-map to individual Fedora API requests. A FedoraRequest object, in turn, can be 
-executed by an instance of FedoraClient.
+    Usage is simple: create a FedoraRequest object that maps to the a Fedora API 
+method. Then execute the request by passing it to FedoraClient. FedoraClient 
+also offers convenience methods to simplify oft-used requests, such as getting a 
+new PID or the lastModifiedDate of an object or datastream.
+
+    Every REST API method as of 2010-05-27 is fully supported. This includes 
+new features implemented since the release of Fedora 3.3 such as 
+getRelationships and optimistic locking of modify object and datastream. 
 
     For examples of how to use fedora-client, see the {{{usage.html}Usage}} 
 section and the project's JUnit integration tests.
