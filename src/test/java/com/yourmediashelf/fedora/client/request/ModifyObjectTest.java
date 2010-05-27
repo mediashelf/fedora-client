@@ -15,9 +15,12 @@ import org.w3c.dom.Document;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.util.DateUtility;
 
-
+/**
+ *
+ *
+ * @author Edwin Shin
+ */
 public class ModifyObjectTest extends FedoraMethodBaseTest {
 
     @Test
@@ -27,6 +30,19 @@ public class ModifyObjectTest extends FedoraMethodBaseTest {
         assertEquals(200, response.getStatus());
 
         response = fedora().execute(getObjectProfile(testPid).format("xml").build());
+
+        //test the response
+        String objectProfile = response.getEntity(String.class);
+        assertXpathEvaluatesTo(modifiedLabel, "/objectProfile/objLabel", objectProfile);
+    }
+
+    @Test
+    public void testModifyObjectLabelWithXParam() throws Exception {
+        String modifiedLabel = "Nobody expects the Spanish Inquisition";
+        ClientResponse response = fedora().execute(modifyObject(testPid).xParam("label", modifiedLabel).build());
+        assertEquals(200, response.getStatus());
+
+        response = fedora().execute(getObjectProfile(testPid).xParam("format", "xml").build());
 
         //test the response
         String objectProfile = response.getEntity(String.class);
@@ -52,18 +68,10 @@ public class ModifyObjectTest extends FedoraMethodBaseTest {
 
     @Test
     public void testOptimisticLocking() throws Exception {
-        ClientResponse response;
-        // get the object's lastModifiedDate
-        response = fedora().execute(getObjectXML(testPid).build());
-        XpathEngine engine = getXpathEngine("f", "info:fedora/fedora-system:def/foxml#");
-        Document objectXML = XMLUnit.buildControlDocument(response.getEntity(String.class));
-        String xpath = "/f:digitalObject/f:objectProperties/f:property[@NAME='info:fedora/fedora-system:def/view#lastModifiedDate']/@VALUE";
-        DateTime lastModifiedDate = DateUtility.parseXSDDateTime(engine.evaluate(xpath, objectXML));
+        DateTime lastModifiedDate = fedora().getLastModifiedDate(testPid);
 
-        // create an earlier lastModifiedDate
-        String badDate = DateUtility.getXSDDateTime(lastModifiedDate.minusHours(1));
         try {
-            fedora().execute(modifyObject(testPid).label("foo").lastModifiedDate(badDate).build());
+            fedora().execute(modifyObject(testPid).label("foo").lastModifiedDate(lastModifiedDate.minusHours(1)).build());
             fail("modifyObject succeeded, but should have failed with HTTP 409 Conflict");
         } catch (FedoraClientException expected) {
         }

@@ -10,6 +10,7 @@ import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -90,10 +91,9 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testOptimisticLocking() throws Exception {
-        // attempt to modify with a bogus lastModifiedDate
-        String lastModifiedDate = "1970-01-01T00:00:00Z";
+        DateTime lastModifiedDate = fedora().getLastModifiedDate(testPid, "DC");
         try {
-            fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate).build());
+            fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)).build());
             fail("modifyDatastream succeeded, but should have failed");
         } catch (FedoraClientException expected) {
         }
