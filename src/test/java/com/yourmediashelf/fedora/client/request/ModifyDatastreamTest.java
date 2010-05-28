@@ -96,6 +96,7 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
             fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)));
             fail("modifyDatastream succeeded, but should have failed");
         } catch (FedoraClientException expected) {
+            assertEquals(409, expected.getStatus());
         }
     }
 }

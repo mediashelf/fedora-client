@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.yourmediashelf.fedora.client;
 
@@ -9,6 +9,7 @@ package com.yourmediashelf.fedora.client;
  */
 public class FedoraClientException extends Exception {
 	private static final long serialVersionUID = 1L;
+	private int status;
 
 	public FedoraClientException(String message) {
         super(message, null);
@@ -16,5 +17,14 @@ public class FedoraClientException extends Exception {
 
     public FedoraClientException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    public FedoraClientException(int status, String message) {
+        super(message);
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }

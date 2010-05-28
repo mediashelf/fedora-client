@@ -74,6 +74,7 @@ public class ModifyObjectTest extends FedoraMethodBaseTest {
             fedora().execute(modifyObject(testPid).label("foo").lastModifiedDate(lastModifiedDate.minusHours(1)));
             fail("modifyObject succeeded, but should have failed with HTTP 409 Conflict");
         } catch (FedoraClientException expected) {
+            assertEquals(409, expected.getStatus());
         }
     }
 }

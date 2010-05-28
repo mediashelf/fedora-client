@@ -16,7 +16,8 @@ public class FedoraResponseImpl implements FedoraResponse {
         this.status = cr.getStatus();
         if (status >= 400) {
             String msg = cr.getEntity(String.class);
-            throw new FedoraClientException(String.format("HTTP %d Error: %s", status, msg));
+            throw new FedoraClientException(status,
+                                            String.format("HTTP %d Error: %s", status, msg));
         }
     }
 
