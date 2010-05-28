@@ -7,7 +7,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
-public class PurgeDatastream extends FedoraMethod<PurgeDatastream> {
+public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
     private final String pid;
     private final String dsId;
 

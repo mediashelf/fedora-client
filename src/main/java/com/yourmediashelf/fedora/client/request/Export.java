@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  *
  */
 public class Export
-        extends FedoraMethod<Export> {
+        extends FedoraRequest<Export> {
 
     private final String pid;
 

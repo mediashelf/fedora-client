@@ -9,7 +9,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class ListDatastreams
-        extends FedoraMethod<ListDatastreams> {
+        extends FedoraRequest<ListDatastreams> {
 
     private final String pid;
 

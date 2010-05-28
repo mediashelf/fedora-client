@@ -7,7 +7,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
-public class PurgeRelationship extends FedoraMethod<PurgeObject> {
+public class PurgeRelationship extends FedoraRequest<PurgeObject> {
     private final String pid;
 
     public PurgeRelationship(String pid) {

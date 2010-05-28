@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.IngestResponse;
  *
  * @author Edwin Shin
  */
-public class Ingest extends FedoraMethod<Ingest> {
+public class Ingest extends FedoraRequest<Ingest> {
     private final String pid;
     private Object content;
 

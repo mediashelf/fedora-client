@@ -7,21 +7,20 @@ A developer-friendly Java client for the Fedora Commons Repository REST API.
 
 Create a new Fedora object as easily as:
 
-    fedora.execute(ingest("test:pid").build());
+    ingest("test:pid").execute(client);
     
 Or, to add a datastream:
     
     File f = new File("/tmp/Hyperballad.mp3");
-    fedora.execute(addDatastream("test:pid", "DS1")
-                     .controlGroup("M").content(f).build());
+    addDatastream("test:pid", "DS1").controlGroup("M").content(f).execute(client);
                      
 Optional properties are just that: optional. And when you do need one, it's 
 clearly labeled rather than lost in an opaque series of null arguments. 
 Compare:
 
-    fedora.execute(addDatastream("test:pid", "DS2").controlGroup("M")
+    addDatastream("test:pid", "DS2").controlGroup("M")
       .dsLocation("http://localhost:8080/fedora/get/fedora-system:ContentModel-3.0/DC")
-      .mimeType("text/xml").build());
+      .mimeType("text/xml").execute(client);
     
 with something like the following:
     

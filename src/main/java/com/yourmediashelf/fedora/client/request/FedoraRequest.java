@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
  *
  * @author Edwin Shin
  */
-public abstract class FedoraMethod<T> {
+public abstract class FedoraRequest<T> {
 
     private final MultivaluedMap<String, String> queryParams =
             new MultivaluedMapImpl();

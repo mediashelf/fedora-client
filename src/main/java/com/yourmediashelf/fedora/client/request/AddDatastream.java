@@ -19,7 +19,7 @@ import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
  *
  */
 public class AddDatastream
-        extends FedoraMethod<AddDatastream> {
+        extends FedoraRequest<AddDatastream> {
 
     private final String pid;
 

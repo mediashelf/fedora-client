@@ -9,7 +9,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class AddRelationship
-        extends FedoraMethod<AddRelationship> {
+        extends FedoraRequest<AddRelationship> {
 
     private final String pid;
 

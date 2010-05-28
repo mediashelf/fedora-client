@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @since 0.0.3
  */
 public class GetDatastreamHistory
-        extends FedoraMethod<GetDatastreamHistory> {
+        extends FedoraRequest<GetDatastreamHistory> {
 
     private final String pid;
     private final String dsId;

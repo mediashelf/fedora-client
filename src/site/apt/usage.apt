@@ -14,38 +14,30 @@ FedoraCredentials credentials =
 FedoraClient fedora = new FedoraClient(credentials);
 +--
 
-    Build a request object
+    Build the request, execute it, and evaluate the response
     
 +--
-FedoraRequest ingest = FedoraRequest.ingest("test:pid").build();
-+--
-
-    Execute the request
-    
-+--
-fedora.execute(ingest);
+IngestResponse response = new Ingest("test:pid").label("foo").execute(fedora);
+String pid = response.getPid();
 +--
 
     Using static imports, you can use a more abbreviated syntax
     
 +--
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.*;
+import static com.yourmediashelf.fedora.client.FedoraClient.*;
 
 ...
 
-    fedora.execute(ingest("test:pid").build());
+    ingest("test:pid").execute(fedora);
 +--
 
-    Create a new object with a RELS-EXT datastream
-    
+    Use optimistic locking for modifyObject by passing the lastModifiedDate as a
+request parameter. If the request's lastModifiedDate is earlier than 
+the object's, the request will fail with a HTTP 409 Conflict error.
+
 +--
-String pid = fedora.getNextPid("test"); // generate a new PID with namespace "test"
-fedora.execute(ingest(pid).build());    // create a new object
-String cmodel = "info:fedora/foo:bar";  // uri for a Content Model
-String relsExt = new RelsExt.Builder(pid)
-                   .addCModel(cmodel)
-                   .build().toString(); // build a RELS-EXT document
-fedora.execute(addDatastream(pid, "RELS-EXT").content(relsExt).build());
+DateTime lastModifiedDate = fedora.getLastModifiedDate("test:pid");
+modifyObject("test:pid").label("bar").lastModifiedDate(lastModifiedDate)
 +--
 
 * Including fedora-client in your Maven2 project

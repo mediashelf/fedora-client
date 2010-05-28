@@ -9,7 +9,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class GetObjectProfile
-        extends FedoraMethod<GetObjectProfile> {
+        extends FedoraRequest<GetObjectProfile> {
 
     private final String pid;
 

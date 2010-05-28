@@ -11,7 +11,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
-public class ModifyObject extends FedoraMethod<ModifyObject> {
+public class ModifyObject extends FedoraRequest<ModifyObject> {
     private final String pid;
 
     public ModifyObject(String pid) {

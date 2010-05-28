@@ -17,7 +17,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 
-public class ModifyDatastream extends FedoraMethod<ModifyDatastream> {
+public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     private final String pid;
     private final String dsId;
     private Object content;

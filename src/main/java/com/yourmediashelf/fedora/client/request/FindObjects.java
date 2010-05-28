@@ -7,7 +7,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
-public class FindObjects extends FedoraMethod<FindObjects> {
+public class FindObjects extends FedoraRequest<FindObjects> {
 
     public FindObjects() {
     }

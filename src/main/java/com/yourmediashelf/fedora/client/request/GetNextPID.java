@@ -9,7 +9,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class GetNextPID
-        extends FedoraMethod<GetNextPID> {
+        extends FedoraRequest<GetNextPID> {
 
     public GetNextPID() {
     }

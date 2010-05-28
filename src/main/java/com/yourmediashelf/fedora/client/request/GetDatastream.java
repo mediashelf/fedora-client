@@ -9,7 +9,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class GetDatastream
-        extends FedoraMethod<GetDatastream> {
+        extends FedoraRequest<GetDatastream> {
 
     private final String pid;
     private final String dsId;

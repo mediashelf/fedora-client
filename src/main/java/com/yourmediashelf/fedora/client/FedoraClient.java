@@ -22,7 +22,7 @@ import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.yourmediashelf.fedora.client.request.AddDatastream;
 import com.yourmediashelf.fedora.client.request.AddRelationship;
 import com.yourmediashelf.fedora.client.request.Export;
-import com.yourmediashelf.fedora.client.request.FedoraMethod;
+import com.yourmediashelf.fedora.client.request.FedoraRequest;
 import com.yourmediashelf.fedora.client.request.FindObjects;
 import com.yourmediashelf.fedora.client.request.GetDatastream;
 import com.yourmediashelf.fedora.client.request.GetDatastreamDissemination;
@@ -101,7 +101,7 @@ public class FedoraClient {
         client.setFollowRedirects(true);
     }
 
-    public FedoraResponse execute(FedoraMethod<?> method)
+    public FedoraResponse execute(FedoraRequest<?> method)
             throws FedoraClientException {
         return method.execute(this);
     }

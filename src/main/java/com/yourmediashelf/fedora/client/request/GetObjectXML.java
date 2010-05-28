@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @since 0.0.3
  */
 public class GetObjectXML
-        extends FedoraMethod<GetObjectXML> {
+        extends FedoraRequest<GetObjectXML> {
 
     private final String pid;
 
