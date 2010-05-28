@@ -4,13 +4,13 @@ package com.yourmediashelf.fedora.client;
 import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 import javax.net.ssl.SSLContext;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.joda.time.DateTime;
 import org.xml.sax.InputSource;
 
 import com.sun.jersey.api.client.Client;
@@ -48,7 +48,7 @@ import com.yourmediashelf.fedora.util.NamespaceContextImpl;
 import eu.medsea.mimeutil.MimeUtil2;
 
 /**
- * A client for Fedora's REST API.
+ * A client for the Fedora REST API.
  *
  * @author Edwin Shin
  */
@@ -120,7 +120,7 @@ public class FedoraClient {
                 .toString();
     }
 
-    public DateTime getLastModifiedDate(String pid) throws FedoraClientException {
+    public Date getLastModifiedDate(String pid) throws FedoraClientException {
         FedoraResponse response = execute(getObjectXML(pid));
 
         String expr = "//f:objectProperties/f:property[@NAME='info:fedora/fedora-system:def/view#lastModifiedDate']/@VALUE";
@@ -130,10 +130,10 @@ public class FedoraClient {
         } catch (XPathExpressionException e) {
             throw new FedoraClientException(e.getMessage(), e);
         }
-        return DateUtility.parseXSDDateTime(lastModifiedDate);
+        return DateUtility.parseXSDDateTime(lastModifiedDate).toDate();
     }
 
-    public DateTime getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
+    public Date getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
         FedoraResponse response = execute(getDatastream(pid, dsId).format("xml"));
         String expr = "/datastreamProfile/dsCreateDate";
         String lastModifiedDate;
@@ -142,17 +142,7 @@ public class FedoraClient {
         } catch (XPathExpressionException e) {
             throw new FedoraClientException(e.getMessage(), e);
         }
-        return DateUtility.parseXSDDateTime(lastModifiedDate);
-    }
-
-    public String getNextPid(String namespace) throws FedoraClientException {
-        FedoraResponse response = execute(getNextPID().namespace(namespace).format("xml"));
-        String expr = "/pidList/pid";
-        try {
-            return getXPath().evaluate(expr, new InputSource(response.getEntityInputStream()));
-        } catch (XPathExpressionException e) {
-            throw new FedoraClientException(e.getMessage(), e);
-        }
+        return DateUtility.parseXSDDateTime(lastModifiedDate).toDate();
     }
 
     private XPath getXPath() {

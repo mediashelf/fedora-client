@@ -68,7 +68,7 @@ public class ModifyObjectTest extends FedoraMethodBaseTest {
 
     @Test
     public void testOptimisticLocking() throws Exception {
-        DateTime lastModifiedDate = fedora().getLastModifiedDate(testPid);
+        DateTime lastModifiedDate = new DateTime(fedora().getLastModifiedDate(testPid));
 
         try {
             fedora().execute(modifyObject(testPid).label("foo").lastModifiedDate(lastModifiedDate.minusHours(1)));

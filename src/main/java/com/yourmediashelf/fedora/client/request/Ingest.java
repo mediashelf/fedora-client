@@ -11,7 +11,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 /**
- *
+ * Builder for the Ingest method.
  *
  * @author Edwin Shin
  */

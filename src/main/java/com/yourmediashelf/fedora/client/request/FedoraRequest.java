@@ -11,7 +11,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 /**
- * Base class for Fedora REST API requests.
+ * Base class for Fedora REST API methods.
  *
  * @author Edwin Shin
  */

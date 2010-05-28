@@ -2,39 +2,35 @@
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getNextPID;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.custommonkey.xmlunit.XpathEngine;
 import org.junit.Test;
-import org.w3c.dom.Document;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
 
 public class GetNextPIDTest extends FedoraMethodBaseTest {
     @Test
     public void testGetOnePid() throws Exception {
-        FedoraResponse response = null;
-
-        response = fedora().execute(getNextPID().format("xml"));
+        GetNextPIDResponse response = getNextPID().execute(fedora());
         assertEquals(200, response.getStatus());
-        String nextPid = response.getEntity(String.class);
-        assertXpathExists("/pidList/pid", nextPid);
+        assertNotNull(response.getPid());
     }
 
     @Test
     public void testGetOneNamespacedPid() throws Exception {
-        FedoraResponse response = null;
         String namespace = "foo";
-        response = fedora().execute(getNextPID().namespace(namespace).format("xml"));
+        GetNextPIDResponse response = getNextPID().namespace(namespace).execute(fedora());
         assertEquals(200, response.getStatus());
+        assertTrue(response.getPid().startsWith(namespace));
+    }
 
-        Document nextPid = XMLUnit.buildControlDocument(response.getEntity(String.class));
-
-        XpathEngine engine = getXpathEngine(null);
-        String pid = engine.evaluate("/pidList/pid", nextPid);
-        assertTrue(pid.startsWith(namespace));
+    @Test
+    public void testGetTwoPids() throws Exception {
+        GetNextPIDResponse response = null;
+        response = getNextPID().numPIDs(2).execute(fedora()) ;
+        assertEquals(200, response.getStatus());
+        assertEquals(2, response.getPids().size());
     }
 }

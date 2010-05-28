@@ -8,6 +8,11 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
+/**
+ * Builder for the ListDatastreams method.
+ *
+ * @author Edwin Shin
+ */
 public class ListDatastreams
         extends FedoraRequest<ListDatastreams> {
 

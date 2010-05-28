@@ -19,11 +19,20 @@ public class FedoraClientException extends Exception {
         super(message, cause);
     }
 
+    /**
+     *
+     * @param status the HTTP status code of the error.
+     * @param message
+     */
     public FedoraClientException(int status, String message) {
         super(message);
         this.status = status;
     }
 
+    /**
+     *
+     * @return the HTTP status code of the error
+     */
     public int getStatus() {
         return status;
     }

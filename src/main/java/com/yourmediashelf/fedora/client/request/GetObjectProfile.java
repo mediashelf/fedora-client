@@ -8,6 +8,11 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
+/**
+ * Builder for the GetObjectProfile method.
+ *
+ * @author Edwin Shin
+ */
 public class GetObjectProfile
         extends FedoraRequest<GetObjectProfile> {
 

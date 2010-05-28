@@ -7,6 +7,11 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
+/**
+ * Builder for the PurgeDatastream method.
+ *
+ * @author Edwin Shin
+ */
 public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
     private final String pid;
     private final String dsId;

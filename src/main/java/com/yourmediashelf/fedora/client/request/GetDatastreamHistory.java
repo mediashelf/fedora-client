@@ -9,7 +9,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 /**
- * <p>Builder for the AddDatastream method.</p>
+ * <p>Builder for the GetDatastreamHistory method.</p>
  *
  * @author Edwin Shin
  * @since 0.0.3

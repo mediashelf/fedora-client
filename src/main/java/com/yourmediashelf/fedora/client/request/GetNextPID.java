@@ -5,17 +5,21 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
 
+/**
+ * Builder for the GetNextPID method.
+ *
+ * @author Edwin Shin
+ */
 public class GetNextPID
         extends FedoraRequest<GetNextPID> {
 
     public GetNextPID() {
     }
 
-    public GetNextPID numPIDs(String asOfDateTime) {
-        addQueryParam("asOfDateTime", asOfDateTime);
+    public GetNextPID numPIDs(int numPIDs) {
+        addQueryParam("numPIDs", String.valueOf(numPIDs));
         return this;
     }
 
@@ -24,18 +28,18 @@ public class GetNextPID
         return this;
     }
 
-    public GetNextPID format(String format) {
-        addQueryParam("format", format);
-        return this;
-    }
-
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetNextPIDResponse execute(FedoraClient fedora) throws FedoraClientException {
+        // default to xml for the format, so we can parse the results
+        if (getFirstQueryParam("format") == null) {
+            addQueryParam("format", "xml");
+        }
+
         WebResource wr = fedora.resource();
         String path = String.format("objects/nextPID");
 
         ClientResponse cr = wr.path(path).queryParams(getQueryParams()).post(ClientResponse.class);
-        return new FedoraResponseImpl(cr);
+        return new GetNextPIDResponse(cr);
     }
 
 }

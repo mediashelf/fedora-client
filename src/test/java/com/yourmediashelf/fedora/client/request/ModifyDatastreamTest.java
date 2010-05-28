@@ -91,7 +91,7 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testOptimisticLocking() throws Exception {
-        DateTime lastModifiedDate = fedora().getLastModifiedDate(testPid, "DC");
+        DateTime lastModifiedDate = new DateTime(fedora().getLastModifiedDate(testPid, "DC"));
         try {
             fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)));
             fail("modifyDatastream succeeded, but should have failed");

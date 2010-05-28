@@ -1,5 +1,6 @@
 package com.yourmediashelf.fedora.client;
 
+import static com.yourmediashelf.fedora.client.FedoraClient.getNextPID;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -49,7 +50,7 @@ public class FedoraClientTest {
 	@Test
 	public void testObjectCreationWithRelsExt() throws Exception {
 	    // create the object
-	    String pid = client.getNextPid("test");
+	    String pid = getNextPID().namespace("test").execute(client).getPid();
 	    IngestResponse response = new Ingest(pid).execute(client);
 	    assertEquals(pid, response.getPid());
 

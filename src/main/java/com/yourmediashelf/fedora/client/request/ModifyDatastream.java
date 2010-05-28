@@ -3,6 +3,7 @@ package com.yourmediashelf.fedora.client.request;
 import static com.yourmediashelf.fedora.util.DateUtility.getXSDDateTime;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -16,7 +17,11 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
-
+/**
+ * Builder for the ModifyDatastream method.
+ *
+ * @author Edwin Shin
+ */
 public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     private final String pid;
     private final String dsId;
@@ -75,6 +80,11 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     }
 
     public ModifyDatastream lastModifiedDate(DateTime lastModifiedDate) {
+        addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
+        return this;
+    }
+
+    public ModifyDatastream lastModifiedDate(Date lastModifiedDate) {
         addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
         return this;
     }

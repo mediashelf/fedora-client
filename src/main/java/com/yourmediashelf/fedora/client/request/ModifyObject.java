@@ -2,6 +2,8 @@ package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.util.DateUtility.getXSDDateTime;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -11,6 +13,11 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
+/**
+ * Builder for the ModifyObject method.
+ *
+ * @author Edwin Shin
+ */
 public class ModifyObject extends FedoraRequest<ModifyObject> {
     private final String pid;
 
@@ -24,6 +31,11 @@ public class ModifyObject extends FedoraRequest<ModifyObject> {
     }
 
     public ModifyObject lastModifiedDate(DateTime lastModifiedDate) {
+        addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
+        return this;
+    }
+
+    public ModifyObject lastModifiedDate(Date lastModifiedDate) {
         addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
         return this;
     }

@@ -38,6 +38,14 @@ public class FedoraCredentials {
 		this.password = password;
 	}
 
+	/**
+	 * Convenience constructor that takes the baseUrl as a String.
+	 *
+	 * @param baseUrl e.g., http://localhost:8080/fedora
+     * @param username e.g., fedoraAdmin
+     * @param password e.g., fedoraAdmin
+	 * @throws MalformedURLException
+	 */
 	public FedoraCredentials(String baseUrl, String username, String password) throws MalformedURLException {
 		this(new URL(baseUrl), username, password);
 	}

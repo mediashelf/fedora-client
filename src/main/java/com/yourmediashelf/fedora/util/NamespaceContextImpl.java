@@ -16,7 +16,6 @@ import javax.xml.namespace.NamespaceContext;
  * an addNamespace method.
  *
  * @author Edwin Shin
- * @version $Id: NamespaceContextImpl.java 8493 2010-01-20 02:13:21Z birkland $
  */
 public class NamespaceContextImpl
         implements NamespaceContext {

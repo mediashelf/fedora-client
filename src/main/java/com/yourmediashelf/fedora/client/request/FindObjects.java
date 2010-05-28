@@ -7,6 +7,11 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
+/**
+ * Builder for the FindObjects method.
+ *
+ * @author Edwin Shin
+ */
 public class FindObjects extends FedoraRequest<FindObjects> {
 
     public FindObjects() {
