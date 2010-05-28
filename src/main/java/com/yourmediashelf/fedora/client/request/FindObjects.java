@@ -3,6 +3,9 @@ package com.yourmediashelf.fedora.client.request;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class FindObjects extends FedoraMethod<FindObjects> {
 
@@ -142,11 +145,11 @@ public class FindObjects extends FedoraMethod<FindObjects> {
     }
 
     @Override
-    protected ClientResponse execute(FedoraClient fedora) {
+    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path = String.format("objects");
 
-        return wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        return new FedoraResponseImpl(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
     }
 
 }

@@ -1,14 +1,15 @@
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.ingest;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.purgeObject;
+import static com.yourmediashelf.fedora.client.FedoraClient.ingest;
+import static com.yourmediashelf.fedora.client.FedoraClient.purgeObject;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 
 
@@ -28,16 +29,16 @@ public class PurgeObjectTest extends FedoraMethodBaseTest {
 
     @Test
     public void testPurgeObject() throws Exception {
-        ClientResponse response = null;
+        IngestResponse response = null;
         String pid = null;
 
         // first, ingest object
-        response = fedora().execute(ingest(null).build());
+        response = ingest(null).execute(fedora());
         assertEquals(201, response.getStatus());
-        pid = response.getEntity(String.class);
+        pid = response.getPid();
 
         // now delete it
-        response = fedora().execute(purgeObject(pid).build());
-        assertEquals(204, response.getStatus());
+        FedoraResponse purge = purgeObject(pid).execute(fedora());
+        assertEquals(204, purge.getStatus());
     }
 }

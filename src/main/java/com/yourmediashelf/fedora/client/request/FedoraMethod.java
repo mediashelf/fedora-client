@@ -5,48 +5,43 @@ import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 /**
- *
+ * Base class for Fedora REST API requests.
  *
  * @author Edwin Shin
- * @version $Id$
  */
 public abstract class FedoraMethod<T> {
 
     private final MultivaluedMap<String, String> queryParams =
             new MultivaluedMapImpl();
 
-    /**
-     * Construct the request.
-     *
-     * @return FedoraRequest representing the FedoraMethod and its properties.
-     */
-    public FedoraRequest build() {
-        return new FedoraRequest(this);
-    }
-
-    abstract protected ClientResponse execute(FedoraClient fedora);
+    abstract public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException;
 
     /**
-     * <p>Add an arbitrary query parameter and value to the method.</p>
+     * <p>
+     * Add an arbitrary query parameter and value to the method.
+     * </p>
+     * <p>
+     * This method is intended as mild future-proofing, allowing fedora-client
+     * to be used with future or unreleased versions of Fedora that may support
+     * additional or different query parameters than fedora-client is aware of.
      *
-     * <p>This method is intended as mild future-proofing, allowing
-     * fedora-client to be used with future or unreleased versions of Fedora
-     * that may support additional or different query parameters than
-     * fedora-client is aware of.
-     *
-     * @param key the query parameter name
-     * @param value the value
+     * @param key
+     *        the query parameter name
+     * @param value
+     *        the value
      * @return this builder
      */
     @SuppressWarnings("unchecked")
     public T xParam(String key, String value) {
         addQueryParam(key, value);
-        return (T)this;
+        return (T) this;
     }
 
     protected void addQueryParam(String key, String value) {

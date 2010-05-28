@@ -1,8 +1,5 @@
 package com.yourmediashelf.fedora.client;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.addDatastream;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.ingest;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.purgeObject;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -12,7 +9,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import com.yourmediashelf.fedora.client.request.AddRelationship;
+import com.yourmediashelf.fedora.client.request.Ingest;
+import com.yourmediashelf.fedora.client.request.PurgeObject;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 
 /**
@@ -47,18 +48,21 @@ public class FedoraClientTest {
 
 	@Test
 	public void testObjectCreationWithRelsExt() throws Exception {
+	    // create the object
 	    String pid = client.getNextPid("test");
+	    IngestResponse response = new Ingest(pid).execute(client);
+	    assertEquals(pid, response.getPid());
+
+	    // create rels-ext with a new cmodel
 	    String cmodel = "test:cmodel";
-	    String relsExt = new RelsExt.Builder(pid)
-            .addCModel(cmodel)
-            .build().toString();
-	    ClientResponse response = client.execute(ingest(pid).build());
-	    assertEquals(pid, response.getEntity(String.class));
-	    response = client.execute(addDatastream(pid, "RELS-EXT").content(relsExt).build());
-	    assertEquals(201, response.getStatus());
+
+	    FedoraResponse addRel = new AddRelationship(pid)
+    	            .predicate("info:fedora/fedora-system:def/model#hasModel")
+    	            .object(cmodel).execute(client);
+	    assertEquals(200, addRel.getStatus());
 
 	    // cleanup
-	    response = client.execute(purgeObject(pid).build());
-	    assertEquals(204, response.getStatus());
+	    FedoraResponse purge = new PurgeObject(pid).execute(client);
+	    assertEquals(204, purge.getStatus());
 	}
 }

@@ -4,6 +4,9 @@ package com.yourmediashelf.fedora.client.request;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class ListMethods
         extends FedoraMethod<ListMethods> {
@@ -40,7 +43,7 @@ public class ListMethods
     }
 
     @Override
-    protected ClientResponse execute(FedoraClient fedora) {
+    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path;
         if (sdefPid == null) {
@@ -49,7 +52,8 @@ public class ListMethods
             path = String.format("objects/%s/methods%s", pid, sdefPid);
         }
 
-        return wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        return new FedoraResponseImpl(cr);
     }
 
 }

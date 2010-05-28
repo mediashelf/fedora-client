@@ -1,8 +1,8 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.ingest;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.purgeObject;
+import static com.yourmediashelf.fedora.client.FedoraClient.ingest;
+import static com.yourmediashelf.fedora.client.FedoraClient.purgeObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -65,11 +65,11 @@ public abstract class FedoraMethodBaseTest {
     }
 
     public void ingestTestObject() throws FedoraClientException {
-        fedora().execute(ingest(testPid).build());
+        ingest(testPid).execute(fedora());
     }
 
     public void purgeTestObject() throws FedoraClientException {
-        fedora().execute(purgeObject(testPid).build());
+        purgeObject(testPid).execute(fedora());
     }
 
     public XpathEngine getXpathEngine(Map<String, String> nsMap) {

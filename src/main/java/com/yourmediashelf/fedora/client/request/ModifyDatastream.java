@@ -12,6 +12,9 @@ import org.joda.time.DateTime;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 
 public class ModifyDatastream extends FedoraMethod<ModifyDatastream> {
@@ -102,7 +105,7 @@ public class ModifyDatastream extends FedoraMethod<ModifyDatastream> {
     }
 
     @Override
-    protected ClientResponse execute(FedoraClient fedora) {
+    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path;
         if (dsId == null) {
@@ -125,7 +128,7 @@ public class ModifyDatastream extends FedoraMethod<ModifyDatastream> {
         } else {
             throw new IllegalArgumentException("unknown request content type");
         }
-        return response;
+        return new FedoraResponseImpl(response);
     }
 
 }

@@ -1,7 +1,7 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.getDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.getDatastream;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.assertEquals;
@@ -12,15 +12,15 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import com.sun.jersey.api.client.ClientResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class GetDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testGetDatastreamAsHtml() throws Exception {
-        ClientResponse response = null;
+        FedoraResponse response = null;
 
-        response = fedora().execute(getDatastream(testPid, "DC").build());
+        response = fedora().execute(getDatastream(testPid, "DC"));
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
 
@@ -31,9 +31,9 @@ public class GetDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testGetDatastreamAsXml() throws Exception {
-        ClientResponse response = null;
+        FedoraResponse response = null;
 
-        response = fedora().execute(getDatastream(testPid, "DC").format("xml").build());
+        response = fedora().execute(getDatastream(testPid, "DC").format("xml"));
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
 

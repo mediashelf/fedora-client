@@ -1,12 +1,12 @@
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.addDatastream;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.purgeDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.purgeDatastream;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 
 
@@ -15,13 +15,13 @@ public class PurgeDatastreamTest extends FedoraMethodBaseTest {
     @Test
     public void testPurgeDatastream() throws Exception {
         String content = "<foo>bar</foo>";
-        ClientResponse response =
+        FedoraResponse response =
                 fedora().execute(addDatastream(testPid, "baz").content(content)
-                        .dsLabel(null).build());
+                        .dsLabel(null));
         assertEquals(201, response.getStatus());
 
         // now delete it
-        response = fedora().execute(purgeDatastream(testPid, "baz").build());
+        response = fedora().execute(purgeDatastream(testPid, "baz"));
         assertEquals(204, response.getStatus());
     }
 }

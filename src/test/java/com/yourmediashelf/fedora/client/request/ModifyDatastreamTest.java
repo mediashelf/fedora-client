@@ -1,9 +1,9 @@
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.addDatastream;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.getDatastream;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.getDatastreamDissemination;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.modifyDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.getDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.getDatastreamDissemination;
+import static com.yourmediashelf.fedora.client.FedoraClient.modifyDatastream;
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
@@ -13,8 +13,8 @@ import static org.junit.Assert.fail;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 
 
@@ -25,16 +25,16 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
         String dsId = "MDFY";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
-        ClientResponse response = fedora().execute(addDatastream(testPid, dsId).content(content).build());
+        FedoraResponse response = fedora().execute(addDatastream(testPid, dsId).content(content));
         assertEquals(201, response.getStatus());
 
         // verify datastream content before modify
-        response = fedora().execute(getDatastreamDissemination(testPid, dsId).build());
+        response = fedora().execute(getDatastreamDissemination(testPid, dsId));
         assertEquals(200, response.getStatus());
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties before modify
-        response = fedora().execute(getDatastream(testPid, dsId).format("xml").build());
+        response = fedora().execute(getDatastream(testPid, dsId).format("xml"));
         assertEquals(200, response.getStatus());
         String datastreamProfile = response.getEntity(String.class);
 
@@ -58,16 +58,16 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
         // now modify it
         content = "<baz>quux</baz>";
         String newDsLabel = "asdf";
-        response = fedora().execute(modifyDatastream(testPid, dsId).content(content).dsLabel(newDsLabel).build());
+        response = fedora().execute(modifyDatastream(testPid, dsId).content(content).dsLabel(newDsLabel));
         assertEquals(200, response.getStatus());
 
         // verify datastream content after modify
-        response = fedora().execute(getDatastreamDissemination(testPid, dsId).build());
+        response = fedora().execute(getDatastreamDissemination(testPid, dsId));
         assertEquals(200, response.getStatus());
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties after modify
-        response = fedora().execute(getDatastream(testPid, dsId).format("xml").build());
+        response = fedora().execute(getDatastream(testPid, dsId).format("xml"));
         assertEquals(200, response.getStatus());
         datastreamProfile = response.getEntity(String.class);
 
@@ -93,7 +93,7 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
     public void testOptimisticLocking() throws Exception {
         DateTime lastModifiedDate = fedora().getLastModifiedDate(testPid, "DC");
         try {
-            fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)).build());
+            fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)));
             fail("modifyDatastream succeeded, but should have failed");
         } catch (FedoraClientException expected) {
         }

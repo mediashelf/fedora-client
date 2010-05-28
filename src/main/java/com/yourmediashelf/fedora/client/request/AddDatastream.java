@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 
 /**
  * Builder for the AddDatastream method.
@@ -128,7 +130,7 @@ public class AddDatastream
     }
 
     @Override
-    public FedoraRequest build() {
+    public AddDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         // special handling for RELS-EXT and RELS-INT
         if (dsId.equals("RELS-EXT") || dsId.equals("RELS-INT")) {
             String mimeType = getFirstQueryParam("mimeType");
@@ -145,11 +147,7 @@ public class AddDatastream
                 }
             }
         }
-        return super.build();
-    }
 
-    @Override
-    protected ClientResponse execute(FedoraClient fedora) {
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
 
@@ -178,7 +176,7 @@ public class AddDatastream
         } else {
             throw new IllegalArgumentException("unknown request content type");
         }
-        return response;
+        return new AddDatastreamResponse(response);
     }
 
 }

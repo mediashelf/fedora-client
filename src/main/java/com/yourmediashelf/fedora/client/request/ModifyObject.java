@@ -7,17 +7,15 @@ import org.joda.time.DateTime;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class ModifyObject extends FedoraMethod<ModifyObject> {
     private final String pid;
 
     public ModifyObject(String pid) {
         this.pid = pid;
-    }
-
-    @Override
-    public FedoraRequest build() {
-        return new FedoraRequest(this);
     }
 
     public ModifyObject label(String label) {
@@ -51,9 +49,10 @@ public class ModifyObject extends FedoraMethod<ModifyObject> {
     }
 
     @Override
-    protected ClientResponse execute(FedoraClient fedora) {
+    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s", pid);
-        return wr.path(path).queryParams(getQueryParams()).put(ClientResponse.class);
+        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).put(ClientResponse.class);
+        return new FedoraResponseImpl(cr);
     }
 }

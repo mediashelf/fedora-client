@@ -1,10 +1,6 @@
 
 package com.yourmediashelf.fedora.client;
 
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.getDatastream;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.getNextPID;
-import static com.yourmediashelf.fedora.client.request.FedoraRequest.getObjectXML;
-
 import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -18,13 +14,34 @@ import org.joda.time.DateTime;
 import org.xml.sax.InputSource;
 
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
-import com.yourmediashelf.fedora.client.request.FedoraRequest;
+import com.yourmediashelf.fedora.client.request.AddDatastream;
+import com.yourmediashelf.fedora.client.request.AddRelationship;
+import com.yourmediashelf.fedora.client.request.Export;
+import com.yourmediashelf.fedora.client.request.FedoraMethod;
+import com.yourmediashelf.fedora.client.request.FindObjects;
+import com.yourmediashelf.fedora.client.request.GetDatastream;
+import com.yourmediashelf.fedora.client.request.GetDatastreamDissemination;
+import com.yourmediashelf.fedora.client.request.GetDatastreamHistory;
+import com.yourmediashelf.fedora.client.request.GetDissemination;
+import com.yourmediashelf.fedora.client.request.GetNextPID;
+import com.yourmediashelf.fedora.client.request.GetObjectHistory;
+import com.yourmediashelf.fedora.client.request.GetObjectProfile;
+import com.yourmediashelf.fedora.client.request.GetObjectXML;
+import com.yourmediashelf.fedora.client.request.GetRelationships;
+import com.yourmediashelf.fedora.client.request.Ingest;
+import com.yourmediashelf.fedora.client.request.ListDatastreams;
+import com.yourmediashelf.fedora.client.request.ListMethods;
+import com.yourmediashelf.fedora.client.request.ModifyDatastream;
+import com.yourmediashelf.fedora.client.request.ModifyObject;
+import com.yourmediashelf.fedora.client.request.PurgeDatastream;
+import com.yourmediashelf.fedora.client.request.PurgeObject;
+import com.yourmediashelf.fedora.client.request.PurgeRelationship;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.util.DateUtility;
 import com.yourmediashelf.fedora.util.NamespaceContextImpl;
 
@@ -84,7 +101,7 @@ public class FedoraClient {
         client.setFollowRedirects(true);
     }
 
-    public ClientResponse execute(FedoraRequest method)
+    public FedoraResponse execute(FedoraMethod<?> method)
             throws FedoraClientException {
         return method.execute(this);
     }
@@ -104,7 +121,7 @@ public class FedoraClient {
     }
 
     public DateTime getLastModifiedDate(String pid) throws FedoraClientException {
-        ClientResponse response = execute(getObjectXML(pid).build());
+        FedoraResponse response = execute(getObjectXML(pid));
 
         String expr = "//f:objectProperties/f:property[@NAME='info:fedora/fedora-system:def/view#lastModifiedDate']/@VALUE";
         String lastModifiedDate;
@@ -117,7 +134,7 @@ public class FedoraClient {
     }
 
     public DateTime getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
-        ClientResponse response = execute(getDatastream(pid, dsId).format("xml").build());
+        FedoraResponse response = execute(getDatastream(pid, dsId).format("xml"));
         String expr = "/datastreamProfile/dsCreateDate";
         String lastModifiedDate;
         try {
@@ -129,7 +146,7 @@ public class FedoraClient {
     }
 
     public String getNextPid(String namespace) throws FedoraClientException {
-        ClientResponse response = execute(getNextPID().namespace(namespace).format("xml").build());
+        FedoraResponse response = execute(getNextPID().namespace(namespace).format("xml"));
         String expr = "/pidList/pid";
         try {
             return getXPath().evaluate(expr, new InputSource(response.getEntityInputStream()));
@@ -143,5 +160,115 @@ public class FedoraClient {
         XPath xpath = factory.newXPath();
         xpath.setNamespaceContext(nsCtx);
         return xpath;
+    }
+
+    ////////////////////////////////////////////
+    //        static convenience methods      //
+    ////////////////////////////////////////////
+    /**
+     * @param pid
+     *        the persistent identifier
+     * @param dsId
+     *        the datastream identifier
+     * @return builder for the AddDatastream method
+     * @see AddDatastream
+     */
+    public static AddDatastream addDatastream(String pid, String dsId) {
+        return new AddDatastream(pid, dsId);
+    }
+
+    public static AddRelationship addRelationship(String pid) {
+        return new AddRelationship(pid);
+    }
+
+    public static Export export(String pid) {
+        return new Export(pid);
+    }
+
+    public static FindObjects findObjects() {
+        return new FindObjects();
+    }
+
+    public static GetDatastream getDatastream(String pid, String dsId) {
+        return new GetDatastream(pid, dsId);
+    }
+
+    public static GetDatastreamDissemination getDatastreamDissemination(String pid,
+                                                                        String dsId) {
+        return new GetDatastreamDissemination(pid, dsId);
+    }
+
+    public static GetDatastreamHistory getDatastreamHistory(String pid,
+                                                            String dsId) {
+        return new GetDatastreamHistory(pid, dsId);
+    }
+
+    public static GetDissemination getDissemination(String pid,
+                                                    String sdefPid,
+                                                    String method) {
+        return new GetDissemination(pid, sdefPid, method);
+    }
+
+    public static GetNextPID getNextPID() {
+        return new GetNextPID();
+    }
+
+    public static GetObjectHistory getObjectHistory(String pid) {
+        return new GetObjectHistory(pid);
+    }
+
+    public static GetObjectProfile getObjectProfile(String pid) {
+        return new GetObjectProfile(pid);
+    }
+
+    public static GetObjectXML getObjectXML(String pid) {
+        return new GetObjectXML(pid);
+    }
+
+    public static GetRelationships getRelationships(String pid) {
+        return new GetRelationships(pid);
+    }
+
+    /**
+     * @param pid
+     *        persistent identifier of the object to be created or null for a
+     *        server-assigned pid
+     * @return builder for the Ingest method
+     * @see Ingest
+     */
+    public static Ingest ingest(String pid) {
+        return new Ingest(pid);
+    }
+
+    public static ListDatastreams listDatastreams(String pid) {
+        return new ListDatastreams(pid);
+    }
+
+    public static ListMethods listMethods(String pid) {
+        return new ListMethods(pid);
+    }
+
+    public static ListMethods listMethods(String pid, String sdefPid) {
+        return new ListMethods(pid, sdefPid);
+    }
+
+    public static ModifyDatastream modifyDatastream(String pid, String dsId) {
+        return new ModifyDatastream(pid, dsId);
+    }
+
+    public static ModifyObject modifyObject(String pid) {
+        return new ModifyObject(pid);
+    }
+
+    public static PurgeDatastream purgeDatastream(String pid, String dsId) {
+        return new PurgeDatastream(pid, dsId);
+    }
+
+    public static PurgeObject purgeObject(String pid) {
+        return new PurgeObject(pid);
+    }
+
+    public static PurgeRelationship purgeRelationship(String pid) {
+        return new PurgeRelationship(pid);
     }
 }

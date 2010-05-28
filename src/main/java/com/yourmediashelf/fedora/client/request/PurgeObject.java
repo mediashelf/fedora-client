@@ -3,6 +3,9 @@ package com.yourmediashelf.fedora.client.request;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 public class PurgeObject extends FedoraMethod<PurgeObject> {
     private final String pid;
@@ -22,10 +25,10 @@ public class PurgeObject extends FedoraMethod<PurgeObject> {
     }
 
     @Override
-    protected ClientResponse execute(FedoraClient fedora) {
+    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
         String path = String.format("objects/%s", pid);
 
         WebResource wr = fedora.resource().path(path).queryParams(getQueryParams());
-        return wr.delete(ClientResponse.class);
+        return new FedoraResponseImpl(wr.delete(ClientResponse.class));
     }
 }

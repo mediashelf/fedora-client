@@ -7,6 +7,8 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
+import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 /**
  *
@@ -62,7 +64,7 @@ public class Ingest extends FedoraMethod<Ingest> {
     }
 
     @Override
-    protected ClientResponse execute(FedoraClient fedora) {
+    public IngestResponse execute(FedoraClient fedora) throws FedoraClientException {
         ClientResponse response = null;
         String path;
         if (pid == null || pid.isEmpty()) {
@@ -87,6 +89,6 @@ public class Ingest extends FedoraMethod<Ingest> {
         } else {
             throw new IllegalArgumentException("unknown request content type");
         }
-        return response;
+        return new IngestResponse(response);
     }
 }
