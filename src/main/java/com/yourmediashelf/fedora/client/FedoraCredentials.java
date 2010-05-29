@@ -15,6 +15,7 @@ public class FedoraCredentials {
 	private String password;
 
 	/**
+	 * Contructor for FedoraCredentials.
 	 *
 	 * @param baseUrl e.g., http://localhost:8080/fedora
 	 * @param username e.g., fedoraAdmin

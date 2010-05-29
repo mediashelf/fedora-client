@@ -65,6 +65,11 @@ public class FedoraClient {
 
     private final NamespaceContextImpl nsCtx;
 
+    /**
+     * Constructor for FedoraClient.
+     *
+     * @param fc credentials for a Fedora repository
+     */
     public FedoraClient(FedoraCredentials fc) {
         this.fc = fc;
         nsCtx = new NamespaceContextImpl();
@@ -101,6 +106,28 @@ public class FedoraClient {
         client.setFollowRedirects(true);
     }
 
+    /**
+     * Convenience method for executing FedoraRequests. Note that this method
+     * returns a FedoraResponse and therefore requires an explicit cast if a
+     * specific implementation of FedoraResponse is desired.
+     *
+     * <p>The preferred usage is actually the reverse: pass an instance of
+     * FedoraClient to the FedoraRequest, e.g.</p>
+     *
+     * <pre>    IngestResponse r = new Ingest("my:pid").execute(client);</pre>
+     *
+     * <p>Finally, FedoraClient provides a number of static convenience methods
+     * for FedoraRequests. Therefore, with a static import, the following,
+     * abbreviated syntax can be used:</p>
+     *
+     * <pre>import static com.yourmediashelf.fedora.client.FedoraClient.*;
+     * ...
+     *     IngestResponse r = ingest("my:pid").execute(client);</pre>
+     *
+     * @param method a FedoraRequest
+     * @return the wrapped HTTP response
+     * @throws FedoraClientException
+     */
     public FedoraResponse execute(FedoraRequest<?> method)
             throws FedoraClientException {
         return method.execute(this);
@@ -156,6 +183,8 @@ public class FedoraClient {
     //        static convenience methods      //
     ////////////////////////////////////////////
     /**
+     * Static convenience method for AddDatastream.
+     *
      * @param pid
      *        the persistent identifier
      * @param dsId
