@@ -152,7 +152,7 @@ public class DateUtility {
      * @param input
      *        an XML Schema 1.1 dateTime
      * @return a DateTime representing the input
-     * @see http://www.w3.org/TR/xmlschema11-2/#dateTime
+     * @see "http://www.w3.org/TR/xmlschema11-2/#dateTime"
      */
     public static DateTime parseXSDDateTime(String input) {
         Matcher m = XSD_DATETIME.matcher(input);
@@ -217,7 +217,7 @@ public class DateUtility {
      *
      * @param date
      * @return An xsd:dateTime (in UTC) representation of date.
-     * @see {@link #getXSDFormatter(DateTime)}
+     * @see #getXSDFormatter(DateTime)
      */
     public static String getXSDDateTime(Date date) {
         return getXSDDateTime(new DateTime(date));
@@ -231,7 +231,7 @@ public class DateUtility {
      *
      * @param dateTime
      * @return An xsd:dateTime (in UTC) representation of date.
-     * @see http://www.w3.org/TR/xmlschema11-2/#dateTime
+     * @see "http://www.w3.org/TR/xmlschema11-2/#dateTime"
      */
     public static String getXSDDateTime(DateTime dateTime) {
         return dateTime.withZone(DateTimeZone.UTC).toString(getXSDFormatter(dateTime));

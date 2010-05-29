@@ -20,6 +20,13 @@ public abstract class FedoraRequest<T> {
     private final MultivaluedMap<String, String> queryParams =
             new MultivaluedMapImpl();
 
+    /**
+     * Execute this request using the supplied FedoraClient instance.
+     *
+     * @param fedora an instance of FedoraClient
+     * @return the response
+     * @throws FedoraClientException
+     */
     abstract public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException;
 
