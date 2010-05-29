@@ -10,9 +10,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.request.AddRelationship;
+import com.yourmediashelf.fedora.client.request.AddDatastream;
 import com.yourmediashelf.fedora.client.request.Ingest;
 import com.yourmediashelf.fedora.client.request.PurgeObject;
+import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.IngestResponse;
 
@@ -54,13 +55,14 @@ public class FedoraClientTest {
 	    IngestResponse response = new Ingest(pid).execute(client);
 	    assertEquals(pid, response.getPid());
 
-	    // create rels-ext with a new cmodel
+	    // Create RELS-EXT using RelsExt.Builder
 	    String cmodel = "test:cmodel";
+	    String relsExt = new RelsExt.Builder(pid)
+                               .addCModel(cmodel).build().toString();
 
-	    FedoraResponse addRel = new AddRelationship(pid)
-    	            .predicate("info:fedora/fedora-system:def/model#hasModel")
-    	            .object(cmodel).execute(client);
-	    assertEquals(200, addRel.getStatus());
+	    AddDatastreamResponse addDS = new AddDatastream(pid, "RELS-EXT")
+	                                        .content(relsExt).execute(client);
+	    assertEquals(201, addDS.getStatus());
 
 	    // cleanup
 	    FedoraResponse purge = new PurgeObject(pid).execute(client);
