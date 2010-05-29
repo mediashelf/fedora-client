@@ -3,10 +3,14 @@ package com.yourmediashelf.fedora.client.request;
 import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
 import static com.yourmediashelf.fedora.client.FedoraClient.listDatastreams;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.ListDatastreamsResponse;
+import com.yourmediashelf.fedora.client.response.listDatastreams.DatastreamType;
 
 
 
@@ -17,12 +21,18 @@ public class ListDatastreamsTest extends FedoraMethodBaseTest {
         String dsId = "MDFY";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
-        FedoraResponse response = fedora().execute(addDatastream(testPid, dsId).content(content));
-        assertEquals(201, response.getStatus());
+        addDatastream(testPid, dsId).content(content).execute(fedora());
 
         // list datastreams
-        response = fedora().execute(listDatastreams(testPid).format("xml"));
+        ListDatastreamsResponse response = listDatastreams(testPid).execute(fedora());
         assertEquals(200, response.getStatus());
-        System.out.println("listDS: " + response.getEntity(String.class));
+        List<DatastreamType> datastreams = response.getDatastreams();
+        boolean found = false;
+        for (DatastreamType d : datastreams) {
+            if (d.getDsid().equals(dsId)) {
+                found = true;
+            }
+        }
+        assertTrue(found);
     }
 }

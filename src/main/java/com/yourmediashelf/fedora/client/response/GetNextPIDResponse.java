@@ -25,11 +25,11 @@ public class GetNextPIDResponse
     }
 
     /**
-     * The Set of requested pids.
+     * The List of requested pids.
      * <p>If the GetNextPIDs request explicitly set format=html, this method
      * call will fail.</p>
      *
-     * @return the Set of next pids
+     * @return the List of next pids
      * @throws FedoraClientException
      */
     public List<String> getPids() throws FedoraClientException {

@@ -7,16 +7,18 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 
 
 public class IngestResponse extends FedoraResponseImpl {
-    private final String pid;
+    private String pid;
     private final URI location;
 
     public IngestResponse(ClientResponse cr) throws FedoraClientException {
         super(cr);
-        pid = cr.getEntity(String.class);
         location = cr.getLocation();
     }
 
     public String getPid() {
+        if (pid == null) {
+            pid = getEntity(String.class);
+        }
         return pid;
     }
 

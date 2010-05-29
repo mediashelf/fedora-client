@@ -18,13 +18,27 @@ public class GetNextPID
     public GetNextPID() {
     }
 
-    public GetNextPID numPIDs(int numPIDs) {
-        addQueryParam("numPIDs", String.valueOf(numPIDs));
+    /**
+     * The format of the response. The Fedora REST API default is "html", but
+     * fedora-client will set "xml" as the default in order to parse the
+     * response. If "html" is selected, the caller is responsible for parsing
+     * the raw HTTP response.
+     *
+     * @param format The response format, either "xml" or "html"
+     * @return this builder
+     */
+    public GetNextPID format(String format) {
+        addQueryParam("format", format);
         return this;
     }
 
     public GetNextPID namespace(String namespace) {
         addQueryParam("namespace", namespace);
+        return this;
+    }
+
+    public GetNextPID numPIDs(int numPIDs) {
+        addQueryParam("numPIDs", String.valueOf(numPIDs));
         return this;
     }
 

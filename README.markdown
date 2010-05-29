@@ -32,7 +32,7 @@ with something like the following:
 Requirements
 ------------
 
-* Fedora 3.3
+* Fedora 3.4 (earlier 3.x versions should work as well, minus some features)
 * Java 6
 
 Installation

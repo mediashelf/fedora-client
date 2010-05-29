@@ -5,8 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.ListDatastreamsResponse;
 
 /**
  * Builder for the ListDatastreams method.
@@ -37,12 +36,17 @@ public class ListDatastreams
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public ListDatastreamsResponse execute(FedoraClient fedora) throws FedoraClientException {
+        // default to xml for the format, so we can parse the results
+        if (getFirstQueryParam("format") == null) {
+            addQueryParam("format", "xml");
+        }
+
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s/datastreams", pid);
 
         ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
-        return new FedoraResponseImpl(cr);
+        return new ListDatastreamsResponse(cr);
     }
 
 }
