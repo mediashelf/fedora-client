@@ -37,7 +37,13 @@ the object's, the request will fail with a HTTP 409 Conflict error.
 
 +--
 Date lastModifiedDate = fedora.getLastModifiedDate("test:pid");
-modifyObject("test:pid").label("bar").lastModifiedDate(lastModifiedDate)
+try {
+    modifyObject("test:pid").label("bar").lastModifiedDate(lastModifiedDate).execute(fedora)
+} catch(FedoraClientException e) {
+    if (e.getStatus() == 409) {
+        // do something
+    }
+}
 +--
 
 * Including fedora-client in your Maven2 project
