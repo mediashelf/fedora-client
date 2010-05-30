@@ -24,7 +24,7 @@ public class DateUtilityTest {
     public void testTimezones() throws Exception {
         String s1 = "2002-10-10T12:00:00-05:00";
         DateTime dt1 = DateUtility.parseXSDDateTime(s1);
-        String s2 = "2002-10-10T17:00:00Z";
+        String s2 = "2002-10-10T17:00:00-00:00";
         DateTime dt2 = DateUtility.parseXSDDateTime(s2);
         assertTrue(dt1.isEqual(dt2));
 
@@ -58,5 +58,30 @@ public class DateUtilityTest {
         String can3 = lex3;
         DateTime dt3 = DateUtility.parseXSDDateTime(lex3);
         assertEquals(can3, DateUtility.getXSDDateTime(dt3));
+    }
+
+    @Test
+    public void testNegativeDates() throws Exception {
+        String lex1 = "-0003-12-13T22:33:44.010Z";
+        String can1 = "-0003-12-13T22:33:44.01Z";
+        DateTime dt1 = DateUtility.parseXSDDateTime(lex1);
+        assertEquals(can1, DateUtility.getXSDDateTime(dt1));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testIncorrectDateFormats() throws Exception {
+        String[] badDates = {"-985-12-13T22:33:44.000Z",
+                             "-3-12-13T22:33:44.01Z",
+                             "100-12-13T22:33:44.01Z",
+                             "1970-01",
+                             "1970-1-1",
+                             "12345-01-01T00:00:00.",
+                             "",
+                             "AAAA-BB-CCTDD:EE:FF:GG.HHH"
+        };
+
+        for (String badDate : badDates) {
+            DateUtility.parseXSDDateTime(badDate);
+        }
     }
 }
