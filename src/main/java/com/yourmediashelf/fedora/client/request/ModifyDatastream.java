@@ -79,16 +79,46 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         return this;
     }
 
+    /**
+     * Convenience method for {@link #lastModifiedDate(String)}.
+     *
+     * @param lastModifiedDate
+     * @return this builder
+     */
     public ModifyDatastream lastModifiedDate(DateTime lastModifiedDate) {
         addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
         return this;
     }
 
+    /**
+     * Convenience method for {@link #lastModifiedDate(String)}.
+     *
+     * @param lastModifiedDate
+     * @return this builder
+     */
     public ModifyDatastream lastModifiedDate(Date lastModifiedDate) {
         addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
         return this;
     }
 
+    /**
+     * <p>If provided, the server will use the supplied lastModifedDate to
+     * prevent concurrent modifications, only performing the request if the
+     * datastream has not been modified since the request-provided
+     * lastModifiedDate. Otherwise, the request will fail with an HTTP 409
+     * Conflict.</p>
+     *
+     * <p>Typical usage would be to get the lastModifiedDate of a datastream
+     * before modification, and then to pass that date as part of the subsequent
+     * modify request, which would then only succeed if the datastream has not
+     * been already modified since.</p>
+     *
+     * <p>Supported against Fedora 3.4.0 and later (with earlier versions, this
+     * parameter is ignored).</p>
+     *
+     * @param lastModifiedDate an xsd:dateTime string, e.g. 2001-12-31T12:50:01.000Z
+     * @return this builder
+     */
     public ModifyDatastream lastModifiedDate(String lastModifiedDate) {
         addQueryParam("lastModifiedDate", lastModifiedDate);
         return this;

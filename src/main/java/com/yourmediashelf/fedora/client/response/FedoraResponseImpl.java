@@ -9,12 +9,23 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.util.NamespaceContextImpl;
 
-
+/**
+ * Base class for FedoraResponse implementations.
+ *
+ * @author Edwin Shin
+ */
 public class FedoraResponseImpl implements FedoraResponse {
     private final ClientResponse cr;
     private final int status;
     private final NamespaceContextImpl nsCtx;
 
+    /**
+     * Constructor for a FedoraResponseImpl.
+     *
+     * @param cr
+     * @throws FedoraClientException if the HTTP status code of the response is
+     * >= 400.
+     */
     public FedoraResponseImpl(ClientResponse cr) throws FedoraClientException {
         this.cr = cr;
         nsCtx = new NamespaceContextImpl();

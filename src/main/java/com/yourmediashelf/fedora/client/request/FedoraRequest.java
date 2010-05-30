@@ -11,7 +11,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 /**
- * Base class for Fedora REST API methods.
+ * Base class for Fedora REST API requests.
  *
  * @author Edwin Shin
  */
@@ -21,11 +21,12 @@ public abstract class FedoraRequest<T> {
             new MultivaluedMapImpl();
 
     /**
-     * Execute this request using the supplied FedoraClient instance.
+     * <p>Execute this request using the supplied FedoraClient instance.</p>
      *
      * @param fedora an instance of FedoraClient
      * @return the response
-     * @throws FedoraClientException
+     * @throws FedoraClientException if the HTTP status code of the response is
+     * >= 400.
      */
     abstract public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException;

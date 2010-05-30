@@ -11,9 +11,15 @@ import javax.xml.bind.Unmarshaller;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.request.ListDatastreams;
 import com.yourmediashelf.fedora.client.response.listDatastreams.DatastreamType;
 import com.yourmediashelf.fedora.client.response.listDatastreams.ObjectDatastreams;
 
+/**
+ * A {@link FedoraResponse} for the {@link ListDatastreams} request.
+ *
+ * @author Edwin Shin
+ */
 public class ListDatastreamsResponse
         extends FedoraResponseImpl {
 

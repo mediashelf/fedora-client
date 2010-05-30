@@ -13,7 +13,13 @@ import org.xml.sax.InputSource;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.request.GetNextPID;
 
+/**
+ * A {@link FedoraResponse} for the {@link GetNextPID} request.
+ *
+ * @author Edwin Shin
+ */
 public class GetNextPIDResponse
         extends FedoraResponseImpl {
 
