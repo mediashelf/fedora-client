@@ -33,11 +33,6 @@ public class GetDatastreamDissemination
         return this;
     }
 
-    public GetDatastreamDissemination format(String format) {
-        addQueryParam("format", format);
-        return this;
-    }
-
     public GetDatastreamDissemination download(boolean download) {
         addQueryParam("download", Boolean.toString(download));
         return this;
