@@ -30,6 +30,18 @@ public class ListDatastreams
         return this;
     }
 
+    /**
+     * <p>The format of the response. Defaults to "xml".</p>
+     *
+     * <p>The Fedora REST API default is "html", but
+     * fedora-client will set "xml" as the default in order to parse the
+     * response. If "html" is selected, the caller is responsible for parsing
+     * the raw HTTP response as most of the FedoraResponse convenience methods
+     * rely on an XML response.</p>
+     *
+     * @param format The response format, either "xml" or "html"
+     * @return this builder
+     */
     public ListDatastreams format(String format) {
         addQueryParam("format", format);
         return this;
