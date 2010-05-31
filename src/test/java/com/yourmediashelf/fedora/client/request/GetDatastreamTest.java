@@ -3,7 +3,6 @@ package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getDatastream;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.assertEquals;
 
 import org.custommonkey.xmlunit.HTMLDocumentBuilder;
@@ -13,6 +12,8 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
+import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
 
 public class GetDatastreamTest extends FedoraMethodBaseTest {
 
@@ -31,14 +32,14 @@ public class GetDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testGetDatastreamAsXml() throws Exception {
-        FedoraResponse response = null;
+        GetDatastreamResponse response = null;
 
-        response = fedora().execute(getDatastream(testPid, "DC").format("xml"));
+        response = getDatastream(testPid, "DC").format("xml").execute(fedora());
         assertEquals(200, response.getStatus());
-        String result = response.getEntity(String.class);
 
-        assertXpathExists(String.format("/datastreamProfile[@pid='%s']", testPid),
-                          result);
+        DatastreamProfile profile = response.getDatastreamProfile();
+        assertEquals(testPid, profile.getPid());
+        assertEquals("DC", profile.getDsID());
     }
 
     private Document buildTestDocument(String html) throws Exception {

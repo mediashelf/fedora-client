@@ -66,6 +66,6 @@ public class FedoraClientTest {
 
 	    // cleanup
 	    FedoraResponse purge = new PurgeObject(pid).execute(client);
-	    assertEquals(204, purge.getStatus());
+	    assertEquals(200, purge.getStatus());
 	}
 }

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
@@ -33,6 +34,11 @@
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>jena</artifactId>
         <version>2.6.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-lgpl</artifactId>
+        <version>1.5.2</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
@@ -71,6 +77,10 @@
     <dependency>
       <groupId>com.hp.hpl.jena</groupId>
       <artifactId>jena</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-lgpl</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

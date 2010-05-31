@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datastreamProfile xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.fedora.info/definitions/1/0/management/ https://localhost:8443/datastreamProfile.xsd"
+  pid="test-rest:1" dsID="quux">
+  <dsLabel></dsLabel>
+  <dsVersionID>quux.0</dsVersionID>
+  <dsCreateDate>2010-05-30T05:46:31.880Z</dsCreateDate>
+  <dsState>A</dsState>
+  <dsMIME>text/xml</dsMIME>
+  <dsFormatURI></dsFormatURI>
+  <dsControlGroup>X</dsControlGroup>
+  <dsSize>16</dsSize>
+  <dsVersionable>true</dsVersionable>
+  <dsInfoType></dsInfoType>
+  <dsLocation>test-rest:1+quux+quux.0</dsLocation>
+  <dsLocationType></dsLocationType>
+  <dsChecksumType>DISABLED</dsChecksumType>
+  <dsChecksum>none</dsChecksum>
+</datastreamProfile>

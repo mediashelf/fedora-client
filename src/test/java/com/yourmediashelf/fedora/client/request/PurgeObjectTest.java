@@ -39,6 +39,6 @@ public class PurgeObjectTest extends FedoraMethodBaseTest {
 
         // now delete it
         FedoraResponse purge = purgeObject(pid).execute(fedora());
-        assertEquals(204, purge.getStatus());
+        assertEquals(200, purge.getStatus());
     }
 }

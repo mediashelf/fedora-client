@@ -5,16 +5,17 @@ import static com.yourmediashelf.fedora.client.FedoraClient.getDatastream;
 import static com.yourmediashelf.fedora.client.FedoraClient.getDatastreamDissemination;
 import static com.yourmediashelf.fedora.client.FedoraClient.modifyDatastream;
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.DatastreamProfileResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
 
 
 
@@ -25,75 +26,77 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
         String dsId = "MDFY";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
-        FedoraResponse response = fedora().execute(addDatastream(testPid, dsId).content(content));
+        FedoraResponse response;
+        response = addDatastream(testPid, dsId).content(content).execute(fedora());
         assertEquals(201, response.getStatus());
 
         // verify datastream content before modify
-        response = fedora().execute(getDatastreamDissemination(testPid, dsId));
+        response = getDatastreamDissemination(testPid, dsId).execute(fedora());
         assertEquals(200, response.getStatus());
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties before modify
-        response = fedora().execute(getDatastream(testPid, dsId).format("xml"));
-        assertEquals(200, response.getStatus());
-        String datastreamProfile = response.getEntity(String.class);
 
-        assertXpathEvaluatesTo(testPid, "/datastreamProfile/@pid", datastreamProfile);
-        assertXpathEvaluatesTo(dsId, "/datastreamProfile/@dsID", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsLabel", datastreamProfile);
-        assertXpathEvaluatesTo(String.format("%s.0", dsId), "/datastreamProfile/dsVersionID", datastreamProfile);
-        assertXpathExists("/datastreamProfile/dsCreateDate", datastreamProfile);
-        assertXpathEvaluatesTo("A", "/datastreamProfile/dsState", datastreamProfile);
-        assertXpathEvaluatesTo("text/xml", "/datastreamProfile/dsMIME", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsFormatURI", datastreamProfile);
-        assertXpathEvaluatesTo("X", "/datastreamProfile/dsControlGroup", datastreamProfile);
-        assertXpathEvaluatesTo("16", "/datastreamProfile/dsSize", datastreamProfile);
-        assertXpathEvaluatesTo("true", "/datastreamProfile/dsVersionable", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsInfoType", datastreamProfile);
-        assertXpathEvaluatesTo(String.format("%s+%s+%s.0", testPid, dsId, dsId), "/datastreamProfile/dsLocation", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsLocationType", datastreamProfile);
-        assertXpathEvaluatesTo("DISABLED", "/datastreamProfile/dsChecksumType", datastreamProfile);
-        assertXpathEvaluatesTo("none", "/datastreamProfile/dsChecksum", datastreamProfile);
+        DatastreamProfileResponse dspResponse;
+        dspResponse = getDatastream(testPid, dsId).format("xml").execute(fedora());
+        assertEquals(200, response.getStatus());
+        DatastreamProfile profile = dspResponse.getDatastreamProfile();
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals("", profile.getDsLabel());
+        assertEquals(String.format("%s.0", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals("A", profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals("true", profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.0", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
 
         // now modify it
         content = "<baz>quux</baz>";
         String newDsLabel = "asdf";
-        response = fedora().execute(modifyDatastream(testPid, dsId).content(content).dsLabel(newDsLabel));
+        response = modifyDatastream(testPid, dsId).content(content).dsLabel(newDsLabel).execute(fedora());
         assertEquals(200, response.getStatus());
 
         // verify datastream content after modify
-        response = fedora().execute(getDatastreamDissemination(testPid, dsId));
+        response = getDatastreamDissemination(testPid, dsId).execute(fedora());
         assertEquals(200, response.getStatus());
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties after modify
-        response = fedora().execute(getDatastream(testPid, dsId).format("xml"));
+        dspResponse = getDatastream(testPid, dsId).format("xml").execute(fedora());
         assertEquals(200, response.getStatus());
-        datastreamProfile = response.getEntity(String.class);
+        profile = dspResponse.getDatastreamProfile();
 
-        assertXpathEvaluatesTo(testPid, "/datastreamProfile/@pid", datastreamProfile);
-        assertXpathEvaluatesTo(dsId, "/datastreamProfile/@dsID", datastreamProfile);
-        assertXpathEvaluatesTo(newDsLabel, "/datastreamProfile/dsLabel", datastreamProfile);
-        assertXpathEvaluatesTo(String.format("%s.1", dsId), "/datastreamProfile/dsVersionID", datastreamProfile);
-        assertXpathExists("/datastreamProfile/dsCreateDate", datastreamProfile);
-        assertXpathEvaluatesTo("A", "/datastreamProfile/dsState", datastreamProfile);
-        assertXpathEvaluatesTo("text/xml", "/datastreamProfile/dsMIME", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsFormatURI", datastreamProfile);
-        assertXpathEvaluatesTo("X", "/datastreamProfile/dsControlGroup", datastreamProfile);
-        assertXpathEvaluatesTo("17", "/datastreamProfile/dsSize", datastreamProfile);
-        assertXpathEvaluatesTo("true", "/datastreamProfile/dsVersionable", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsInfoType", datastreamProfile);
-        assertXpathEvaluatesTo(String.format("%s+%s+%s.1", testPid, dsId, dsId), "/datastreamProfile/dsLocation", datastreamProfile);
-        assertXpathEvaluatesTo("", "/datastreamProfile/dsLocationType", datastreamProfile);
-        assertXpathEvaluatesTo("DISABLED", "/datastreamProfile/dsChecksumType", datastreamProfile);
-        assertXpathEvaluatesTo("none", "/datastreamProfile/dsChecksum", datastreamProfile);
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals(newDsLabel, profile.getDsLabel());
+        assertEquals(String.format("%s.1", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals("A", profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(17, profile.getDsSize().intValue());
+        assertEquals("true", profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.1", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
     }
 
     @Test
     public void testOptimisticLocking() throws Exception {
         DateTime lastModifiedDate = new DateTime(fedora().getLastModifiedDate(testPid, "DC"));
         try {
-            fedora().execute(modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)));
+            modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)).execute(fedora());
             fail("modifyDatastream succeeded, but should have failed");
         } catch (FedoraClientException expected) {
             assertEquals(409, expected.getStatus());

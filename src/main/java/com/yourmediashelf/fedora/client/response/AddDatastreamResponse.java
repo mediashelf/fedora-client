@@ -1,5 +1,7 @@
 package com.yourmediashelf.fedora.client.response;
 
+import java.net.URI;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.AddDatastream;
@@ -10,12 +12,15 @@ import com.yourmediashelf.fedora.client.request.AddDatastream;
  * @author Edwin Shin
  */
 public class AddDatastreamResponse
-        extends FedoraResponseImpl {
+        extends DatastreamProfileResponse {
+    private final URI location;
 
     public AddDatastreamResponse(ClientResponse cr) throws FedoraClientException {
         super(cr);
+        location = cr.getLocation();
     }
 
-    //TODO convenience methods that parse the response datastreamProfile
-
+    public URI getLocation() {
+        return location;
+    }
 }

@@ -14,8 +14,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.ModifyDatastreamResponse;
 
 /**
  * Builder for the ModifyDatastream method.
@@ -145,7 +144,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public ModifyDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path;
         if (dsId == null) {
@@ -168,7 +167,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         } else {
             throw new IllegalArgumentException("unknown request content type");
         }
-        return new FedoraResponseImpl(response);
+        return new ModifyDatastreamResponse(response);
     }
 
 }

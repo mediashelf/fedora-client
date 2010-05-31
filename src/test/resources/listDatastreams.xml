@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objectDatastreams xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.fedora.info/definitions/1/0/access/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.fedora.info/definitions/1/0/access/ 
+  file:///opt/workspace/fedora-client/src/test/resources/listDatastreams.xsd"
+  pid="test-rest:1" baseURL="https://localhost:8443/fedora/">
+  <datastream dsid="DC" label="Dublin Core Record for this object"
+    mimeType="text/xml" />
+  <datastream dsid="MDFY" label="" mimeType="text/xml" />
+</objectDatastreams>

@@ -5,8 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 
 /**
  * Builder for the GetDatastream method.
@@ -44,11 +43,11 @@ public class GetDatastream
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
 
-        return new FedoraResponseImpl(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new GetDatastreamResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
     }
 
 }

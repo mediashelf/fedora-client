@@ -42,6 +42,7 @@ import com.yourmediashelf.fedora.client.request.PurgeDatastream;
 import com.yourmediashelf.fedora.client.request.PurgeObject;
 import com.yourmediashelf.fedora.client.request.PurgeRelationship;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 import com.yourmediashelf.fedora.util.DateUtility;
 import com.yourmediashelf.fedora.util.NamespaceContextImpl;
 
@@ -161,15 +162,8 @@ public class FedoraClient {
     }
 
     public Date getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
-        FedoraResponse response = execute(getDatastream(pid, dsId).format("xml"));
-        String expr = "/datastreamProfile/dsCreateDate";
-        String lastModifiedDate;
-        try {
-            lastModifiedDate = getXPath().evaluate(expr, new InputSource(response.getEntityInputStream()));
-        } catch (XPathExpressionException e) {
-            throw new FedoraClientException(e.getMessage(), e);
-        }
-        return DateUtility.parseXSDDateTime(lastModifiedDate).toDate();
+        GetDatastreamResponse response = getDatastream(pid, dsId).format("xml").execute(this);
+        return response.getLastModifiedDate();
     }
 
     private XPath getXPath() {

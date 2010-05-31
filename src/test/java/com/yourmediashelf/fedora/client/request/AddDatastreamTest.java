@@ -3,6 +3,7 @@ package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import org.junit.Test;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
 
 public class AddDatastreamTest extends FedoraMethodBaseTest {
 
@@ -21,6 +23,9 @@ public class AddDatastreamTest extends FedoraMethodBaseTest {
                                         .dsLabel("bar")
                                         .content("<foo>?</foo>").execute(fedora());
         assertEquals(201, response.getStatus());
+        DatastreamProfile profile = response.getDatastreamProfile();
+        assertNotNull(profile);
+        assertEquals("bar", profile.getDsLabel());
     }
 
     @Test
