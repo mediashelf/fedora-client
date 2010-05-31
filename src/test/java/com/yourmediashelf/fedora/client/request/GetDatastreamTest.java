@@ -21,7 +21,7 @@ public class GetDatastreamTest extends FedoraMethodBaseTest {
     public void testGetDatastreamAsHtml() throws Exception {
         FedoraResponse response = null;
 
-        response = fedora().execute(getDatastream(testPid, "DC"));
+        response = getDatastream(testPid, "DC").format("html").execute(fedora());
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
 
