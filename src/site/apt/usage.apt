@@ -6,7 +6,7 @@
 
 Usage
 
-    Create an instance of FedoraClient
+    Create an instance of FedoraClient:
     
 +--
 FedoraCredentials credentials = 
@@ -21,7 +21,7 @@ IngestResponse response = new Ingest("test:pid").label("foo").execute(fedora);
 String pid = response.getPid();
 +--
 
-    Using static imports, you can use a more abbreviated syntax
+    Using static imports, you can use a more abbreviated syntax:
     
 +--
 import static com.yourmediashelf.fedora.client.FedoraClient.*;
@@ -45,6 +45,15 @@ try {
     }
 }
 +--
+
+    Parsing a response. FedoraRequests return instances of a FedoraResponse. 
+The response-specific implementations (e.g. AddDatastreamResponse, 
+GetDatastreamResponse, etc.) provide convenience methods that parse the 
+response body. However, at this writing, not every request has a corresponding 
+response implemented (yet). In those cases, it is necessary to parse the "raw"
+response, as returned by FedoraReponse.getEntityInputStream or 
+FedoraResponse.getEntity.
+
 
 * Including fedora-client in your Maven2 project
 
