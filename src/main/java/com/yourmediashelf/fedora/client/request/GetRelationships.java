@@ -19,6 +19,17 @@ public class GetRelationships extends FedoraRequest<GetRelationships> {
         this.pid = pid;
     }
 
+    /**
+     * The format of the response. Default is rdf/xml.
+     *
+     * @param format one of "rdf/xml", "n-triples", "turtle", or "sparql".
+     * @return this builder
+     */
+    public GetRelationships format(String format) {
+        addQueryParam("format", format);
+        return this;
+    }
+
     public GetRelationships subject(String subject) {
         addQueryParam("subject", subject);
         return this;
