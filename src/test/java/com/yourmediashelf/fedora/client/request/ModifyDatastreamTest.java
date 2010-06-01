@@ -102,4 +102,20 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
             assertEquals(409, expected.getStatus());
         }
     }
+
+    @Test
+    public void testNullAndEmptyPidAndDsId() throws Exception {
+        String dsId = "test";
+        try {
+            modifyDatastream(null, dsId).execute(fedora());
+            modifyDatastream("", dsId).execute(fedora());
+            modifyDatastream(null, null).execute(fedora());
+            modifyDatastream("", "").execute(fedora());
+            modifyDatastream(testPid, null).execute(fedora());
+            modifyDatastream(testPid, "").execute(fedora());
+            fail("Null or empty pids or dsIds should throw an exception");
+        } catch(IllegalArgumentException expected) {
+
+        }
+    }
 }
