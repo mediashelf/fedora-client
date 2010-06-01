@@ -8,13 +8,13 @@ import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class AddRelationshipTest extends FedoraMethodBaseTest {
+public class AddRelationshipTest extends BaseFedoraRequestTest {
 
     @Test
     public void testAddRelationship() throws Exception {
         FedoraResponse response = null;
         String subject = String.format("info:fedora/%s", testPid);
-        String predicate = "urn:foo/p";
+        String predicate = "urn:foo/testAddRelationship";
         String object = "urn:foo/한";
 
         response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object));
@@ -25,7 +25,7 @@ public class AddRelationshipTest extends FedoraMethodBaseTest {
     public void testAddLiteral() throws Exception {
         FedoraResponse response = null;
         String subject = String.format("info:fedora/%s", testPid);
-        String predicate = "urn:foo/p";
+        String predicate = "urn:foo/testAddLiteral";
         String object = "你好";
 
         response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
@@ -36,7 +36,7 @@ public class AddRelationshipTest extends FedoraMethodBaseTest {
     public void testAddTypedLiteral() throws Exception {
         FedoraResponse response = null;
         String subject = String.format("info:fedora/%s", testPid);
-        String predicate = "urn:foo/p";
+        String predicate = "urn:foo/testAddTypedLiteral";
         String object = "1970-01-01T00:00:00Z";
         String datatype = "http://www.w3.org/2001/XMLSchema#dateTime";
 

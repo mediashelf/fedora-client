@@ -15,11 +15,11 @@ import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
 
-public class AddDatastreamTest extends FedoraMethodBaseTest {
+public class AddDatastreamTest extends BaseFedoraRequestTest {
 
     @Test
     public void testNewAddDatastream() throws Exception {
-        String dsid = "foo";
+        String dsid = "testNewAddDatastream";
         AddDatastreamResponse response = new AddDatastream(testPid, dsid)
                                         .dsLabel("bar")
                                         .content("<foo>?</foo>").execute(fedora());
@@ -37,8 +37,9 @@ public class AddDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testDefaultValues() throws Exception {
+        String dsid = "testDefaultValues";
         String content = "<foo>bar</foo>";
-        AddDatastreamResponse response = addDatastream(testPid, "baz")
+        AddDatastreamResponse response = addDatastream(testPid, dsid)
                                            .content(content)
                                            .dsLabel(null).execute(fedora());
         assertEquals(201, response.getStatus());
@@ -46,24 +47,27 @@ public class AddDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testManagedContent() throws Exception {
+        String dsid = "MANAGED_DS";
         File f = new File("src/test/resources/21.edit.essay.zip");
         assertTrue(f.exists());
         FedoraResponse response =
-            fedora().execute(addDatastream(testPid, "MANAGED_DS")
+            fedora().execute(addDatastream(testPid, dsid)
                         .controlGroup("M").content(f));
         assertEquals(201, response.getStatus());
     }
 
     @Test(expected=FedoraClientException.class)
     public void testMissingManagedContent() throws Exception {
-        fedora().execute(addDatastream(testPid, "MANAGED_DS")
+        String dsid = "testMissingManagedContent";
+        fedora().execute(addDatastream(testPid, dsid)
                     .controlGroup("M"));
     }
 
     @Test
     public void testAddByLocation() throws Exception {
+        String dsid = "testAddByLocation";
         String dsLocation = String.format("%s/objects/%s/datastreams/DC/content",
                                           getCredentials().getBaseUrl().toString(), testPid);
-        addDatastream(testPid, "MYDC").dsLocation(dsLocation).controlGroup("R").execute(fedora());
+        addDatastream(testPid, dsid).dsLocation(dsLocation).controlGroup("R").execute(fedora());
     }
 }

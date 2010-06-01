@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
 
-public class GetDatastreamTest extends FedoraMethodBaseTest {
+public class GetDatastreamTest extends BaseFedoraRequestTest {
 
     @Test
     public void testGetDatastreamAsHtml() throws Exception {

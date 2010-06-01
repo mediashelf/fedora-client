@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
 
-public class GetNextPIDTest extends FedoraMethodBaseTest {
+public class GetNextPIDTest extends BaseFedoraRequestTest {
     @Test
     public void testGetOnePid() throws Exception {
         GetNextPIDResponse response = getNextPID().execute(fedora());

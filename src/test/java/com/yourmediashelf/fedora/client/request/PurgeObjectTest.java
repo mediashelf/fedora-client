@@ -13,7 +13,7 @@ import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 
 
-public class PurgeObjectTest extends FedoraMethodBaseTest {
+public class PurgeObjectTest extends BaseFedoraRequestTest {
 
     @Override
     @Before

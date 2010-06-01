@@ -18,7 +18,7 @@ import com.yourmediashelf.fedora.util.DateUtility;
  *
  * @author Edwin Shin
  */
-public class ModifyObjectTest extends FedoraMethodBaseTest {
+public class ModifyObjectTest extends BaseFedoraRequestTest {
 
     @Test
     public void testModifyObjectLabel() throws Exception {

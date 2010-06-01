@@ -23,7 +23,7 @@ import com.yourmediashelf.fedora.client.response.PurgeDatastreamResponse;
 import com.yourmediashelf.fedora.util.DateUtility;
 
 public class PurgeDatastreamTest
-        extends FedoraMethodBaseTest {
+        extends BaseFedoraRequestTest {
 
     @Test
     public void testPurgeDatastream() throws Exception {

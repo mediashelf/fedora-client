@@ -15,7 +15,7 @@ import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 
 
-public class IngestTest extends FedoraMethodBaseTest {
+public class IngestTest extends BaseFedoraRequestTest {
 
     private String pid;
 
@@ -29,7 +29,7 @@ public class IngestTest extends FedoraMethodBaseTest {
     @After
     public void tearDown() throws Exception {
         if (pid != null) {
-            fedora().execute(purgeObject(pid));
+            purgeObject(pid).logMessage("purging IngestTest object").execute(fedora());
         }
     }
 
@@ -39,7 +39,7 @@ public class IngestTest extends FedoraMethodBaseTest {
         URI location = null;
 
         // empty object, no pid, no namespace
-        response = ingest(null).execute(fedora());
+        response = ingest(null).logMessage("testIngestDefault").execute(fedora());
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/"));
@@ -52,7 +52,7 @@ public class IngestTest extends FedoraMethodBaseTest {
         URI location = null;
 
         // empty object, with namespace, but no pid
-        response = ingest(null).namespace("foospace").execute(fedora());
+        response = ingest(null).namespace("foospace").logMessage("testIngestWithNamespace").execute(fedora());
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/foospace"));
@@ -64,7 +64,7 @@ public class IngestTest extends FedoraMethodBaseTest {
         IngestResponse response = null;
 
         // empty object, with pid
-        response = ingest(testPid).execute(fedora());
+        response = ingest(testPid).logMessage("testIngestWithPid").execute(fedora());
         assertEquals(201, response.getStatus());
         pid = response.getPid();
         assertEquals(testPid, pid);

@@ -19,11 +19,11 @@ import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamPro
 
 
 
-public class ModifyDatastreamTest extends FedoraMethodBaseTest {
+public class ModifyDatastreamTest extends BaseFedoraRequestTest {
 
     @Test
     public void testModifyDatastreamContent() throws Exception {
-        String dsId = "MDFY";
+        String dsId = "testModifyDatastreamContent";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
         FedoraResponse response;
@@ -96,7 +96,7 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
     public void testOptimisticLocking() throws Exception {
         DateTime lastModifiedDate = new DateTime(fedora().getLastModifiedDate(testPid, "DC"));
         try {
-            modifyDatastream(testPid, "DC").dsLabel("foo").lastModifiedDate(lastModifiedDate.minusHours(1)).execute(fedora());
+            modifyDatastream(testPid, "DC").dsLabel("testOptimisticLocking").lastModifiedDate(lastModifiedDate.minusHours(1)).execute(fedora());
             fail("modifyDatastream succeeded, but should have failed");
         } catch (FedoraClientException expected) {
             assertEquals(409, expected.getStatus());
@@ -105,14 +105,14 @@ public class ModifyDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testNullAndEmptyPidAndDsId() throws Exception {
-        String dsId = "test";
+        String dsId = "testNullAndEmptyPidAndDsId";
         try {
-            modifyDatastream(null, dsId).execute(fedora());
-            modifyDatastream("", dsId).execute(fedora());
-            modifyDatastream(null, null).execute(fedora());
-            modifyDatastream("", "").execute(fedora());
-            modifyDatastream(testPid, null).execute(fedora());
-            modifyDatastream(testPid, "").execute(fedora());
+            modifyDatastream(null, dsId).logMessage("test null pid").execute(fedora());
+            modifyDatastream("", dsId).logMessage("test empty pid").execute(fedora());
+            modifyDatastream(null, null).logMessage("test null pid & dsid").execute(fedora());
+            modifyDatastream("", "").logMessage("test empty pid & dsid").execute(fedora());
+            modifyDatastream(testPid, null).logMessage("test null dsid").execute(fedora());
+            modifyDatastream(testPid, "").logMessage("test empty dsid").execute(fedora());
             fail("Null or empty pids or dsIds should throw an exception");
         } catch(IllegalArgumentException expected) {
 

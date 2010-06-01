@@ -15,11 +15,11 @@ import com.yourmediashelf.fedora.client.response.objectDatastreams.DatastreamTyp
 
 
 
-public class ListDatastreamsTest extends FedoraMethodBaseTest {
+public class ListDatastreamsTest extends BaseFedoraRequestTest {
 
     @Test
     public void testListDatastreams() throws Exception {
-        String dsId = "MDFY";
+        String dsId = "testListDatastreams";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
         addDatastream(testPid, dsId).content(content).execute(fedora());

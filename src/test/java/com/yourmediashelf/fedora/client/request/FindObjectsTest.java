@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class FindObjectsTest extends FedoraMethodBaseTest {
+public class FindObjectsTest extends BaseFedoraRequestTest {
 
     @Test
     public void testFindObjects() throws Exception {

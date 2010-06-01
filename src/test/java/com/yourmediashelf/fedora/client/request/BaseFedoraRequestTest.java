@@ -20,7 +20,12 @@ import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.FedoraCredentials;
 
-public abstract class FedoraMethodBaseTest {
+/**
+ * Base class for FedoraRequest integration tests.
+ *
+ * @author Edwin Shin
+ */
+public abstract class BaseFedoraRequestTest {
 
     private FedoraCredentials credentials;
 
@@ -65,11 +70,11 @@ public abstract class FedoraMethodBaseTest {
     }
 
     public void ingestTestObject() throws FedoraClientException {
-        ingest(testPid).execute(fedora());
+        ingest(testPid).logMessage("ingestTestObject for " + getClass()).execute(fedora());
     }
 
     public void purgeTestObject() throws FedoraClientException {
-        purgeObject(testPid).execute(fedora());
+        purgeObject(testPid).logMessage("purgeTestObject for " + getClass()).execute(fedora());
     }
 
     public XpathEngine getXpathEngine(Map<String, String> nsMap) {
