@@ -19,10 +19,16 @@ public class AddDatastreamTest extends FedoraMethodBaseTest {
 
     @Test
     public void testNewAddDatastream() throws Exception {
-        AddDatastreamResponse response = new AddDatastream(testPid, "foo")
+        String dsid = "foo";
+        AddDatastreamResponse response = new AddDatastream(testPid, dsid)
                                         .dsLabel("bar")
                                         .content("<foo>?</foo>").execute(fedora());
         assertEquals(201, response.getStatus());
+        String expectedLocation = String.format("%s/objects/%s/datastreams/%s",
+                                                getCredentials().getBaseUrl().toString(),
+                                                testPid,
+                                                dsid);
+        assertEquals(expectedLocation, response.getLocation().toString());
         DatastreamProfile profile = response.getDatastreamProfile();
         assertNotNull(profile);
         assertEquals("bar", profile.getDsLabel());
