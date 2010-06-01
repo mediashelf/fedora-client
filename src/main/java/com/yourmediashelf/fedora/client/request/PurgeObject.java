@@ -24,11 +24,6 @@ public class PurgeObject extends FedoraRequest<PurgeObject> {
         return this;
     }
 
-    public PurgeObject force(boolean force) {
-        addQueryParam("force", Boolean.toString(force));
-        return this;
-    }
-
     @Override
     public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
         String path = String.format("objects/%s", pid);

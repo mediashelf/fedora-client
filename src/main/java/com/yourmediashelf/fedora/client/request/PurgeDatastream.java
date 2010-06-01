@@ -62,11 +62,6 @@ public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
         return this;
     }
 
-    public PurgeDatastream force(boolean force) {
-        addQueryParam("force", Boolean.toString(force));
-        return this;
-    }
-
     @Override
     public PurgeDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
