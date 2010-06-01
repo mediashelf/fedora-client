@@ -32,6 +32,7 @@ public class AddDatastreamTest extends FedoraMethodBaseTest {
         DatastreamProfile profile = response.getDatastreamProfile();
         assertNotNull(profile);
         assertEquals("bar", profile.getDsLabel());
+        assertEquals(0, profile.getDsAltID().size());
     }
 
     @Test
@@ -54,8 +55,15 @@ public class AddDatastreamTest extends FedoraMethodBaseTest {
     }
 
     @Test(expected=FedoraClientException.class)
-    public void testMissingContent() throws Exception {
+    public void testMissingManagedContent() throws Exception {
         fedora().execute(addDatastream(testPid, "MANAGED_DS")
                     .controlGroup("M"));
+    }
+
+    @Test
+    public void testAddByLocation() throws Exception {
+        String dsLocation = String.format("%s/objects/%s/datastreams/DC/content",
+                                          getCredentials().getBaseUrl().toString(), testPid);
+        addDatastream(testPid, "MYDC").dsLocation(dsLocation).controlGroup("R").execute(fedora());
     }
 }
