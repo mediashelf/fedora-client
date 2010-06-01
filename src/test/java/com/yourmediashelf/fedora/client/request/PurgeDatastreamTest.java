@@ -27,23 +27,24 @@ public class PurgeDatastreamTest
 
     @Test
     public void testPurgeDatastream() throws Exception {
+        String dsid = "testPurgeDatastream";
         String content = "<foo>bar</foo>";
         FedoraResponse response =
-                addDatastream(testPid, "baz").content(content).dsLabel(null)
+                addDatastream(testPid, dsid).content(content).dsLabel(null)
                         .execute(fedora());
         assertEquals(201, response.getStatus());
 
         // now delete it
-        response = fedora().execute(purgeDatastream(testPid, "baz"));
+        response = fedora().execute(purgeDatastream(testPid, dsid));
         assertEquals(200, response.getStatus());
     }
 
     @Test
     public void testPurgeVersion() throws Exception {
-        String dsid = "quux";
+        String dsid = "testPurgeVersion";
         String content = "<foo>bar</foo>";
         AddDatastreamResponse addResponse =
-                addDatastream(testPid, dsid).content(content).execute(fedora());
+                addDatastream(testPid, dsid).content(content).logMessage("").execute(fedora());
         assertEquals(201, addResponse.getStatus());
         Date originalDate = addResponse.getLastModifiedDate();
 
@@ -59,10 +60,10 @@ public class PurgeDatastreamTest
         // purge only the first modified version
         PurgeDatastreamResponse purge =
                 purgeDatastream(testPid, dsid).startDT(modify1).endDT(modify1)
-                        .execute(fedora());
+                        .logMessage("purge only 1").execute(fedora());
         List<String> purgedDates = purge.getPurgedDates();
-        assertEquals(1, purgedDates.size());
         assertEquals(DateUtility.getXSDDateTime(modify1), purgedDates.get(0));
+        assertEquals(1, purgedDates.size());
 
         // purge everything
         purge = purgeDatastream(testPid, dsid).execute(fedora());
@@ -82,8 +83,8 @@ public class PurgeDatastreamTest
     }
 
     @Test
-    public void TestOutOfRangeDates() throws Exception {
-        String dsid = "quux";
+    public void testOutOfRangeDates() throws Exception {
+        String dsid = "testOutOfRangeDates";
         String content = "<foo>bar</foo>";
         AddDatastreamResponse addResponse =
                 addDatastream(testPid, dsid).content(content).execute(fedora());
@@ -107,15 +108,16 @@ public class PurgeDatastreamTest
     }
 
     @Test
-    public void TestMalformedDates() throws Exception {
-        String dsid = "quux";
+    public void testMalformedDates() throws Exception {
+        String dsid = "testMalformedDates";
         String content = "<foo>bar</foo>";
         AddDatastreamResponse addResponse =
                 addDatastream(testPid, dsid).content(content).execute(fedora());
         assertEquals(201, addResponse.getStatus());
 
         try {
-            purgeDatastream(testPid, dsid).startDT("1999").execute(fedora());
+            purgeDatastream(testPid, dsid).startDT("1999")
+                .logMessage("test bad purgeDatastream request").execute(fedora());
             fail("purge with invalid date should have failed.");
         } catch(FedoraClientException expected) {
             assertEquals(400, expected.getStatus());

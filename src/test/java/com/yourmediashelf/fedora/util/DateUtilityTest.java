@@ -58,6 +58,16 @@ public class DateUtilityTest {
         String can3 = lex3;
         DateTime dt3 = DateUtility.parseXSDDateTime(lex3);
         assertEquals(can3, DateUtility.getXSDDateTime(dt3));
+
+        String lex4 = "2010-06-01T04:52:14.025Z";
+        String can4 = lex4;
+        DateTime dt4 = DateUtility.parseXSDDateTime(lex4);
+        assertEquals(can4, DateUtility.getXSDDateTime(dt4));
+
+        String lex5 = "2010-06-01T02:52:14.25Z";
+        String can5 = "2010-06-01T02:52:14.25Z";
+        DateTime dt5 = DateUtility.parseXSDDateTime(lex5);
+        assertEquals(can5, DateUtility.getXSDDateTime(dt5));
     }
 
     @Test
