@@ -27,6 +27,12 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     private Object content;
 
     public ModifyDatastream(String pid, String dsId) {
+        if (pid == null || pid.isEmpty()) {
+            throw new IllegalArgumentException("pid cannot be null or empty");
+        }
+        if (dsId == null || pid.isEmpty()) {
+            throw new IllegalArgumentException("dsId cannot be null or empty");
+        }
         this.pid = pid;
         this.dsId = dsId;
     }
@@ -146,12 +152,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     @Override
     public ModifyDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
-        String path;
-        if (dsId == null) {
-            path = String.format("objects/%s/datastreams/", pid);
-        } else {
-            path = String.format("objects/%s/datastreams/%s", pid, dsId);
-        }
+        String path = String.format("objects/%s/datastreams/%s", pid, dsId);
         wr = wr.path(path).queryParams(getQueryParams());
 
         ClientResponse response = null;
