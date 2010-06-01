@@ -32,6 +32,7 @@
         <item name="File Activity" href="file-activity.html"/>
         <item name="JavaDocs" href="apidocs/index.html"/>
         <item name="Browse Source Code" href="xref/index.html"/>
+        <item name="Test Coverage" href="cobertura/index.html"/>
         <item name="Test Results" href="surefire-report.html"/>
         <item name="Test JavaDocs" href="testapidocs/index.html"/>
         <item name="Browse Test Source Code" href="xref-test/index.html"/>
