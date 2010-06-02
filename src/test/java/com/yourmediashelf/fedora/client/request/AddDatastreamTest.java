@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
+import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
 public class AddDatastreamTest extends BaseFedoraRequestTest {
 

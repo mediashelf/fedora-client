@@ -12,7 +12,7 @@ import javax.xml.bind.Unmarshaller;
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.GetObjectProfile;
-import com.yourmediashelf.fedora.client.response.objectProfile.ObjectProfile;
+import com.yourmediashelf.fedora.generated.access.ObjectProfile;
 import com.yourmediashelf.fedora.util.DateUtility;
 
 /**
@@ -73,7 +73,7 @@ public class GetObjectProfileResponse
         if (objectProfile == null) {
             try {
                 JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.client.response.objectProfile");
+                        .newInstance("com.yourmediashelf.fedora.generated.access");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 objectProfile =
                         (ObjectProfile) unmarshaller

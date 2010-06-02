@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
-import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
+import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
 public class GetDatastreamTest extends BaseFedoraRequestTest {
 

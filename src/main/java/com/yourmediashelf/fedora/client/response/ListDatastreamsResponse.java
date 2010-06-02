@@ -12,8 +12,8 @@ import javax.xml.bind.Unmarshaller;
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.ListDatastreams;
-import com.yourmediashelf.fedora.client.response.objectDatastreams.DatastreamType;
-import com.yourmediashelf.fedora.client.response.objectDatastreams.ObjectDatastreams;
+import com.yourmediashelf.fedora.generated.access.DatastreamType;
+import com.yourmediashelf.fedora.generated.access.ObjectDatastreams;
 
 /**
  * A {@link FedoraResponse} for the {@link ListDatastreams} request.
@@ -77,7 +77,7 @@ public class ListDatastreamsResponse
         if (objectDatastreams == null) {
             try {
                 JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.client.response.objectDatastreams");
+                        .newInstance("com.yourmediashelf.fedora.generated.access");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 objectDatastreams =
                         (ObjectDatastreams) unmarshaller

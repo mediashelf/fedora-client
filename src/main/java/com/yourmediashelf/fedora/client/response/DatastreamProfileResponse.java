@@ -10,7 +10,7 @@ import javax.xml.bind.Unmarshaller;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.datastreamProfile.DatastreamProfile;
+import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 import com.yourmediashelf.fedora.util.DateUtility;
 
 /**
@@ -54,7 +54,7 @@ public class DatastreamProfileResponse
         if (datastreamProfile == null) {
             try {
                 JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.client.response.datastreamProfile");
+                        .newInstance("com.yourmediashelf.fedora.generated.management");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 datastreamProfile =
                         (DatastreamProfile) unmarshaller

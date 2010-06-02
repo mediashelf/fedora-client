@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.ListDatastreamsResponse;
-import com.yourmediashelf.fedora.client.response.objectDatastreams.DatastreamType;
+import com.yourmediashelf.fedora.generated.access.DatastreamType;
 
 
 
