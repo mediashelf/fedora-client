@@ -1,0 +1,40 @@
+	---
+	Deploy Notes
+	---
+
+Snapshot release
+
++--
+mvn clean javadoc:jar source:jar deploy
++--
+
+Performing a release
+
++--
+mvn release:prepare -DdryRun
+mvn release:clean && mvn release:prepare
+mvn release:perform
++--
+
+Fixing a botched release
+
++--
+# maven cleanup
+mvn release:rollback
+
+# delete the local tag maven release:prepare created
+#	substitute "fedora-client-0.0.8" with the actual tag
+git tag -d fedora-client-0.0.8
+
+# delete the remote tag
+git push origin :fedora-client-0.0.8
+
+# find the commit you want to back to
+git log --pretty=oneline
+
+# reset local repo
+git reset --hard thechecksum
+
+# reset remote repo
+git push origin +master
++--
