@@ -97,9 +97,9 @@
       <artifactId>jackson-mapper-lgpl</artifactId>
     </dependency>
     <dependency>
-        <groupId>xerces</groupId>
-        <artifactId>xercesImpl</artifactId>
-      </dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -226,6 +226,41 @@
               <generatePackage>com.yourmediashelf.fedora.generated.management</generatePackage>
               <generateDirectory>${project.build.directory}/generated-sources/management</generateDirectory>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <inherited>false</inherited>
+
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.6.0</version>
+        <configuration>
+          <header>${basedir}/LICENSE_HEADER</header>
+          <aggregate>true</aggregate>
+          <includes>
+            <include>**/src/main/java/**</include>
+            <include>**/src/test/java/**</include>
+          </includes>
+          <excludes>
+            <exclude>target/**</exclude>
+            <exclude>**/src/test/resources/**</exclude>
+            <exclude>**/src/main/resources/**</exclude>
+            <exclude>**/*.properties</exclude>
+          </excludes>
+          <properties>
+            <name>${project.artifactId}</name>
+            <year>${project.inceptionYear}</year>
+            <holder>${project.organization.name}</holder>
+            <contact>${project.organization.url}</contact>
+          </properties>
+          <encoding>UTF-8</encoding>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
