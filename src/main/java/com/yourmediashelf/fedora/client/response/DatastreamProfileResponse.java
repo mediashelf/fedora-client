@@ -28,6 +28,10 @@ public class DatastreamProfileResponse
         super(cr);
     }
 
+    public boolean isChecksumValid() throws FedoraClientException {
+        return Boolean.parseBoolean(getDatastreamProfile().getDsChecksumValid());
+    }
+
     /**
      * Get the last modified date of the datastream.
      *

@@ -136,6 +136,7 @@ public class AddDatastreamTest
         AddDatastreamResponse response = null;
 
         for (String type : types) {
+            dsid = dsid + type;
             value = ChecksumUtility.checksum(type, content);
             response =
                     addDatastream(testPid, dsid).content(content)
@@ -152,11 +153,12 @@ public class AddDatastreamTest
         File f = new File("src/test/resources/21.edit.essay.zip");
         assertTrue(f.exists());
 
-        String[] types = {"MD5"};
+        String[] types = {"MD5", "SHA-1"};
         String checksum;
 
         for (String type : types) {
-            checksum = ChecksumUtility.checksum("MD5", new FileInputStream(f));
+            dsid = dsid + type;
+            checksum = ChecksumUtility.checksum(type, new FileInputStream(f));
             response = addDatastream(testPid, dsid).controlGroup("M").content(f)
                     .checksumType(type).checksum(checksum).execute(fedora());
             assertEquals(201, response.getStatus());
