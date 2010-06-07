@@ -24,8 +24,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.ListMethodsResponse;
 
 /**
  * Builder for the ListMethods method.
@@ -79,7 +78,7 @@ public class ListMethods
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public ListMethodsResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
@@ -93,7 +92,7 @@ public class ListMethods
         }
 
         ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
-        return new FedoraResponseImpl(cr);
+        return new ListMethodsResponse(cr);
     }
 
 }

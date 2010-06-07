@@ -1,0 +1,10 @@
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      version="2.0">
+
+    <bindings schemaLocation="listMethods.xsd"
+          node="/xsd:schema/xsd:complexType[@name='objectMethodsType']/xsd:sequence/xsd:element[@name='sDef']">
+    <property name="objectMethodsTypeAttribute" />
+    </bindings>
+        
+</bindings>

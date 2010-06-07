@@ -24,8 +24,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.GetObjectHistoryResponse;
 
 /**
  * Builder for the GetObjectHistory method.
@@ -63,7 +62,7 @@ public class GetObjectHistory
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetObjectHistoryResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
@@ -73,7 +72,7 @@ public class GetObjectHistory
         String path = String.format("objects/%s/versions", pid);
 
         ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
-        return new FedoraResponseImpl(cr);
+        return new GetObjectHistoryResponse(cr);
     }
 
 }
