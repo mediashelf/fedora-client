@@ -37,7 +37,7 @@ public class UploadResponse extends FedoraResponseImpl {
 
     public String getUploadLocation() throws FedoraClientException {
         if (uploadLocation == null) {
-            uploadLocation = getEntity(String.class);
+            uploadLocation = getEntity(String.class).trim();
         }
         return uploadLocation;
     }
