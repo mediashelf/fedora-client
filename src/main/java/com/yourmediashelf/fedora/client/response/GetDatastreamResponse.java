@@ -15,4 +15,8 @@ public class GetDatastreamResponse
     public GetDatastreamResponse(ClientResponse cr) throws FedoraClientException {
         super(cr);
     }
+
+    public boolean isChecksumValid() throws FedoraClientException {
+        return Boolean.parseBoolean(getDatastreamProfile().getDsChecksumValid());
+    }
 }

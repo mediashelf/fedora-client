@@ -36,9 +36,19 @@
         <version>2.6.2</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.santuario</groupId>
+        <artifactId>xmlsec</artifactId>
+        <version>1.4.3</version>
+      </dependency>
+      <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-mapper-lgpl</artifactId>
         <version>1.5.2</version>
+      </dependency>
+      <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.9.1</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
@@ -79,9 +89,17 @@
       <artifactId>jena</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.santuario</groupId>
+      <artifactId>xmlsec</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-mapper-lgpl</artifactId>
     </dependency>
+    <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+      </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -108,7 +126,7 @@
     <developer>
       <id>eddies</id>
       <name>Edwin Shin</name>
-      <email>edwin.shin@yourmediashelf.com</email>
+      <email>edwin.shin @ (domain of organization url)</email>
       <organization>MediaShelf</organization>
       <organizationUrl>http://www.yourmediashelf.com/</organizationUrl>
       <roles>
