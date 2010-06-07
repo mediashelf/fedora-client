@@ -22,6 +22,7 @@ package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
 import static com.yourmediashelf.fedora.client.FedoraClient.getDatastream;
+import static com.yourmediashelf.fedora.client.FedoraClient.upload;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -184,6 +185,29 @@ public class AddDatastreamTest
             GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
             assertTrue(r.isChecksumValid());
         }
+    }
 
+    @Ignore
+    @Test
+    public void testManagedChecksumByLocation() throws Exception {
+        FedoraResponse response = null;
+        String dsid = "testManagedChecksumByLocation";
+        File f = new File("src/test/resources/21.edit.essay.zip");
+        assertTrue(f.exists());
+
+        String dsLocation = upload(f).execute(fedora()).getUploadLocation();
+
+        String[] types = {"MD5", "SHA-1"};
+        String checksum;
+
+        for (String type : types) {
+            dsid = dsid + type;
+            checksum = ChecksumUtility.checksum(type, new FileInputStream(f));
+            response = addDatastream(testPid, dsid).controlGroup("M").dsLocation(dsLocation)
+                    .checksumType(type).checksum(checksum).execute(fedora());
+            assertEquals(201, response.getStatus());
+            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
+            assertTrue(r.isChecksumValid());
+        }
     }
 }
