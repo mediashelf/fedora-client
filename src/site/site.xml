@@ -15,6 +15,7 @@
     <menu name="MediaShelf fedora-client">
       <item name="Introduction" href="index.html"/>
       <item name="Usage" href="usage.html"/>
+      <item name="Developers" href="developers.html"/>
     </menu>
 
     <menu name="Project Information">

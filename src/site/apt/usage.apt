@@ -46,7 +46,9 @@ try {
 }
 +--
 
-    Parsing a response. FedoraRequests return instances of a FedoraResponse. 
+* Parsing a response
+
+    FedoraRequests return instances of a FedoraResponse. 
 The response-specific implementations (e.g. AddDatastreamResponse, 
 GetDatastreamResponse, etc.) provide convenience methods that parse the 
 response body. However, at this writing, not every request has a corresponding 
@@ -73,7 +75,7 @@ of fedora-client):
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client</artifactId>
-        <version>0.0.8</version>
+        <version>0.0.9</version>
     </dependency>
 </dependencies>
 +--
