@@ -111,7 +111,7 @@ public class XmlSerializerTest {
         BufferedInputStream f =
                 new BufferedInputStream(new FileInputStream(file));
         f.read(buffer);
-        return new String(buffer);
+        return new String(buffer, "UTF-8");
     }
 
 }
