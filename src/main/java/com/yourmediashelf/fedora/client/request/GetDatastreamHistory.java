@@ -24,8 +24,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.GetDatastreamHistoryResponse;
 
 /**
  * <p>Builder for the GetDatastreamHistory method.</p>
@@ -67,7 +66,7 @@ public class GetDatastreamHistory
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetDatastreamHistoryResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
@@ -75,6 +74,6 @@ public class GetDatastreamHistory
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s/datastreams/%s/versions", pid, dsId);
 
-        return new FedoraResponseImpl(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new GetDatastreamHistoryResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
     }
 }
