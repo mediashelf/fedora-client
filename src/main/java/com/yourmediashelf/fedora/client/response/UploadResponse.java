@@ -35,6 +35,13 @@ public class UploadResponse extends FedoraResponseImpl {
         super(cr);
     }
 
+    /**
+     * Get the Fedora-generated upload url, typically for use in subsequent
+     * requests as the value of dsLocation.
+     *
+     * @return the upload url (in the form "uploaded://xxx")
+     * @throws FedoraClientException
+     */
     public String getUploadLocation() throws FedoraClientException {
         if (uploadLocation == null) {
             uploadLocation = getEntity(String.class).trim();

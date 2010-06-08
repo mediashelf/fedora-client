@@ -29,6 +29,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import org.joda.time.DateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -55,7 +56,6 @@ public class ModifyDatastreamTest extends BaseFedoraRequestTest {
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties before modify
-
         DatastreamProfileResponse dspResponse;
         dspResponse = getDatastream(testPid, dsId).format("xml").execute(fedora());
         assertEquals(200, response.getStatus());
@@ -77,7 +77,7 @@ public class ModifyDatastreamTest extends BaseFedoraRequestTest {
         assertEquals("DISABLED", profile.getDsChecksumType());
         assertEquals("none", profile.getDsChecksum());
 
-        // now modify it
+        // now modify the content (and label, while we're at it)
         content = "<baz>quux</baz>";
         String newDsLabel = "asdf";
         response = modifyDatastream(testPid, dsId).content(content).dsLabel(newDsLabel).execute(fedora());
@@ -90,7 +90,7 @@ public class ModifyDatastreamTest extends BaseFedoraRequestTest {
 
         // verify datastream properties after modify
         dspResponse = getDatastream(testPid, dsId).format("xml").execute(fedora());
-        assertEquals(200, response.getStatus());
+        assertEquals(200, dspResponse.getStatus());
         profile = dspResponse.getDatastreamProfile();
 
         assertEquals(testPid, profile.getPid());
@@ -133,8 +133,190 @@ public class ModifyDatastreamTest extends BaseFedoraRequestTest {
             modifyDatastream(testPid, null).logMessage("test null dsid").execute(fedora());
             modifyDatastream(testPid, "").logMessage("test empty dsid").execute(fedora());
             fail("Null or empty pids or dsIds should throw an exception");
-        } catch(IllegalArgumentException expected) {
+        } catch(IllegalArgumentException expected) {}
+    }
 
-        }
+    /**
+     *
+     * @throws Exception
+     * @see "http://www.fedora-commons.org/jira/browse/FCREPO-608"
+     */
+    @Test
+    public void testModifyState() throws Exception {
+        String dsId = "testModifyState";
+        // first, add an inline datastream
+        String content = "<foo>bar</foo>";
+        FedoraResponse response;
+        response = addDatastream(testPid, dsId).content(content).execute(fedora());
+        assertEquals(201, response.getStatus());
+
+        // verify datastream properties before modify
+        DatastreamProfileResponse dspResponse;
+        dspResponse = getDatastream(testPid, dsId).format("xml").execute(fedora());
+        assertEquals(200, dspResponse.getStatus());
+        DatastreamProfile profile = dspResponse.getDatastreamProfile();
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals("", profile.getDsLabel());
+        assertEquals(String.format("%s.0", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals("A", profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals("true", profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.0", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
+
+        // now modify the state
+        String newDsState = "I";
+        response = modifyDatastream(testPid, dsId).dsState(newDsState).execute(fedora());
+        assertEquals(200, response.getStatus());
+
+        // verify datastream properties after modify
+        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        assertEquals(200, response.getStatus());
+        profile = dspResponse.getDatastreamProfile();
+
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals("", profile.getDsLabel());
+        assertEquals(String.format("%s.1", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals(newDsState, profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals("true", profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.1", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
+
+        // now modify the label
+        String newDsLabel = "testModifyState";
+        response = modifyDatastream(testPid, dsId).dsLabel(newDsLabel).execute(fedora());
+        assertEquals(200, response.getStatus());
+
+        // verify datastream properties after modify
+        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        assertEquals(200, response.getStatus());
+        profile = dspResponse.getDatastreamProfile();
+
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals(newDsLabel, profile.getDsLabel());
+        assertEquals(String.format("%s.2", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals(newDsState, profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals("true", profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.2", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
+    }
+
+    @Ignore
+    @Test
+    /**
+     * Verifies setting versionable property.
+     *
+     * @see "http://www.fedora-commons.org/jira/browse/FCREPO-699"
+     */
+    public void testModifyVersionable() throws Exception {
+        String dsId = "testModifyVersionable";
+        // first, add an inline datastream
+        String content = "<foo>bar</foo>";
+        FedoraResponse response;
+        response = addDatastream(testPid, dsId).content(content).execute(fedora());
+        assertEquals(201, response.getStatus());
+
+        // verify datastream properties before modify
+        DatastreamProfileResponse dspResponse;
+        dspResponse = getDatastream(testPid, dsId).format("xml").execute(fedora());
+        assertEquals(200, dspResponse.getStatus());
+        DatastreamProfile profile = dspResponse.getDatastreamProfile();
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals("", profile.getDsLabel());
+        assertEquals(String.format("%s.0", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals("A", profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals("true", profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.0", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
+
+        // now modify versionable
+        boolean newVersionable = false;
+        response = modifyDatastream(testPid, dsId).versionable(newVersionable).execute(fedora());
+        assertEquals(200, response.getStatus());
+
+        // verify datastream properties after modify
+        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        assertEquals(200, response.getStatus());
+        profile = dspResponse.getDatastreamProfile();
+
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals("", profile.getDsLabel());
+        assertEquals(String.format("%s.1", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals("A", profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals(Boolean.toString(newVersionable), profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.1", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
+
+        // empty modify operation
+        response = modifyDatastream(testPid, dsId)
+            .logMessage("don't actually modify anything")
+            .execute(fedora());
+        assertEquals(200, response.getStatus());
+
+        // verify datastream properties after modify
+        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        assertEquals(200, response.getStatus());
+        profile = dspResponse.getDatastreamProfile();
+
+        assertEquals(testPid, profile.getPid());
+        assertEquals(dsId, profile.getDsID());
+        assertEquals("", profile.getDsLabel());
+        assertEquals(String.format("%s.2", dsId), profile.getDsVersionID());
+        assertNotNull(profile.getDsCreateDate());
+        assertEquals("A", profile.getDsState());
+        assertEquals("text/xml", profile.getDsMIME());
+        assertEquals("", profile.getDsFormatURI());
+        assertEquals("X", profile.getDsControlGroup());
+        assertEquals(16, profile.getDsSize().intValue());
+        assertEquals(Boolean.toString(newVersionable), profile.getDsVersionable());
+        assertEquals("", profile.getDsInfoType());
+        assertEquals(String.format("%s+%s+%s.2", testPid, dsId, dsId), profile.getDsLocation());
+        assertEquals("", profile.getDsLocationType());
+        assertEquals("DISABLED", profile.getDsChecksumType());
+        assertEquals("none", profile.getDsChecksum());
     }
 }

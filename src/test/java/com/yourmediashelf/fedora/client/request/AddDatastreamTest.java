@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -187,7 +188,6 @@ public class AddDatastreamTest
         }
     }
 
-    @Ignore
     @Test
     public void testManagedChecksumByLocation() throws Exception {
         FedoraResponse response = null;
@@ -209,5 +209,24 @@ public class AddDatastreamTest
             GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
             assertTrue(r.isChecksumValid());
         }
+    }
+
+    @Ignore
+    @Test
+    public void testManagedChecksumByHttpLocation() throws Exception {
+        FedoraResponse response = null;
+        String dsid = "testManagedChecksumByHttpLocation";
+
+        URL baseUrl = getCredentials().getBaseUrl();
+        String dsLocation = String.format("%s://%s:%s/tomcat.gif",
+                                          baseUrl.getProtocol(),
+                                          baseUrl.getHost(),
+                                          baseUrl.getPort());
+
+        response = addDatastream(testPid, dsid).controlGroup("M").dsLocation(dsLocation)
+                .checksumType("MD5").checksum("b8ebd781db53b856efa8e873fa4d2f6e").execute(fedora());
+        assertEquals(201, response.getStatus());
+        GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
+        assertTrue(r.isChecksumValid());
     }
 }

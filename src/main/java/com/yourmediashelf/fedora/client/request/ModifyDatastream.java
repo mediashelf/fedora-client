@@ -68,6 +68,13 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         return this;
     }
 
+    /**
+     * The algorithm used to compute the checksum.
+     *
+     * @param checksumType One of DEFAULT, DISABLED, MD5, SHA-1, SHA-256,
+     * SHA-385, SHA-512
+     * @return this builder
+     */
     public ModifyDatastream checksumType(String checksumType) {
         addQueryParam("checksumType", checksumType);
         return this;
@@ -88,6 +95,12 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         return this;
     }
 
+    /**
+     * One of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
+     *
+     * @param dsState
+     * @return this builder
+     */
     public ModifyDatastream dsState(String dsState) {
         addQueryParam("dsState", dsState);
         return this;
@@ -153,6 +166,12 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         return this;
     }
 
+    /**
+     * Enable versioning of the datastream.
+     *
+     * @param versionable
+     * @return this builder
+     */
     public ModifyDatastream versionable(boolean versionable) {
         addQueryParam("versionable", Boolean.toString(versionable));
         return this;
