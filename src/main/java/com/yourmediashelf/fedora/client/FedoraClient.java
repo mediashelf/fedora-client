@@ -35,6 +35,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.yourmediashelf.fedora.client.request.AddDatastream;
 import com.yourmediashelf.fedora.client.request.AddRelationship;
+import com.yourmediashelf.fedora.client.request.DescribeRepository;
 import com.yourmediashelf.fedora.client.request.Export;
 import com.yourmediashelf.fedora.client.request.FedoraRequest;
 import com.yourmediashelf.fedora.client.request.FindObjects;
@@ -198,6 +199,10 @@ public class FedoraClient {
 
     public static AddRelationship addRelationship(String pid) {
         return new AddRelationship(pid);
+    }
+
+    public static DescribeRepository describeRepository() {
+        return new DescribeRepository();
     }
 
     public static Export export(String pid) {
