@@ -32,6 +32,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.yourmediashelf.fedora.client.request.AddDatastream;
 import com.yourmediashelf.fedora.client.request.AddRelationship;
@@ -78,6 +79,10 @@ public class FedoraClient {
     private final Client client;
 
     private final MimeUtil2 mimeUtil;
+
+    private String serverVersion;
+
+    private boolean debug = false;
 
     //private final NamespaceContextImpl nsCtx;
 
@@ -154,7 +159,9 @@ public class FedoraClient {
         wr
                 .addFilter(new HTTPBasicAuthFilter(fc.getUsername(), fc
                         .getPassword()));
-        //wr.addFilter(new LoggingFilter(System.out));
+        if (debug) {
+            wr.addFilter(new LoggingFilter(System.out));
+        }
         return wr;
     }
 
@@ -171,6 +178,30 @@ public class FedoraClient {
     public Date getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
         GetDatastreamResponse response = getDatastream(pid, dsId).format("xml").execute(this);
         return response.getLastModifiedDate();
+    }
+
+    /**
+     * If enabled, adds a logging filter to all requests that outputs to
+     * System.out.
+     *
+     * @param debug true to enable debugging
+     */
+    public void debug(boolean debug) {
+        this.debug = debug;
+    }
+
+    /**
+     * Get the version of the Fedora Repository this client is associated with
+     * as reported by DescribeRepository
+     *
+     * @return the version of the Fedora Repository this client is associated with.
+     * @throws FedoraClientException
+     */
+    public String getServerVersion() throws FedoraClientException {
+        if (serverVersion == null) {
+            serverVersion = describeRepository().execute(this).getRepositoryVersion();
+        }
+        return serverVersion;
     }
 
 //    private XPath getXPath() {
