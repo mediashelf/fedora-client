@@ -28,6 +28,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -301,9 +303,13 @@ public class ModifyDatastreamTest
 
         // now modify versionable
         boolean newVersionable = false;
-        response =
-                modifyDatastream(testPid, dsId).versionable(newVersionable)
-                        .execute(fedora());
+        ModifyDatastream modifyDS = modifyDatastream(testPid, dsId)
+            .versionable(newVersionable)
+            .logMessage("set versionable = " + newVersionable);
+        List<String> versionable = modifyDS.getQueryParam("versionable");
+        assertEquals(1, versionable.size());
+        assertEquals(Boolean.toString(newVersionable), versionable.get(0));
+        response = modifyDS.execute(fedora());
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify

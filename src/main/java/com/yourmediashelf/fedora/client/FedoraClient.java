@@ -289,9 +289,16 @@ public class FedoraClient {
     }
 
     /**
-     * @param pid
-     *        persistent identifier of the object to be created or null for a
-     *        server-assigned pid
+     * Ingest request that uses a server-assigned pid
+     *
+     * @return builder for the Ingest method
+     */
+    public static Ingest ingest() {
+        return new Ingest();
+    }
+
+    /**
+     * @param pid persistent identifier of the object to be created
      * @return builder for the Ingest method
      * @see Ingest
      */

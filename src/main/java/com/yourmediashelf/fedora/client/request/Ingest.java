@@ -46,42 +46,127 @@ public class Ingest extends FedoraRequest<Ingest> {
         this.pid = pid;
     }
 
+    /**
+     * Constructor that will use a server-generated pid.
+     */
+    public Ingest() {
+        this(null);
+    }
+
+    /**
+     * The label of the new object
+     *
+     * @param label the object label
+     * @return this builder
+     */
     public Ingest label(String label) {
         addQueryParam("label", label);
         return this;
     }
 
+    /**
+     * <p>The XML format of the object to be ingested.</p>
+     *
+     * <p>One of:</p>
+     * <ul>
+     *  <li>info:fedora/fedora-system:FOXML-1.1</li>
+     *  <li>info:fedora/fedora-system:FOXML-1.0</li>
+     *  <li>info:fedora/fedora-system:METSFedoraExt-1.1</li>
+     *  <li>info:fedora/fedora-system:METSFedoraExt-1.0</li>
+     *  <li>info:fedora/fedora-system:ATOM-1.1</li>
+     *  <li>info:fedora/fedora-system:ATOMZip-1.1</li>
+     * </ul>
+     *
+     * @param format the XML format of the object to be ingested.
+     * @return this builder
+     */
     public Ingest format(String format) {
         addQueryParam("format", format);
         return this;
     }
 
+    /**
+     * The encoding of the XML to be ingested.
+     *
+     * @param encoding
+     * @return this builder
+     */
     public Ingest encoding(String encoding) {
         addQueryParam("encoding", encoding);
         return this;
     }
 
+    /**
+     * The namespace to be used to create a PID for a new empty object;
+     * if object XML is included with the request, the namespace parameter is
+     * ignored.
+     *
+     * @param namespace the namespace of the PID to create
+     * @return this builder
+     */
     public Ingest namespace(String namespace) {
         addQueryParam("namespace", namespace);
         return this;
     }
 
+    /**
+     * The id of the user to be listed at the object owner.
+     *
+     * @param ownerId
+     * @return this builder
+     */
     public Ingest ownerId(String ownerId) {
         addQueryParam("ownerId", ownerId);
         return this;
     }
 
+    /**
+     * <p>A message describing the activity being performed, which will be
+     * recorded in the Fedora server log.</p>
+     *
+     * @param logMessage the log message
+     * @return this builder
+     */
     public Ingest logMessage(String logMessage) {
         addQueryParam("logMessage", logMessage);
         return this;
     }
 
-    public Ingest ignoreMime(String ignoreMime) {
-        addQueryParam("ignoreMime", ignoreMime);
+    /**
+     * <p>Indicates that the request should not be checked to ensure that the
+     * content is XML prior to attempting an ingest.</p>
+     *
+     * <p>This is provided to allow for client applications which do not
+     * indicate the correct Content-Type when submitting a request.</p>
+     *
+     * <p>If not provided, defaults to false.</p>
+     *
+     * @param ignoreMime
+     * @return this builder
+     */
+    public Ingest ignoreMime(boolean ignoreMime) {
+        addQueryParam("ignoreMime", Boolean.toString(ignoreMime));
         return this;
     }
 
-    public Ingest content(Object content) {
+    /**
+     * The file to be ingested as a new object.
+     *
+     * @param content
+     * @return this builder
+     */
+    public Ingest content(File content) {
+        this.content = content;
+        return this;
+    }
+
+    /**
+     * The XML to be ingested as a new object.
+     *
+     * @param content
+     * @return this builder
+     */
+    public Ingest content(String content) {
         this.content = content;
         return this;
     }

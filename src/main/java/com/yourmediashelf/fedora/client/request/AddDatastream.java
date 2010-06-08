@@ -57,6 +57,11 @@ public class AddDatastream
         this.dsId = dsId;
     }
 
+    /**
+     * Alternate identifiers for the datastream.
+     * @param altIDs
+     * @return this builder
+     */
     public AddDatastream altIDs(List<String> altIDs) {
         for (String altID : altIDs) {
             addQueryParam("altIDs", altID);
@@ -64,11 +69,23 @@ public class AddDatastream
         return this;
     }
 
+    /**
+     * The value of the checksum represented as a hexadecimal string.
+     *
+     * @param checksum
+     * @return this builder
+     */
     public AddDatastream checksum(String checksum) {
         addQueryParam("checksum", checksum);
         return this;
     }
 
+    /**
+     * The algorithm used to compute the checksum.
+     *
+     * @param checksumType
+     * @return this builder
+     */
     public AddDatastream checksumType(String checksumType) {
         addQueryParam("checksumType", checksumType);
         return this;
@@ -85,6 +102,12 @@ public class AddDatastream
         return this;
     }
 
+    /**
+     * The label for the datastream.
+     *
+     * @param dsLabel
+     * @return this builder
+     */
     public AddDatastream dsLabel(String dsLabel) {
         addQueryParam("dsLabel", dsLabel);
         return this;

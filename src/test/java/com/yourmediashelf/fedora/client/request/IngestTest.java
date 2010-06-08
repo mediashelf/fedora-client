@@ -58,7 +58,7 @@ public class IngestTest extends BaseFedoraRequestTest {
         URI location = null;
 
         // empty object, no pid, no namespace
-        response = ingest(null).logMessage("testIngestDefault").execute(fedora());
+        response = ingest().logMessage("testIngestDefault").execute(fedora());
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/"));
@@ -71,7 +71,7 @@ public class IngestTest extends BaseFedoraRequestTest {
         URI location = null;
 
         // empty object, with namespace, but no pid
-        response = ingest(null).namespace("foospace").logMessage("testIngestWithNamespace").execute(fedora());
+        response = ingest().namespace("foospace").logMessage("testIngestWithNamespace").execute(fedora());
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/foospace"));

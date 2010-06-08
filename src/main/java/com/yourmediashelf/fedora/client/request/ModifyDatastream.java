@@ -123,8 +123,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
      * @return this builder
      */
     public ModifyDatastream lastModifiedDate(DateTime lastModifiedDate) {
-        addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
-        return this;
+        return lastModifiedDate(getXSDDateTime(lastModifiedDate));
     }
 
     /**
@@ -134,8 +133,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
      * @return this builder
      */
     public ModifyDatastream lastModifiedDate(Date lastModifiedDate) {
-        addQueryParam("lastModifiedDate", getXSDDateTime(lastModifiedDate));
-        return this;
+        return lastModifiedDate(getXSDDateTime(lastModifiedDate));
     }
 
     /**
