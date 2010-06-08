@@ -235,11 +235,21 @@
               <generateDirectory>${project.build.directory}/generated-sources/management</generateDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>generate-foxml</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <schemaDirectory>src/main/resources/xsd/foxml</schemaDirectory>
+              <generatePackage>com.yourmediashelf.fedora.generated.foxml</generatePackage>
+              <generateDirectory>${project.build.directory}/generated-sources/foxml</generateDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
         <inherited>false</inherited>
-
         <groupId>com.mycila.maven-license-plugin</groupId>
         <artifactId>maven-license-plugin</artifactId>
         <version>1.6.0</version>
