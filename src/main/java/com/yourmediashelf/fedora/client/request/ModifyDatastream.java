@@ -49,7 +49,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         if (pid == null || pid.isEmpty()) {
             throw new IllegalArgumentException("pid cannot be null or empty");
         }
-        if (dsId == null || pid.isEmpty()) {
+        if (dsId == null || dsId.isEmpty()) {
             throw new IllegalArgumentException("dsId cannot be null or empty");
         }
         this.pid = pid;
