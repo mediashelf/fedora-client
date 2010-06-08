@@ -36,7 +36,11 @@ import com.yourmediashelf.fedora.client.response.UploadResponse;
 /**
  * Builder for the Upload method.
  *
+ * <p>The REST-API doesn't yet provide this method, therefore this request is
+ * built against the API-M-Lite upload method.
+ *
  * @author Edwin Shin
+ * @see "http://www.fedora-commons.org/jira/browse/FCREPO-687"
  */
 public class Upload
         extends FedoraRequest<Upload> {
