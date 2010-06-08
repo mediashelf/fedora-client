@@ -38,6 +38,10 @@ public class Ingest extends FedoraRequest<Ingest> {
     private final String pid;
     private Object content;
 
+    /**
+     *
+     * @param pid the identified to assign or null to use a server-assigned pid
+     */
     public Ingest(String pid) {
         this.pid = pid;
     }

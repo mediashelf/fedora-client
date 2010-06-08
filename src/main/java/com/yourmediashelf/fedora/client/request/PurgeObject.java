@@ -34,6 +34,10 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 public class PurgeObject extends FedoraRequest<PurgeObject> {
     private final String pid;
 
+    /**
+     *
+     * @param pid the identifier of the object to delete.
+     */
     public PurgeObject(String pid) {
         this.pid = pid;
     }

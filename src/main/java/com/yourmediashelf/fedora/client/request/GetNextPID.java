@@ -34,9 +34,6 @@ import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
 public class GetNextPID
         extends FedoraRequest<GetNextPID> {
 
-    public GetNextPID() {
-    }
-
     /**
      * <p>The format of the response. Defaults to "xml".</p>
      *
@@ -54,11 +51,24 @@ public class GetNextPID
         return this;
     }
 
+    /**
+     * Namespace of the returned pid(s). If omitted, the returned pids will use
+     * the server-configured default namespace.
+     *
+     * @param namespace
+     * @return this builder
+     */
     public GetNextPID namespace(String namespace) {
         addQueryParam("namespace", namespace);
         return this;
     }
 
+    /**
+     * Set the number of pids this request should return.
+     *
+     * @param numPIDs the number of pids to return.
+     * @return this builder
+     */
     public GetNextPID numPIDs(int numPIDs) {
         addQueryParam("numPIDs", String.valueOf(numPIDs));
         return this;

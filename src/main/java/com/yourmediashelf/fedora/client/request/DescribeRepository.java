@@ -37,9 +37,6 @@ import com.yourmediashelf.fedora.client.response.DescribeRepositoryResponse;
 public class DescribeRepository
         extends FedoraRequest<DescribeRepository> {
 
-    public DescribeRepository() {
-    }
-
     /**
      * <p>Format the response as XML. Defaults to "true".</p>
      *

@@ -56,11 +56,24 @@ public class AddRelationship
         return this;
     }
 
+    /**
+     * Indicate whether the object is a literal. If omitted, defaults to false.
+     *
+     * @param isLiteral indicate whether the object is a literal.
+     * @return this builder
+     */
     public AddRelationship isLiteral(boolean isLiteral) {
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
         return this;
     }
 
+    /**
+     * The URI of the XML Schema Datatype of the object literal, e.g.
+     * "http://www.w3.org/2001/XMLSchema#dateTime".
+     *
+     * @param datatype the datatype of the literal
+     * @return this builder
+     */
     public AddRelationship datatype(String datatype) {
         addQueryParam("datatype", datatype);
         return this;
