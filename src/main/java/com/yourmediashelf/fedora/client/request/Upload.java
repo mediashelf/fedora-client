@@ -21,6 +21,7 @@
 package com.yourmediashelf.fedora.client.request;
 
 import java.io.File;
+import java.net.URI;
 
 import javax.ws.rs.core.MediaType;
 
@@ -45,6 +46,9 @@ import com.yourmediashelf.fedora.client.response.UploadResponse;
 public class Upload
         extends FedoraRequest<Upload> {
 
+    private final org.slf4j.Logger logger =
+        org.slf4j.LoggerFactory.getLogger(this.getClass());
+
     private final File file;
 
     /**
@@ -58,13 +62,22 @@ public class Upload
     @Override
     public UploadResponse execute(FedoraClient fedora) throws FedoraClientException {
         ClientResponse response = null;
-        WebResource wr = fedora.resource();
         String path = String.format("management/upload");
+        WebResource wr = fedora.resource().path(path);
 
         MediaType mediaType = MediaType.valueOf(fedora.getMimeType(file));
         MultiPart multiPart = new FormDataMultiPart().bodyPart(new FileDataBodyPart("file", file, mediaType));
 
-        response = wr.path(path).queryParams(getQueryParams()).type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, multiPart);
+        // Check for a 302 (expected if baseUrl is http but Fedora is configured
+        // to require SSL
+        response = wr.head();
+        if (response.getStatus() == 302) {
+            URI newLocation = response.getLocation();
+            logger.warn("302 status for upload request: " + newLocation);
+            wr = fedora.resource(newLocation.toString());
+        }
+
+        response = wr.queryParams(getQueryParams()).type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, multiPart);
         return new UploadResponse(response);
     }
 }

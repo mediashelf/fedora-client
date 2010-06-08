@@ -189,7 +189,7 @@
         <version>2.5</version>
         <configuration>
           <systemPropertyVariables>
-            <fedora.test.baseUrl>https://localhost:8443/fedora</fedora.test.baseUrl>
+            <fedora.test.baseUrl>http://localhost:8080/fedora</fedora.test.baseUrl>
             <fedora.test.username>fedoraAdmin</fedora.test.username>
             <fedora.test.password>fedoraAdmin</fedora.test.password>
             <javax.net.ssl.trustStore>/opt/fedora/current/server/truststore</javax.net.ssl.trustStore>

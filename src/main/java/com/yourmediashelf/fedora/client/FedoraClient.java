@@ -155,7 +155,11 @@ public class FedoraClient {
     }
 
     public WebResource resource() {
-        WebResource wr = client.resource(fc.getBaseUrl().toString());
+        return resource(fc.getBaseUrl().toString());
+    }
+
+    public WebResource resource(String uri) {
+        WebResource wr = client.resource(uri);
         wr
                 .addFilter(new HTTPBasicAuthFilter(fc.getUsername(), fc
                         .getPassword()));

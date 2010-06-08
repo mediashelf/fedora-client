@@ -196,6 +196,8 @@ public class AddDatastreamTest
         assertTrue(f.exists());
 
         String dsLocation = upload(f).execute(fedora()).getUploadLocation();
+        assertTrue("unexpected value for dsLocation: \"" + dsLocation + "\"",
+                   dsLocation.startsWith("uploaded://"));
 
         String[] types = {"MD5", "SHA-1"};
         String checksum;
