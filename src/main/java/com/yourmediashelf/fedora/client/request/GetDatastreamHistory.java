@@ -72,7 +72,9 @@ public class GetDatastreamHistory
             addQueryParam("format", "xml");
         }
         WebResource wr = fedora.resource();
-        String path = String.format("objects/%s/datastreams/%s/versions", pid, dsId);
+        // prior to Fedora 3.4, /history was /versions
+        // see https://jira.duraspace.org/browse/FCREPO-675
+        String path = String.format("objects/%s/datastreams/%s/history", pid, dsId);
 
         return new GetDatastreamHistoryResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
     }
