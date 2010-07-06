@@ -14,6 +14,19 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- begin messaging-specific dependencies -->
+      <dependency>
+        <groupId>org.apache.abdera</groupId>
+        <artifactId>abdera-core</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-core</artifactId>
+        <version>5.3.2</version>
+      </dependency>
+      <!-- end messaging dependencies -->
+      
       <dependency>
         <groupId>com.sun.jersey</groupId>
         <artifactId>jersey-client</artifactId>
@@ -76,6 +89,11 @@
   </dependencyManagement>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
@@ -194,8 +212,23 @@
             <fedora.test.password>fedoraAdmin</fedora.test.password>
             <javax.net.ssl.trustStore>/opt/fedora/current/server/truststore</javax.net.ssl.trustStore>
             <javax.net.ssl.trustStorePassword>tomcat</javax.net.ssl.trustStorePassword>
+            
           </systemPropertyVariables>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
