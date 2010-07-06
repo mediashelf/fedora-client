@@ -85,7 +85,7 @@ public class PurgeDatastreamTest
         assertEquals(1, purgedDates.size());
 
         // purge everything
-        purge = purgeDatastream(testPid, dsid).execute(fedora());
+        purge = purgeDatastream(testPid, dsid).logMessage("purge everything").execute(fedora());
         purgedDates = purge.getPurgedDates();
         assertEquals(2, purgedDates.size());
         Collections.sort(purgedDates);
