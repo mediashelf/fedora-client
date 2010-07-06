@@ -13,7 +13,7 @@ Performing a release
 +--
 mvn release:prepare -DdryRun
 mvn release:clean && mvn release:prepare
-mvn release:perform
+mvn release:perform -Darguments=-Dgpg.passphrase=
 +--
 
 Fixing a botched release
