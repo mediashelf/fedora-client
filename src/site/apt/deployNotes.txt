@@ -11,6 +11,9 @@ mvn clean javadoc:jar source:jar deploy
 Performing a release
 
 +--
+# if needed, add missing license headers
+mvn license:format
+
 mvn release:prepare -DdryRun
 mvn release:clean && mvn release:prepare
 mvn release:perform -Darguments=-Dgpg.passphrase=
