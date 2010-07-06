@@ -89,9 +89,9 @@ public class PurgeDatastreamTest
         purgedDates = purge.getPurgedDates();
         assertEquals(2, purgedDates.size());
         Collections.sort(purgedDates);
-        assertEquals(DateUtility.getXSDDateTime(originalDate), purgedDates
+        assertEquals("purgedDates: " + purgedDates, DateUtility.getXSDDateTime(originalDate), purgedDates
                 .get(0));
-        assertEquals(DateUtility.getXSDDateTime(modify2), purgedDates.get(1));
+        assertEquals("purgedDates: " + purgedDates, DateUtility.getXSDDateTime(modify2), purgedDates.get(1));
 
         try {
             getDatastream(testPid, dsid).execute(fedora());
