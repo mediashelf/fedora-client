@@ -212,7 +212,7 @@
             <fedora.test.password>fedoraAdmin</fedora.test.password>
             <javax.net.ssl.trustStore>/opt/fedora/current/server/truststore</javax.net.ssl.trustStore>
             <javax.net.ssl.trustStorePassword>tomcat</javax.net.ssl.trustStorePassword>
-            
+            <org.apache.activemq.default.directory.prefix>${build.directory}/</org.apache.activemq.default.directory.prefix>
           </systemPropertyVariables>
         </configuration>
       </plugin>
@@ -235,6 +235,7 @@
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.7.3</version>
         <executions>
           <execution>
             <id>generate-access</id>
