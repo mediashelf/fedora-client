@@ -70,7 +70,7 @@ public class MessagingClientTest implements MessagingListener {
         properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
                                "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
         properties.setProperty(Context.PROVIDER_URL,
-                               "vm://localhost?broker.useShutdownHook=false&broker.persistent=true");
+                               "vm://localhost?broker.useShutdownHook=false&broker.persistent=true&broker.useJmx=false");
         properties.setProperty(JMSManager.CONNECTION_FACTORY_NAME,
                                "ConnectionFactory");
         properties.setProperty("topic." + TOPIC_NAME, TOPIC);
