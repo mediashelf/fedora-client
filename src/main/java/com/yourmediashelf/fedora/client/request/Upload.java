@@ -37,8 +37,7 @@ import com.yourmediashelf.fedora.client.response.UploadResponse;
 /**
  * Builder for the Upload method.
  *
- * <p>The REST-API doesn't yet provide this method, therefore this request is
- * built against the API-M-Lite upload method.
+ * <p>The Fedora REST API upload method was introduced in Fedora 3.4</p>
  *
  * @author Edwin Shin
  * @see "http://www.fedora-commons.org/jira/browse/FCREPO-687"
@@ -62,7 +61,7 @@ public class Upload
     @Override
     public UploadResponse execute(FedoraClient fedora) throws FedoraClientException {
         ClientResponse response = null;
-        String path = String.format("management/upload");
+        String path = String.format("upload");
         WebResource wr = fedora.resource().path(path);
 
         MediaType mediaType = MediaType.valueOf(fedora.getMimeType(file));

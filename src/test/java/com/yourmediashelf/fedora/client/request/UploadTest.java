@@ -39,7 +39,7 @@ public class UploadTest
         assertTrue(f.exists());
         UploadResponse response =
                 upload(f).execute(fedora());
-        assertEquals(201, response.getStatus());
+        assertEquals(202, response.getStatus());
         assertTrue(response.getUploadLocation().startsWith("uploaded://"));
     }
 }
