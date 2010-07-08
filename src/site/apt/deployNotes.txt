@@ -21,7 +21,7 @@ mvn license:format
 
 mvn release:prepare -DdryRun
 mvn release:clean && mvn release:prepare
-mvn release:perform -Darguments=-Dgpg.passphrase=
+mvn release:perform
 +--
 
 Fixing a botched release
