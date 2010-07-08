@@ -9,7 +9,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jersey.version>1.2</jersey.version>
+    <jersey.version>1.3</jersey.version>
   </properties>
 
   <dependencyManagement>
@@ -89,7 +89,10 @@
   </dependencyManagement>
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-core</artifactId>
@@ -212,7 +215,7 @@
             <fedora.test.password>fedoraAdmin</fedora.test.password>
             <javax.net.ssl.trustStore>/opt/fedora/current/server/truststore</javax.net.ssl.trustStore>
             <javax.net.ssl.trustStorePassword>tomcat</javax.net.ssl.trustStorePassword>
-            <org.apache.activemq.default.directory.prefix>${build.directory}/</org.apache.activemq.default.directory.prefix>
+            <org.apache.activemq.default.directory.prefix>${project.build.directory}/</org.apache.activemq.default.directory.prefix>
           </systemPropertyVariables>
         </configuration>
       </plugin>
