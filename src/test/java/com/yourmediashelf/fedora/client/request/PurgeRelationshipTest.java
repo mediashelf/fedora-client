@@ -65,7 +65,8 @@ public class PurgeRelationshipTest extends BaseFedoraRequestTest {
 
         // now delete it
         response = fedora().execute(purgeRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
-        assertEquals(204, response.getStatus());
+        assertEquals(200, response.getStatus());
+        assertEquals("true", response.getEntity(String.class));
 
         // verify it's gone
         response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
@@ -78,5 +79,60 @@ public class PurgeRelationshipTest extends BaseFedoraRequestTest {
             assertFalse(predicate.equals(s.getPredicate().toString()));
             assertFalse(object.equals(s.getObject().toString()));
         }
+    }
+
+    /**
+     * purgeRelationship should be idempotent with respect to the returned
+     * HTTP status code. The response body however, should indicate "false" for
+     * successive deletes of the same resource.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testIdempotency() throws Exception {
+        FedoraResponse response = null;
+        Model model = null;
+        Statement s = null;
+        String subject = String.format("info:fedora/%s", testPid);
+        String predicate = "urn:foo/p";
+        String object = "你好";
+
+        // first add a relationship
+        response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        assertEquals(200, response.getStatus());
+
+        // verify it was added
+        response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
+        assertEquals(200, response.getStatus());
+        model = ModelFactory.createDefaultModel();
+        model.read(response.getEntityInputStream(), null, FileUtils.langXML);
+        StmtIterator it = model.listStatements();
+        while (it.hasNext()) {
+            s = it.next();
+            assertEquals(subject, s.getSubject().toString());
+            assertEquals(predicate, s.getPredicate().toString());
+            assertEquals(object, s.getObject().toString());
+        }
+
+        // now delete it
+        response = fedora().execute(purgeRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        assertEquals(200, response.getStatus());
+        assertEquals("true", response.getEntity(String.class));
+
+        // verify it's gone
+        response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
+        assertEquals(200, response.getStatus());
+        model = ModelFactory.createDefaultModel();
+        model.read(response.getEntityInputStream(), null, FileUtils.langXML);
+        it = model.listStatements();
+        while (it.hasNext()) {
+            s = it.next();
+            assertFalse(predicate.equals(s.getPredicate().toString()));
+            assertFalse(object.equals(s.getObject().toString()));
+        }
+
+        response = purgeRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true).execute(fedora());
+        assertEquals(200, response.getStatus());
+        assertEquals("false", response.getEntity(String.class));
     }
 }
