@@ -4,7 +4,7 @@
   <artifactId>fedora-client</artifactId>
   <version>0.1.3-SNAPSHOT</version>
   <name>MediaShelf ${project.artifactId}</name>
-  <url>http://mediashelf.github.com/fedora-client</url>
+  <url>http://mediashelf.github.com/${project.artifactId}</url>
   <description>Java client library for Fedora</description>
 
   <properties>
@@ -171,11 +171,11 @@
   </organization>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:git:git://github.com/mediashelf/fedora-client.git
+    <connection>scm:git:git://github.com/mediashelf/${project.artifactId}.git
     </connection>
-    <developerConnection>scm:git:git@github.com:mediashelf/fedora-client.git
+    <developerConnection>scm:git:git@github.com:mediashelf/${project.artifactId}.git
     </developerConnection>
-    <url>http://github.com/mediashelf/fedora-client</url>
+    <url>http://github.com/mediashelf/${project.artifactId}</url>
   </scm>
 
   <distributionManagement>
@@ -191,13 +191,14 @@
     </snapshotRepository>
     <site>
       <id>gh-pages</id>
-      <url>gitsite:git@github-mshlf/mediashelf/fedora-client.git</url>
+      <url>gitsite:git@github-mshlf/mediashelf/${project.artifactId}.git</url>
     </site>
   </distributionManagement>
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.1</version>
         <inherited>true</inherited>
         <configuration>
           <source>1.6</source>
@@ -380,7 +381,7 @@
         <artifactId>maven-changelog-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <displayFileDetailUrl>http://github.com/mediashelf/fedora-client/blob/master/%FILE%</displayFileDetailUrl>
+          <displayFileDetailUrl>http://github.com/mediashelf/${project.artifactId}/blob/master/%FILE%</displayFileDetailUrl>
         </configuration>
       </plugin>
       <plugin>
