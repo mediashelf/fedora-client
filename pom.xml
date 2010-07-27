@@ -102,9 +102,9 @@
       <artifactId>jersey-client</artifactId>
     </dependency>
     <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-multipart</artifactId>
-      </dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-multipart</artifactId>
+    </dependency>
     <dependency>
       <groupId>eu.medsea.mimeutil</groupId>
       <artifactId>mime-util</artifactId>
