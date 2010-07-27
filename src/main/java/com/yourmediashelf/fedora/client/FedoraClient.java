@@ -125,6 +125,8 @@ public class FedoraClient {
             client = Client.create();
         }
         client.setFollowRedirects(true);
+        client.addFilter(new HTTPBasicAuthFilter(fc.getUsername(), fc
+                                                 .getPassword()));
     }
 
     /**
@@ -160,9 +162,6 @@ public class FedoraClient {
 
     public WebResource resource(String uri) {
         WebResource wr = client.resource(uri);
-        wr
-                .addFilter(new HTTPBasicAuthFilter(fc.getUsername(), fc
-                        .getPassword()));
         if (debug) {
             wr.addFilter(new LoggingFilter(System.out));
         }
