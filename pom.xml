@@ -3,10 +3,11 @@
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
   <version>0.1.3-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>MediaShelf ${project.artifactId}</name>
-  <url>http://mediashelf.github.com/${project.artifactId}</url>
   <description>Java client library for Fedora</description>
-
+  <url>http://mediashelf.github.com/${project.artifactId}</url>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jersey.version>1.3</jersey.version>
