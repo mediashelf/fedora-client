@@ -15,13 +15,12 @@ method. Then execute the request by passing it an instance of FedoraClient.
 FedoraClient also offers convenience methods to simplify oft-used requests, such 
 as getting the lastModifiedDate of an object or datastream.
 
-    Every REST API method as of 2010-07-05 is fully supported. This includes 
-new features implemented since the release of Fedora 3.3 such as 
-getRelationships and optimistic locking for modify object and datastream.
+    Every REST API method is fully supported. This includes new features 
+implemented since the release of Fedora 3.3 such as getRelationships, upload and 
+optimistic locking for modify object and datastream.
 
-    Since version 0.1.0, fedora-client also supports DescribeRepository and 
-Upload, methods which are only provided by the Fedora API-A-Lite and API-M-Lite 
-interfaces.
+    Since version 0.1.0, fedora-client also supports DescribeRepository which 
+is only provided by the Fedora API-A-Lite and API-M-Lite interfaces.
 
     For examples of how to use fedora-client, see the {{{usage.html}Usage}} 
 section and the project's JUnit integration tests.
