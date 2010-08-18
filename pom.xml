@@ -283,7 +283,7 @@
         <inherited>false</inherited>
         <groupId>com.mycila.maven-license-plugin</groupId>
         <artifactId>maven-license-plugin</artifactId>
-        <version>1.6.0</version>
+        <version>1.8.0</version>
         <configuration>
           <header>${basedir}/LICENSE_HEADER</header>
           <aggregate>true</aggregate>
