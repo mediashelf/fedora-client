@@ -413,7 +413,7 @@ public class JMSManager {
     }
 
     /**
-     * @see JMSManager#listenDurable(Topic, MessageListener, String)
+     * @see JMSManager#listenDurable(Topic, String, MessageListener, String)
      */
     public String listenDurable(String topicName,
                                 MessageListener callback,
@@ -430,7 +430,7 @@ public class JMSManager {
      * method is the same as calling
      * <code>listenDurable(topic, "", callback, null)</code>
      *
-     * @see JMSManager#listenDurable(Topic, MessageListener, String)
+     * @see JMSManager#listenDurable(Topic, String, MessageListener, String)
      */
     public String listenDurable(Topic topic, MessageListener callback)
             throws MessagingException {

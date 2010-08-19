@@ -131,34 +131,18 @@ public class AtomApimMessage {
         return sWriter.toString();
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
     public String getBaseUrl() {
         return fedoraBaseUrl;
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
     public Date getDate() {
         return date;
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
     public String getMethodName() {
         return methodName;
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
     public String getPID() {
         return pid;
     }
@@ -167,18 +151,10 @@ public class AtomApimMessage {
         return author;
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
     public String getFormat() {
         return format;
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
     public String getServerVersion() {
         return serverVersion;
     }
