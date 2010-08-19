@@ -181,6 +181,24 @@
     <url>http://github.com/mediashelf/${project.artifactId}</url>
   </scm>
 
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://jira.duraspace.org/browse/FCREPO/component/10130</url>
+  </issueManagement>
+
+  <mailingLists>
+    <mailingList>
+      <name>Fedora Users List</name>
+      <subscribe>https://lists.sourceforge.net/lists/listinfo/fedora-commons-users</subscribe>
+      <unsubscribe>https://lists.sourceforge.net/lists/listinfo/fedora-commons-users</unsubscribe>
+      <post>fedora-commons-users@lists.sourceforge.net</post>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=fedora-commons-users</archive>
+      <otherArchives>
+        <otherArchive>http://dir.gmane.org/gmane.comp.cms.fedora-commons.user</otherArchive>
+      </otherArchives>
+    </mailingList>
+  </mailingLists>
+
   <distributionManagement>
     <repository>
       <id>duraspace-thirdparty</id>
