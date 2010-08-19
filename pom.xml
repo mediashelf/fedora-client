@@ -253,7 +253,7 @@
           <dependency>
             <groupId>org.apache.maven.scm</groupId>
             <artifactId>maven-scm-provider-gitexe</artifactId>
-            <version>1.4</version>
+            <version>1.3</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -336,12 +336,12 @@
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-provider-gitexe</artifactId>
-        <version>1.4</version>
+        <version>1.3</version>
       </extension>
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-manager-plexus</artifactId>
-        <version>1.4</version>
+        <version>1.3</version>
       </extension>
       <extension>
         <groupId>org.kathrynhuxtable.maven.wagon</groupId>
