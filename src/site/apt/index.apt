@@ -17,10 +17,10 @@ as getting the lastModifiedDate of an object or datastream.
 
     Every REST API method is fully supported. This includes new features 
 implemented since the release of Fedora 3.3 such as getRelationships, upload and 
-optimistic locking for modify object and datastream.
+optimistic locking for modify object and modify datastream requests.
 
     Since version 0.1.0, fedora-client also supports DescribeRepository which 
-is only provided by the Fedora API-A-Lite and API-M-Lite interfaces.
+is only provided by the Fedora API-A-Lite interface.
 
     For examples of how to use fedora-client, see the {{{usage.html}Usage}} 
 section and the project's JUnit integration tests.
