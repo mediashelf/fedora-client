@@ -261,7 +261,6 @@ public class ModifyDatastreamTest
         assertEquals("none", profile.getDsChecksum());
     }
 
-    @Ignore
     @Test
     /**
      * Verifies setting versionable property.
