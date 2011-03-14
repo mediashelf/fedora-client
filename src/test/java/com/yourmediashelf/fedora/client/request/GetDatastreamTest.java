@@ -60,6 +60,16 @@ public class GetDatastreamTest extends BaseFedoraRequestTest {
         assertEquals(testPid, profile.getPid());
         assertEquals("DC", profile.getDsID());
     }
+    
+    @Test
+    public void testGetDatastreamAsOfDateTimeAsXML() throws Exception {
+    	GetDatastreamResponse response = null;
+
+        response = getDatastream(testPid, "DC").format("xml").asOfDateTime("9999-01-01T00:01:04.567Z").execute(fedora());
+        DatastreamProfile profile = response.getDatastreamProfile();
+        assertEquals(testPid, profile.getPid());
+        assertEquals("DC", profile.getDsID());
+    }
 
     private Document buildTestDocument(String html) throws Exception {
         TolerantSaxDocumentBuilder tolerantSaxDocumentBuilder =
