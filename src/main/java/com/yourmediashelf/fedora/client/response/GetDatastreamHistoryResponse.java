@@ -19,13 +19,6 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.GetDatastreamHistory;
@@ -54,17 +47,18 @@ public class GetDatastreamHistoryResponse
      */
     public DatastreamHistory getDatastreamProfile() throws FedoraClientException {
         if (datastreamHistory == null) {
-            try {
-                JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.generated.management");
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                datastreamHistory =
-                        (DatastreamHistory) unmarshaller
-                                .unmarshal(new BufferedReader(new InputStreamReader(getEntityInputStream())));
-            } catch (JAXBException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
+        	datastreamHistory = (DatastreamHistory) unmarshallResponse(ContextPath.Management);
         }
         return datastreamHistory;
+    }
+    
+    /**
+     * Convenience method that returns the pid of the datastream.
+     *
+     * @return the pid of the datastream
+     * @throws FedoraClientException
+     */
+    public String getPid() throws FedoraClientException {
+    	return getDatastreamProfile().getPid();
     }
 }

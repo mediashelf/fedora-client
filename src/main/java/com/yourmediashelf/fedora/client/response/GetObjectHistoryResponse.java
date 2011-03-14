@@ -20,12 +20,7 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import java.util.List;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -49,17 +44,31 @@ public class GetObjectHistoryResponse
 
     public FedoraObjectHistory getObjectHistory() throws FedoraClientException {
         if (objectHistory == null) {
-            try {
-                JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.generated.access");
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                objectHistory =
-                        (FedoraObjectHistory) unmarshaller
-                                .unmarshal(new BufferedReader(new InputStreamReader(getEntityInputStream())));
-            } catch (JAXBException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
+        	objectHistory =
+                (FedoraObjectHistory) unmarshallResponse(ContextPath.Access);
         }
         return objectHistory;
+    }
+    
+    /**
+     * Accessor for the pid of the ObjectHistory response.
+     *
+     * @return the pid
+     * @throws FedoraClientException
+     */
+    public String getPid() throws FedoraClientException {
+    	return getObjectHistory().getPid();
+    }
+    
+    /**
+     * Accessor for the objectChangeDate property of the ObjectHistory response.
+     * 
+     * Dates are returned as Strings in the following form: 2011-03-14T17:56:54.522Z
+     *
+     * @return List of objectChangeDates
+     * @throws FedoraClientException
+     */
+    public List<String> getObjectChangeDate() throws FedoraClientException {
+    	return getObjectHistory().getObjectChangeDate();
     }
 }

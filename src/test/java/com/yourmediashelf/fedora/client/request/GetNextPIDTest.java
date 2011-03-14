@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.xml.xpath.XPathExpressionException;
+import javax.xml.bind.UnmarshalException;
 
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ public class GetNextPIDTest extends BaseFedoraRequestTest {
         GetNextPIDResponse response = null;
         response = getNextPID().numPIDs(2).execute(fedora()) ;
         assertEquals(200, response.getStatus());
-        assertEquals(2, response.getPids().size());
+        assertEquals(2, response.getPids().getPid().size());
     }
 
     @Test
@@ -65,8 +65,7 @@ public class GetNextPIDTest extends BaseFedoraRequestTest {
             response.getPid();
             fail("Should have failed with format=html");
         } catch(FedoraClientException e) {
-            assertTrue(e.getCause() instanceof XPathExpressionException);
+            assertTrue(e.getCause() instanceof UnmarshalException);
         }
-
     }
 }

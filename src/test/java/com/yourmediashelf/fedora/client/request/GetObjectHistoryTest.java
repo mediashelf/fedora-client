@@ -21,16 +21,18 @@
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getObjectHistory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetObjectHistoryResponse;
 
 public class GetObjectHistoryTest extends BaseFedoraRequestTest {
     @Test
     public void testGetObjectHistory() throws Exception {
-        FedoraResponse response = getObjectHistory(testPid).execute(fedora());
-        System.out.println(response.getEntity(String.class));
-
+        GetObjectHistoryResponse response = getObjectHistory(testPid).execute(fedora());
+        assertEquals(testPid, response.getPid());
+        assertTrue(response.getObjectChangeDate().size() == 1);
     }
 }

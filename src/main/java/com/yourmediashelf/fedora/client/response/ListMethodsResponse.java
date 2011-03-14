@@ -20,13 +20,6 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.GetObjectProfile;
@@ -49,16 +42,7 @@ public class ListMethodsResponse
 
     public ObjectMethods getObjectMethods() throws FedoraClientException {
         if (objectMethods == null) {
-            try {
-                JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.generated.access");
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                objectMethods =
-                        (ObjectMethods) unmarshaller
-                                .unmarshal(new BufferedReader(new InputStreamReader(getEntityInputStream())));
-            } catch (JAXBException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
+        	objectMethods = (ObjectMethods) unmarshallResponse(ContextPath.Access);
         }
         return objectMethods;
     }

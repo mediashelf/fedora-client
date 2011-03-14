@@ -20,19 +20,10 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.GetNextPID;
+import com.yourmediashelf.fedora.generated.management.PidList;
 
 /**
  * A {@link FedoraResponse} for the {@link GetNextPID} request.
@@ -42,7 +33,7 @@ import com.yourmediashelf.fedora.client.request.GetNextPID;
 public class GetNextPIDResponse
         extends FedoraResponseImpl {
 
-    private List<String> pids;
+    private PidList pids;
 
     public GetNextPIDResponse(ClientResponse cr)
             throws FedoraClientException {
@@ -57,23 +48,9 @@ public class GetNextPIDResponse
      * @return the List of next pids
      * @throws FedoraClientException
      */
-    public List<String> getPids() throws FedoraClientException {
+    public PidList getPids() throws FedoraClientException {
         if (pids == null) {
-            pids = new ArrayList<String>();
-            XPath xpath = getXPath();
-            NodeList nodes;
-            try {
-                nodes =
-                        (NodeList) xpath
-                                .evaluate("/pidList/pid/text()",
-                                          new InputSource(getEntityInputStream()),
-                                          XPathConstants.NODESET);
-            } catch (XPathExpressionException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
-            for (int i = 0; i < nodes.getLength(); i++) {
-                pids.add(nodes.item(i).getNodeValue());
-            }
+        	pids = (PidList) unmarshallResponse(ContextPath.Management);
         }
         return pids;
     }
@@ -85,6 +62,6 @@ public class GetNextPIDResponse
      * @throws FedoraClientException
      */
     public String getPid() throws FedoraClientException {
-        return getPids().get(0);
+        return getPids().getPid().get(0);
     }
 }

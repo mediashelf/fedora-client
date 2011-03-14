@@ -19,13 +19,7 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Date;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -75,16 +69,8 @@ public class DatastreamProfileResponse
      */
     public DatastreamProfile getDatastreamProfile() throws FedoraClientException {
         if (datastreamProfile == null) {
-            try {
-                JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.generated.management");
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                datastreamProfile =
-                        (DatastreamProfile) unmarshaller
-                                .unmarshal(new BufferedReader(new InputStreamReader(getEntityInputStream())));
-            } catch (JAXBException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
+        	datastreamProfile =
+                (DatastreamProfile) unmarshallResponse(ContextPath.Management);
         }
         return datastreamProfile;
     }

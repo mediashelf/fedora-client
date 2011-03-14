@@ -232,6 +232,8 @@
         <version>2.7.2</version>
         <configuration>
           <systemPropertyVariables>
+            <test.debug>false</test.debug>
+            <test.validate>true</test.validate>
             <fedora.test.baseUrl>http://localhost:8080/fedora</fedora.test.baseUrl>
             <fedora.test.username>fedoraAdmin</fedora.test.username>
             <fedora.test.password>fedoraAdmin</fedora.test.password>

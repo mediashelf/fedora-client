@@ -20,13 +20,7 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Date;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -90,16 +84,7 @@ public class GetObjectProfileResponse
 
     public ObjectProfile getObjectProfile() throws FedoraClientException {
         if (objectProfile == null) {
-            try {
-                JAXBContext context = JAXBContext
-                        .newInstance("com.yourmediashelf.fedora.generated.access");
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                objectProfile =
-                        (ObjectProfile) unmarshaller
-                                .unmarshal(new BufferedReader(new InputStreamReader(getEntityInputStream())));
-            } catch (JAXBException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
+        	objectProfile = (ObjectProfile) unmarshallResponse(ContextPath.Access);
         }
         return objectProfile;
     }

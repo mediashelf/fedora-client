@@ -45,6 +45,7 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
  * @author Edwin Shin
  */
 public abstract class BaseFedoraRequestTest {
+	private String debug;
 
     private FedoraCredentials credentials;
 
@@ -54,6 +55,7 @@ public abstract class BaseFedoraRequestTest {
 
     @Before
     public void setUp() throws Exception {
+    	debug = System.getProperty("test.debug");
         ingestTestObject();
     }
 
@@ -77,6 +79,7 @@ public abstract class BaseFedoraRequestTest {
         if (fedora == null) {
             try {
                 fedora = new FedoraClient(getCredentials());
+                fedora.debug(Boolean.parseBoolean(debug));
             } catch (MalformedURLException e) {
                 throw new FedoraClientException(e.getMessage(), e);
             }

@@ -25,18 +25,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetDatastreamHistoryResponse;
 
 public class GetDatastreamHistoryTest extends BaseFedoraRequestTest {
 
     @Test
     public void testGetDatastreamHistory() throws Exception {
-        FedoraResponse response = null;
+    	GetDatastreamHistoryResponse response = null;
         String dsId = "DC";
         response = getDatastreamHistory(testPid, dsId).execute(fedora());
-
-        System.out.println(response.getEntity(String.class));
-
-        assertEquals(200, response.getStatus());
+        assertEquals(testPid, response.getPid());
     }
 }
