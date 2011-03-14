@@ -31,7 +31,6 @@ import static org.junit.Assert.fail;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.FedoraClientException;
