@@ -58,6 +58,7 @@ import com.yourmediashelf.fedora.client.request.PurgeDatastream;
 import com.yourmediashelf.fedora.client.request.PurgeObject;
 import com.yourmediashelf.fedora.client.request.PurgeRelationship;
 import com.yourmediashelf.fedora.client.request.Upload;
+import com.yourmediashelf.fedora.client.request.Validate;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.GetObjectProfileResponse;
@@ -339,5 +340,9 @@ public class FedoraClient {
 
     public static Upload upload(File file) {
         return new Upload(file);
+    }
+    
+    public static Validate validate(String pid) {
+        return new Validate(pid);
     }
 }
