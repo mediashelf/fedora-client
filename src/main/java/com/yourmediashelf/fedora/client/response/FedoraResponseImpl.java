@@ -97,9 +97,7 @@ public class FedoraResponseImpl implements FedoraResponse {
 	 * 
 	 * @param contextPath
 	 *            JAXB contextPath
-	 * @param validate
-	 *            perform XSD validation
-	 * @return
+	 * @return the unmarshalled XML
 	 * @throws FedoraClientException
 	 */
 	public Object unmarshallResponse(ContextPath contextPath)
