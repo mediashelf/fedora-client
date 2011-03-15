@@ -324,6 +324,7 @@
             <contact>${project.organization.url}</contact>
           </properties>
           <encoding>UTF-8</encoding>
+          <strictCheck>true</strictCheck>
         </configuration>
         <executions>
           <execution>
