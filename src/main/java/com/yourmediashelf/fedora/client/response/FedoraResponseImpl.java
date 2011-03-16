@@ -129,9 +129,8 @@ public class FedoraResponseImpl implements FedoraResponse {
 	
 	private boolean validateSchema() {
 		if (validateSchema == null) {
-			String debug = System.getProperty("test.debug");
 			String validate = System.getProperty("test.validate");			
-			validateSchema = new Boolean(Boolean.parseBoolean(debug) || Boolean.parseBoolean(validate));
+			validateSchema = Boolean.parseBoolean(validate);
 		}
 		return validateSchema.booleanValue();
 	}
