@@ -57,6 +57,7 @@ import com.yourmediashelf.fedora.client.request.ModifyObject;
 import com.yourmediashelf.fedora.client.request.PurgeDatastream;
 import com.yourmediashelf.fedora.client.request.PurgeObject;
 import com.yourmediashelf.fedora.client.request.PurgeRelationship;
+import com.yourmediashelf.fedora.client.request.RiSearch;
 import com.yourmediashelf.fedora.client.request.Upload;
 import com.yourmediashelf.fedora.client.request.Validate;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
@@ -336,6 +337,10 @@ public class FedoraClient {
 
     public static PurgeRelationship purgeRelationship(String pid) {
         return new PurgeRelationship(pid);
+    }
+    
+    public static RiSearch riSearch(String query) {
+        return new RiSearch(query);
     }
 
     public static Upload upload(File file) {

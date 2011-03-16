@@ -24,4 +24,26 @@ is only provided by the Fedora API-A-Lite interface.
 
     For examples of how to use fedora-client, see the {{{usage.html}Usage}} 
 section and the project's JUnit integration tests.
+
+A Note about Versions and Compatibility
+
+    fedora-client is largely backwards compatible with previous versions of 
+Fedora, going back to Fedora 3.3. However, many of the FedoraResponse 
+implementations provide convenience methods that parse the XML response from the
+server. Therefore, if the response format has changed across Fedora versions, 
+recent releases of fedora-client may not be able to parse the older responses. 
+
+    For example, {{{https://jira.duraspace.org/browse/FCREPO-713}FCREPO-713}} 
+documents a number of Fedora API responses that were not schema valid. Once 
+fedora-client was updated to work with the corrected server responses, 
+fedora-client's convenience methods could no longer parse the buggy responses 
+from older versions of Fedora.
+
+    Even so, you can safely fall back to methods such as 
+FedoraResponse.getEntityInputStream() and FedoraResponse.getEntity() which 
+provide unmediated access to the server response.
+    
+    Future versions of fedora-client will hopefully provide better means of 
+negotiating against multiple versions of Fedora. Ideas and code contributions 
+are always welcome!
     
