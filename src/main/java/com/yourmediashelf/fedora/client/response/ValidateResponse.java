@@ -22,7 +22,7 @@ package com.yourmediashelf.fedora.client.response;
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.request.Validate;
-import com.yourmediashelf.fedora.generated.access.Validation;
+import com.yourmediashelf.fedora.generated.management.Validation;
 
 /**
  * A {@link FedoraResponse} for the {@link Validate} request.
