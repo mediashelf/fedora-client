@@ -44,9 +44,9 @@ public class RiSearch
 	private String type;
 
     /**
-     * @param type one of tuples or triples
-     * @param lang if type is tuples, one of itql or sparql. If type is triples,
-     * one of itql, sparql or spo.
+     * 
+     * 
+     * @param query the query text
      * 
      */
     public RiSearch(String query) {
@@ -55,6 +55,9 @@ public class RiSearch
     }
     
     /**
+     * A tuple query is one that returns a list of named values. A triple query 
+     * is one that returns a list of RDF statements (aka triples).
+     * 
      * Defaults to tuples.
      * 
      * @param type tuples or triples
@@ -68,9 +71,11 @@ public class RiSearch
     }
     
     /**
-     * Defaults to sparql.
+     * The query language to use.
      * 
-     * @param lang
+     * If not specified, defaults to sparql.
+     * 
+     * @param lang one of itql, sparql or spo (spo only if type = triples)
      * @return this builder
      */
     public RiSearch lang(String lang) {
@@ -80,6 +85,8 @@ public class RiSearch
     }
     
     /**
+     * The desired response format.
+     * 
      * Defaults to sparql if type = tuples, n-triples if type = triples.
      * 
      * @param format if type is tuples, then one of csv, simple, sparql, or tsv.
@@ -93,9 +100,22 @@ public class RiSearch
     }
 
     /**
+     * The flush parameter tells the Resource Index to ensure that any 
+     * recently-added/modified/deleted triples are flushed to the triplestore 
+     * before executing the query. 
+     * 
+     * This option can be desirable in certain scenarios, but for performance 
+     * reasons, should be used sparingly when a process is making many API-M 
+     * calls to Fedora in a short period of time: We have found that Mulgara 
+     * generally achieves a much better overall update rate with large batches 
+     * of triples.
+     * 
      * Defaults to false.
      * 
-     * @param flush
+     * @param flush whether the Fedora server should flush its triple buffer 
+     * first. If false, the result could be out of date with what was actually 
+     * stored in the repository at the time of the request. If true, it may take 
+     * considerably longer to get a response. 
      * @return this builder
      */
     public RiSearch flush(boolean flush) {
@@ -104,9 +124,12 @@ public class RiSearch
     }
     
     /**
+     * The maximum number of results to return. It is useful to set this low 
+     * when testing queries.
+     * 
      * Default is no limit.
      * 
-     * @param limit
+     * @param limit maximum number of results to return.
      * @return this builder
      */
     public RiSearch limit(int limit) {
@@ -115,6 +138,9 @@ public class RiSearch
     }
     
     /**
+     * Whether to force duplicate results to be dropped. Note: iTQL never 
+     * returns duplicates.
+     * 
      * Default is off (false).
      * 
      * @param distinct
@@ -126,9 +152,16 @@ public class RiSearch
     }
     
     /**
+     * Whether to stream the results right away (faster), or to save them to a 
+     * temporary file before sending them to the client. 
+     * 
+     * The default behavior (to save the results before streaming) will give a 
+     * more informative error message if a query fails.
+     * 
      * Default is off (false).
      * 
-     * @param stream
+     * @param stream whether to stream the results immediately or save them to a
+     * temporary file before sending them to the client.
      * @return this builder
      */
     public RiSearch stream(boolean stream) {
@@ -166,8 +199,6 @@ public class RiSearch
     			addQueryParam("format", "n-triples");
     		}
         }
-    	
-    	
     	
     	ClientResponse response = null;
     	String path = String.format("risearch");
@@ -218,17 +249,20 @@ public class RiSearch
     		if (!(format.equalsIgnoreCase("csv") || 
     				format.equalsIgnoreCase("simple") || 
     				format.equalsIgnoreCase("sparql") || 
-    				format.equalsIgnoreCase("tsv"))) {
+    				format.equalsIgnoreCase("tsv") || 
+    				format.equalsIgnoreCase("count"))) {
     			throw new IllegalArgumentException("format must be one of " +
-    					"csv, simple, sparql, or tsv if type is tuples");
+    					"csv, simple, sparql, tsv, or count if type is tuples");
     		}
 		} else if (type != null && type.equalsIgnoreCase("triples")) {
 			if (!(format.equalsIgnoreCase("n-triples") || 
 					format.equalsIgnoreCase("Notation 3") || 
 					format.equalsIgnoreCase("RDF/XML") || 
-					format.equalsIgnoreCase("Turtle"))) {
+					format.equalsIgnoreCase("Turtle") || 
+    				format.equalsIgnoreCase("count"))) {
     			throw new IllegalArgumentException("format must be one of " +
-    					"n-triples, notation 3, rdf/xml, or turtle if type is triples");
+    					"n-triples, notation 3, rdf/xml, turtle, or count if " +
+    					"type is triples");
     		}
 		}
     }
