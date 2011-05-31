@@ -34,6 +34,7 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -45,13 +46,18 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
  * @author Edwin Shin
  */
 public abstract class BaseFedoraRequestTest {
-	private String debug;
+	private static String debug;
 
     private FedoraCredentials credentials;
 
     private FedoraClient fedora;
 
     public final String testPid = "test-rest:1";
+    
+    @BeforeClass
+    public static void setDebug() {
+    	debug = System.getProperty("test.debug");
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -75,7 +81,6 @@ public abstract class BaseFedoraRequestTest {
     }
 
     public FedoraClient fedora() throws FedoraClientException {
-    	debug = System.getProperty("test.debug");
         if (fedora == null) {
             try {
                 fedora = new FedoraClient(getCredentials());

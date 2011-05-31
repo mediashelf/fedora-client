@@ -59,6 +59,8 @@ public class FedoraClientTest {
 	@Before
 	public void setUp() throws Exception {
 		client = new FedoraClient(credentials);
+		String debug = System.getProperty("test.debug");
+		client.debug(Boolean.parseBoolean(debug));
 	}
 
 	@Test
