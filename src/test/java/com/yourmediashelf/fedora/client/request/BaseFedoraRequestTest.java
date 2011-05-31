@@ -55,7 +55,6 @@ public abstract class BaseFedoraRequestTest {
 
     @Before
     public void setUp() throws Exception {
-    	debug = System.getProperty("test.debug");
         ingestTestObject();
     }
 
@@ -76,6 +75,7 @@ public abstract class BaseFedoraRequestTest {
     }
 
     public FedoraClient fedora() throws FedoraClientException {
+    	debug = System.getProperty("test.debug");
         if (fedora == null) {
             try {
                 fedora = new FedoraClient(getCredentials());
