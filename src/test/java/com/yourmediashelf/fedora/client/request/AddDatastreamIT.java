@@ -45,8 +45,8 @@ import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 import com.yourmediashelf.fedora.util.ChecksumUtility;
 import com.yourmediashelf.fedora.util.XmlSerializer;
 
-public class AddDatastreamTest
-        extends BaseFedoraRequestTest {
+public class AddDatastreamIT
+        extends BaseFedoraRequestIT {
 
     @Test
     public void testNewAddDatastream() throws Exception {

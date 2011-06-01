@@ -20,21 +20,17 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.export;
+import static com.yourmediashelf.fedora.client.FedoraClient.getObjectProfile;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.generated.foxml.DigitalObject;
 
-public class ExportTest extends BaseFedoraRequestTest {
+public class GetObjectProfileIT extends BaseFedoraRequestIT {
     @Test
-    public void testExport() throws Exception {
-        String format = "info:fedora/fedora-system:FOXML-1.1";
-        FedoraResponse response = export(testPid).format(format).execute(fedora());
+    public void testGetObjectXML() throws Exception {
+        FedoraResponse response = getObjectProfile(testPid).execute(fedora());
         assertEquals(200, response.getStatus());
-        DigitalObject foxml = response.getEntity(DigitalObject.class);
-        assertEquals(testPid, foxml.getPID());
     }
 }

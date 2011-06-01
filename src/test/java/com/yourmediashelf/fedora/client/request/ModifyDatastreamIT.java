@@ -38,8 +38,8 @@ import com.yourmediashelf.fedora.client.response.DatastreamProfileResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
-public class ModifyDatastreamTest
-        extends BaseFedoraRequestTest {
+public class ModifyDatastreamIT
+        extends BaseFedoraRequestIT {
 
     @Test
     public void testModifyDatastreamContent() throws Exception {

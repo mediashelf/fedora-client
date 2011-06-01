@@ -35,7 +35,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class PurgeRelationshipTest extends BaseFedoraRequestTest {
+public class PurgeRelationshipIT extends BaseFedoraRequestIT {
 
     @Test
     public void testPurgeRelationship() throws Exception {

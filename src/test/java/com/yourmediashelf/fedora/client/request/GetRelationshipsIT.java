@@ -33,8 +33,8 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class GetRelationshipsTest
-        extends BaseFedoraRequestTest {
+public class GetRelationshipsIT
+        extends BaseFedoraRequestIT {
 
     @Test
     public void testGetAllRelationships() throws Exception {

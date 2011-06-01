@@ -22,21 +22,17 @@ package com.yourmediashelf.fedora.client.request;
 import static com.yourmediashelf.fedora.client.FedoraClient.ingest;
 import static com.yourmediashelf.fedora.client.FedoraClient.purgeObject;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.net.URI;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.IngestResponse;
 
 
 
-public class IngestTest extends BaseFedoraRequestTest {
-
-    private String pid;
+public class PurgeObjectIT extends BaseFedoraRequestIT {
 
     @Override
     @Before
@@ -47,45 +43,21 @@ public class IngestTest extends BaseFedoraRequestTest {
     @Override
     @After
     public void tearDown() throws Exception {
-        if (pid != null) {
-            purgeObject(pid).logMessage("purging IngestTest object").execute(fedora());
-        }
+        // do nothing
     }
 
     @Test
-    public void testIngestDefault() throws Exception {
+    public void testPurgeObject() throws Exception {
         IngestResponse response = null;
-        URI location = null;
+        String pid = null;
 
-        // empty object, no pid, no namespace
-        response = ingest().logMessage("testIngestDefault").execute(fedora());
-        assertEquals(201, response.getStatus());
-        location = response.getLocation();
-        assertTrue(location.toString().contains("/objects/"));
-        pid = response.getPid();
-    }
-
-    @Test
-    public void testIngestWithNamespace() throws Exception {
-        IngestResponse response = null;
-        URI location = null;
-
-        // empty object, with namespace, but no pid
-        response = ingest().namespace("foospace").logMessage("testIngestWithNamespace").execute(fedora());
-        assertEquals(201, response.getStatus());
-        location = response.getLocation();
-        assertTrue(location.toString().contains("/objects/foospace"));
-        pid = response.getPid();
-    }
-
-    @Test
-    public void testIngestWithPid() throws Exception {
-        IngestResponse response = null;
-
-        // empty object, with pid
-        response = ingest(testPid).logMessage("testIngestWithPid").execute(fedora());
+        // first, ingest object
+        response = ingest(null).execute(fedora());
         assertEquals(201, response.getStatus());
         pid = response.getPid();
-        assertEquals(testPid, pid);
+
+        // now delete it
+        FedoraResponse purge = purgeObject(pid).execute(fedora());
+        assertEquals(200, purge.getStatus());
     }
 }

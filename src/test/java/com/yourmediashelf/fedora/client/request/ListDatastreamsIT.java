@@ -34,7 +34,7 @@ import com.yourmediashelf.fedora.generated.access.DatastreamType;
 
 
 
-public class ListDatastreamsTest extends BaseFedoraRequestTest {
+public class ListDatastreamsIT extends BaseFedoraRequestIT {
 
     @Test
     public void testListDatastreams() throws Exception {

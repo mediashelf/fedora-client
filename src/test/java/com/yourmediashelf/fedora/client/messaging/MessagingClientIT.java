@@ -46,7 +46,7 @@ import org.junit.Test;
  *
  * @author Bill Branan
  */
-public class MessagingClientTest implements MessagingListener {
+public class MessagingClientIT implements MessagingListener {
 
     private static final String TOPIC_NAME = "messageTopic";
     private static final String TOPIC = "org.fcrepo.test.topic";

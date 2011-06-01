@@ -20,17 +20,20 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.getObjectXML;
+import static com.yourmediashelf.fedora.client.FedoraClient.getDatastreamHistory;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetDatastreamHistoryResponse;
 
-public class GetObjectXMLTest extends BaseFedoraRequestTest {
+public class GetDatastreamHistoryIT extends BaseFedoraRequestIT {
+
     @Test
-    public void testGetObjectXML() throws Exception {
-        FedoraResponse response = getObjectXML(testPid).execute(fedora());
-        assertEquals(200, response.getStatus());
+    public void testGetDatastreamHistory() throws Exception {
+    	GetDatastreamHistoryResponse response = null;
+        String dsId = "DC";
+        response = getDatastreamHistory(testPid, dsId).execute(fedora());
+        assertEquals(testPid, response.getPid());
     }
 }

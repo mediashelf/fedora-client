@@ -43,7 +43,7 @@ import com.yourmediashelf.fedora.client.response.IngestResponse;
  * @author Edwin Shin
  *
  */
-public class FedoraClientTest {
+public class FedoraClientIT {
 	private static FedoraCredentials credentials;
 	private FedoraClient client;
 	//private static String testPid = "test-rest:1";

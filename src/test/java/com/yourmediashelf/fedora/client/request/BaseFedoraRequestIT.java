@@ -45,7 +45,7 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
  *
  * @author Edwin Shin
  */
-public abstract class BaseFedoraRequestTest {
+public abstract class BaseFedoraRequestIT {
 	private static String debug;
 
     private FedoraCredentials credentials;

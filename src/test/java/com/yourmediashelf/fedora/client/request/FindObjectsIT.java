@@ -17,47 +17,23 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.ingest;
-import static com.yourmediashelf.fedora.client.FedoraClient.purgeObject;
+import static com.yourmediashelf.fedora.client.FedoraClient.findObjects;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.IngestResponse;
 
-
-
-public class PurgeObjectTest extends BaseFedoraRequestTest {
-
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        // do nothing
-    }
-
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        // do nothing
-    }
+public class FindObjectsIT extends BaseFedoraRequestIT {
 
     @Test
-    public void testPurgeObject() throws Exception {
-        IngestResponse response = null;
-        String pid = null;
+    public void testFindObjects() throws Exception {
+        FedoraResponse response = null;
 
-        // first, ingest object
-        response = ingest(null).execute(fedora());
-        assertEquals(201, response.getStatus());
-        pid = response.getPid();
-
-        // now delete it
-        FedoraResponse purge = purgeObject(pid).execute(fedora());
-        assertEquals(200, purge.getStatus());
+        response = findObjects().pid(true).terms("*").resultFormat("xml").execute(fedora());
+        assertEquals(200, response.getStatus());
     }
 }

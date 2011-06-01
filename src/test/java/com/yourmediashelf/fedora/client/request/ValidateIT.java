@@ -20,20 +20,33 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.listMethods;
+import static com.yourmediashelf.fedora.client.FedoraClient.validate;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.ListMethodsResponse;
-import com.yourmediashelf.fedora.generated.access.ObjectMethods;
+import com.yourmediashelf.fedora.client.response.ValidateResponse;
 
-public class ListMethodsTest extends BaseFedoraRequestTest {
+public class ValidateIT extends BaseFedoraRequestIT {
+
     @Test
-    public void testListMethods() throws Exception {
-        ListMethodsResponse response = listMethods(testPid).execute(fedora());
-        ObjectMethods methods = response.getObjectMethods();
-        assertEquals(testPid, methods.getPid());
-        //System.out.println(response.getEntity(String.class));
+    public void testValidate() throws Exception {
+        ValidateResponse response = null;
+
+        response = validate(testPid).execute(fedora());
+        assertEquals(testPid, response.getPid());
+        assertTrue(response.isValid());
+    }
+
+    @Test
+    public void testValidateWithDateTime() throws Exception {
+    	ValidateResponse response = null;
+    	String dateTime = "9999-01-01T00:00:01.001Z";
+        response = validate(testPid).asOfDateTime(dateTime).execute(fedora());
+        assertEquals(200, response.getStatus());
+
+        assertEquals(testPid, response.getPid());
+        assertEquals(dateTime, response.getAsOfDateTime());
     }
 }

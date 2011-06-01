@@ -20,21 +20,26 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.describeRepository;
+import static com.yourmediashelf.fedora.client.FedoraClient.upload;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.DescribeRepositoryResponse;
+import com.yourmediashelf.fedora.client.response.UploadResponse;
 
-public class DescribeRepositoryTest
-        extends BaseFedoraRequestTest {
+public class UploadIT
+        extends BaseFedoraRequestIT {
 
     @Test
-    public void testDescribe() throws Exception {
-        DescribeRepositoryResponse response =
-                describeRepository().execute(fedora());
-        assertEquals(200, response.getStatus());
-        System.out.println(response.getRepositoryVersion());
+    public void testUpload() throws Exception {
+        File f = new File("src/test/resources/21.edit.essay.zip");
+        assertTrue(f.exists());
+        UploadResponse response =
+                upload(f).execute(fedora());
+        assertEquals(202, response.getStatus());
+        assertTrue(response.getUploadLocation().startsWith("uploaded://"));
     }
 }

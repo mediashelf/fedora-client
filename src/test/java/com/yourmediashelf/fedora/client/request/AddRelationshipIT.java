@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class AddRelationshipTest extends BaseFedoraRequestTest {
+public class AddRelationshipIT extends BaseFedoraRequestIT {
 
     @Test
     public void testAddRelationship() throws Exception {

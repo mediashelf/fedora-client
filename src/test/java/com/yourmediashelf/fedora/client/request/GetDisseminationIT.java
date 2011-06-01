@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class GetDisseminationTest extends BaseFedoraRequestTest {
+public class GetDisseminationIT extends BaseFedoraRequestIT {
 
     @Test
     public void testGetDissemination() throws Exception {

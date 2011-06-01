@@ -20,33 +20,19 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.validate;
+import static com.yourmediashelf.fedora.client.FedoraClient.getObjectHistory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.ValidateResponse;
+import com.yourmediashelf.fedora.client.response.GetObjectHistoryResponse;
 
-public class ValidateTest extends BaseFedoraRequestTest {
-
+public class GetObjectHistoryIT extends BaseFedoraRequestIT {
     @Test
-    public void testValidate() throws Exception {
-        ValidateResponse response = null;
-
-        response = validate(testPid).execute(fedora());
+    public void testGetObjectHistory() throws Exception {
+        GetObjectHistoryResponse response = getObjectHistory(testPid).execute(fedora());
         assertEquals(testPid, response.getPid());
-        assertTrue(response.isValid());
-    }
-
-    @Test
-    public void testValidateWithDateTime() throws Exception {
-    	ValidateResponse response = null;
-    	String dateTime = "9999-01-01T00:00:01.001Z";
-        response = validate(testPid).asOfDateTime(dateTime).execute(fedora());
-        assertEquals(200, response.getStatus());
-
-        assertEquals(testPid, response.getPid());
-        assertEquals(dateTime, response.getAsOfDateTime());
+        assertTrue(response.getObjectChangeDate().size() == 1);
     }
 }

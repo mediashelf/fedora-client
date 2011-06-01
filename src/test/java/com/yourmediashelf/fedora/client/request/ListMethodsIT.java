@@ -20,17 +20,20 @@
 
 package com.yourmediashelf.fedora.client.request;
 
-import static com.yourmediashelf.fedora.client.FedoraClient.getObjectProfile;
+import static com.yourmediashelf.fedora.client.FedoraClient.listMethods;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.ListMethodsResponse;
+import com.yourmediashelf.fedora.generated.access.ObjectMethods;
 
-public class GetObjectProfileTest extends BaseFedoraRequestTest {
+public class ListMethodsIT extends BaseFedoraRequestIT {
     @Test
-    public void testGetObjectXML() throws Exception {
-        FedoraResponse response = getObjectProfile(testPid).execute(fedora());
-        assertEquals(200, response.getStatus());
+    public void testListMethods() throws Exception {
+        ListMethodsResponse response = listMethods(testPid).execute(fedora());
+        ObjectMethods methods = response.getObjectMethods();
+        assertEquals(testPid, methods.getPid());
+        //System.out.println(response.getEntity(String.class));
     }
 }

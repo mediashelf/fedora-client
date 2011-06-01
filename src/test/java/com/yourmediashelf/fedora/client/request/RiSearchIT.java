@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.RiSearchResponse;
 
-public class RiSearchTest extends BaseFedoraRequestTest {
+public class RiSearchIT extends BaseFedoraRequestIT {
 
     @Test
     public void testItqlQuery() throws Exception {

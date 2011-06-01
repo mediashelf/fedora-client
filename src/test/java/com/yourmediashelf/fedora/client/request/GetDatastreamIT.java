@@ -34,7 +34,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
-public class GetDatastreamTest extends BaseFedoraRequestTest {
+public class GetDatastreamIT extends BaseFedoraRequestIT {
 
     @Test
     public void testGetDatastreamAsHtml() throws Exception {
