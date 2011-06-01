@@ -59,7 +59,7 @@ public class GetDissemination
      * @return this builder
      */
     public GetDissemination methodParam(String key, String value) {
-        addQueryParam("key", value);
+        addQueryParam(key, value);
         return this;
     }
 

@@ -32,7 +32,6 @@ public class GetDisseminationTest extends BaseFedoraRequestTest {
     @Test
     public void testGetDissemination() throws Exception {
         FedoraResponse response = null;
-        //fedora-system:FedoraObject-3.0/methods/fedora-system:3/viewDublinCore
 
         String objectPid = "fedora-system:FedoraObject-3.0";
         String sdefPid = "fedora-system:3";
