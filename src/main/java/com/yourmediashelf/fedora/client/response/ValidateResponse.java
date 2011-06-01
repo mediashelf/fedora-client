@@ -41,7 +41,7 @@ public class ValidateResponse
     public Validation getValidation() throws FedoraClientException {
         if (validation == null) {
         	validation =
-                (Validation) unmarshallResponse(ContextPath.Access);
+                (Validation) unmarshallResponse(ContextPath.Management);
         }
         return validation;
     }
