@@ -40,7 +40,7 @@ public class DescribeRepository
     /**
      * <p>Format the response as XML. Defaults to "true".</p>
      *
-     * @param boolean Defaults to "xml".
+     * @param xml Defaults to true.
      * @return this builder
      */
     public DescribeRepository xml(boolean xml) {
