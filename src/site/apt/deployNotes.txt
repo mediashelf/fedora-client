@@ -3,8 +3,7 @@
 	---
 
 Maven requirements
-Maven version 2.2.1 (or greater) is required to support deployment of artifacts
-see: http://jira.codehaus.org/browse/MNG-4235
+Maven version 3.0.0 (or greater) is required to support deployment of artifacts
 
 +--
 Snapshot release
