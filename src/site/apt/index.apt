@@ -22,7 +22,7 @@ optimistic locking for modify object and modify datastream requests.
     Since version 0.1.0, fedora-client also supports DescribeRepository which 
 is only provided by the Fedora API-A-Lite interface.
 
-    For examples of how to use fedora-client, see the {{{usage.html}Usage}} 
+    For examples of how to use fedora-client, see the {{{./usage.html}Usage}} 
 section and the project's JUnit integration tests.
 
 A Note about Versions and Compatibility
