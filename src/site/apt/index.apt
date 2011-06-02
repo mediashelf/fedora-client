@@ -46,4 +46,7 @@ provide unmediated access to the server response.
     Future versions of fedora-client will hopefully provide better means of 
 negotiating against multiple versions of Fedora. Ideas and code contributions 
 are always welcome!
+
+    * fedora-client-0.1.3 is the recommended version to use with Fedora 3.4.x
+    * fedora-client-0.1.5 is the recommended version to use with Fedora 3.5.0
     
