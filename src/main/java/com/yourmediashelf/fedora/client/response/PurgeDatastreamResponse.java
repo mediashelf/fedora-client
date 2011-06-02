@@ -19,11 +19,11 @@
 
 package com.yourmediashelf.fedora.client.response;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.type.TypeFactory;
+import org.codehaus.jackson.type.TypeReference;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -52,9 +52,7 @@ public class PurgeDatastreamResponse extends FedoraResponseImpl {
         if (purgedDates == null) {
             try {
                 purgedDates = mapper.readValue(getEntity(String.class),
-                                               TypeFactory
-                                               .collectionType(ArrayList.class,
-                                                               String.class));
+                			  new TypeReference<Collection<String>>() { });
             } catch (Exception e) {
                 throw new FedoraClientException(e.getMessage(), e);
             }
