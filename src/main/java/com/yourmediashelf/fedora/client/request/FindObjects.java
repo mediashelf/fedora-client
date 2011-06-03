@@ -23,157 +23,251 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
-import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
+import com.yourmediashelf.fedora.client.response.FindObjectsResponse;
 
 /**
  * Builder for the FindObjects method.
- *
+ * 
  * @author Edwin Shin
  */
 public class FindObjects extends FedoraRequest<FindObjects> {
 
-    public FindObjects() {
-    }
+	public FindObjects() {
+	}
 
-    public FindObjects terms(String terms) {
-        addQueryParam("terms", terms);
-        return this;
-    }
+	/**
+	 * A phrase represented as a sequence of characters (including the ? and *
+	 * wildcards) for the search.
+	 * 
+	 * <p>
+	 * If this sequence is found in any of the fields for an object, the object
+	 * is considered a match. Do NOT use this parameter in combination with the
+	 * "query" parameter.
+	 * 
+	 * @param terms
+	 *            A phrase represented as a sequence of characters
+	 * @return this builder
+	 */
+	public FindObjects terms(String terms) {
+		addQueryParam("terms", terms);
+		return this;
+	}
 
-    public FindObjects query(String query) {
-        addQueryParam("query", query);
-        return this;
-    }
+	/**
+	 * A sequence of space-separated conditions.
+	 * 
+	 * <p>
+	 * A condition consists of a metadata element name followed directly by an
+	 * operator, followed directly by a value.
+	 * 
+	 * <p>
+	 * Valid element names are (pid, label, state, ownerId, cDate, mDate,
+	 * dcmDate, title, creator, subject, description, publisher, contributor,
+	 * date, type, format, identifier, source, language, relation, coverage,
+	 * rights).
+	 * 
+	 * <p>
+	 * Valid operators are: contains (), equals (=), greater than (>), less than
+	 * (<), greater than or equals (>=), less than or equals (<=). The contains
+	 * () operator may be used in combination with the ? and * wildcards to
+	 * query for simple string patterns. Space-separators should be encoded in
+	 * the URL as %20.
+	 * 
+	 * <p>
+	 * Operators must be encoded when used in the URL syntax as follows: the (=)
+	 * operator must be encoded as %3D, the (>) operator as %3E, the (<)
+	 * operator as %3C, the (>=) operator as %3E%3D, the (<=) operator as
+	 * %3C%3D, and the (~) operator as %7E. Values may be any string. If the
+	 * string contains a space, the value should begin and end with a single
+	 * quote character ('). If all conditions are met for an object, the object
+	 * is considered a match.
+	 * 
+	 * <p>
+	 * Do NOT use this parameter in combination with the "terms" parameter.
+	 * 
+	 * @param query
+	 *            A sequence of space-separated conditions.
+	 * @return this builder
+	 */
+	public FindObjects query(String query) {
+		addQueryParam("query", query);
+		return this;
+	}
 
-    public FindObjects maxResults(int maxResults) {
-        addQueryParam("maxResults", Integer.toString(maxResults));
-        return this;
-    }
+	/**
+	 * The maximum number of results that the server should provide at once. If
+	 * this is unspecified, the server will default to a small value.
+	 * 
+	 * @param maxResults
+	 *            The maximum number of results that the server should provide
+	 *            at once
+	 * @return this builder
+	 */
+	public FindObjects maxResults(int maxResults) {
+		addQueryParam("maxResults", Integer.toString(maxResults));
+		return this;
+	}
 
-    public FindObjects resultFormat(String resultFormat) {
-        addQueryParam("resultFormat", resultFormat);
-        return this;
-    }
+	/**
+	 * The preferred output format.
+	 * 
+	 * @param resultFormat
+	 *            one of "html" or "xml". Defaults to "xml".
+	 * @return this builder
+	 */
+	public FindObjects resultFormat(String resultFormat) {
+		addQueryParam("resultFormat", resultFormat);
+		return this;
+	}
 
-    public FindObjects sessionToken(String sessionToken) {
-        addQueryParam("sessionToken", sessionToken);
-        return this;
-    }
+	/**
+	 * The identifier of the session to which the search results are being
+	 * returned.
+	 * 
+	 * @param sessionToken
+	 *            The session identifier
+	 * @return this builder
+	 */
+	public FindObjects sessionToken(String sessionToken) {
+		addQueryParam("sessionToken", sessionToken);
+		return this;
+	}
 
-    public FindObjects pid(boolean pid) {
-        addQueryParam("pid", Boolean.toString(pid));
-        return this;
-    }
+	/**
+	 * Return the Fedora persistent identifier (PID) element of matching objects
+	 * in the response.
+	 * 
+	 * @return this builder
+	 */
+	public FindObjects pid() {
+		addQueryParam("pid", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects label(boolean label) {
-        addQueryParam("label", Boolean.toString(label));
-        return this;
-    }
+	public FindObjects label() {
+		addQueryParam("label", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects state(boolean state) {
-        addQueryParam("state", Boolean.toString(state));
-        return this;
-    }
+	public FindObjects state() {
+		addQueryParam("state", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects ownerId(boolean ownerId) {
-        addQueryParam("ownerId", Boolean.toString(ownerId));
-        return this;
-    }
+	public FindObjects ownerId() {
+		addQueryParam("ownerId", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects cDate(boolean cDate) {
-        addQueryParam("cDate", Boolean.toString(cDate));
-        return this;
-    }
+	public FindObjects cDate() {
+		addQueryParam("cDate", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects mDate(boolean mDate) {
-        addQueryParam("mDate", Boolean.toString(mDate));
-        return this;
-    }
+	public FindObjects mDate() {
+		addQueryParam("mDate", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects dcmDate(boolean dcmDate) {
-        addQueryParam("dcmDate", Boolean.toString(dcmDate));
-        return this;
-    }
+	public FindObjects dcmDate() {
+		addQueryParam("dcmDate", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects title(boolean title) {
-        addQueryParam("title", Boolean.toString(title));
-        return this;
-    }
+	/**
+	 * Return the Dublin Core title element(s) of matching objects in the
+	 * response.
+	 * 
+	 * @return this builder
+	 */
+	public FindObjects title() {
+		addQueryParam("title", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects creator(boolean creator) {
-        addQueryParam("creator", Boolean.toString(creator));
-        return this;
-    }
+	public FindObjects creator() {
+		addQueryParam("creator", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects subject(boolean subject) {
-        addQueryParam("subject", Boolean.toString(subject));
-        return this;
-    }
+	public FindObjects subject() {
+		addQueryParam("subject", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects description(boolean description) {
-        addQueryParam("description", Boolean.toString(description));
-        return this;
-    }
+	public FindObjects description() {
+		addQueryParam("description", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects publisher(boolean publisher) {
-        addQueryParam("publisher", Boolean.toString(publisher));
-        return this;
-    }
+	public FindObjects publisher() {
+		addQueryParam("publisher", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects contributor(boolean contributor) {
-        addQueryParam("contributor", Boolean.toString(contributor));
-        return this;
-    }
+	public FindObjects contributor() {
+		addQueryParam("contributor", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects date(boolean date) {
-        addQueryParam("date", Boolean.toString(date));
-        return this;
-    }
+	public FindObjects date() {
+		addQueryParam("date", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects type(boolean type) {
-        addQueryParam("type", Boolean.toString(type));
-        return this;
-    }
+	public FindObjects type() {
+		addQueryParam("type", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects format(boolean format) {
-        addQueryParam("format", Boolean.toString(format));
-        return this;
-    }
+	public FindObjects format() {
+		addQueryParam("format", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects identifier(boolean identifier) {
-        addQueryParam("identifier", Boolean.toString(identifier));
-        return this;
-    }
+	public FindObjects identifier() {
+		addQueryParam("identifier", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects source(boolean source) {
-        addQueryParam("source", Boolean.toString(source));
-        return this;
-    }
+	public FindObjects source() {
+		addQueryParam("source", Boolean.TRUE.toString());
+		return this;
+	}
 
-    public FindObjects language(boolean language) {
-        addQueryParam("language", Boolean.toString(language));
-        return this;
-    }
-    public FindObjects relation(boolean relation) {
-        addQueryParam("relation", Boolean.toString(relation));
-        return this;
-    }
-    public FindObjects coverage(boolean coverage) {
-        addQueryParam("coverage", Boolean.toString(coverage));
-        return this;
-    }
-    public FindObjects rights(boolean rights) {
-        addQueryParam("rights", Boolean.toString(rights));
-        return this;
-    }
+	public FindObjects language() {
+		addQueryParam("language", Boolean.TRUE.toString());
+		return this;
+	}
 
-    @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
-        String path = String.format("objects");
+	public FindObjects relation() {
+		addQueryParam("relation", Boolean.TRUE.toString());
+		return this;
+	}
 
-        return new FedoraResponseImpl(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
-    }
+	public FindObjects coverage() {
+		addQueryParam("coverage", Boolean.TRUE.toString());
+		return this;
+	}
+
+	public FindObjects rights() {
+		addQueryParam("rights", Boolean.TRUE.toString());
+		return this;
+	}
+
+	@Override
+	public FindObjectsResponse execute(FedoraClient fedora)
+			throws FedoraClientException {
+		// default to xml for the format, so we can parse the results
+		if (getFirstQueryParam("resultFormat") == null) {
+			addQueryParam("resultFormat", "xml");
+		}
+
+		WebResource wr = fedora.resource();
+		String path = String.format("objects");
+
+		return new FindObjectsResponse(wr.path(path)
+				.queryParams(getQueryParams()).get(ClientResponse.class));
+	}
 
 }

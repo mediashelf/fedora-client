@@ -17,23 +17,88 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.findObjects;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.FindObjectsResponse;
 
 public class FindObjectsIT extends BaseFedoraRequestIT {
 
-    @Test
-    public void testFindObjects() throws Exception {
-        FedoraResponse response = null;
+	@Test
+	public void testFindObjects() throws Exception {
+		FindObjectsResponse response = null;
 
-        response = findObjects().pid(true).terms("*").resultFormat("xml").execute(fedora());
-        assertEquals(200, response.getStatus());
-    }
+		response = findObjects().pid().terms("*").execute(fedora());
+		assertEquals(200, response.getStatus());
+
+		List<String> pids = response.getPids();
+		assertEquals(5, pids.size());
+		assertFalse(response.hasNext());
+	}
+
+	@Test
+	public void testResumeFindObjects() throws Exception {
+		FindObjectsResponse response = null;
+
+		response = findObjects().pid().maxResults(3).terms("*")
+				.execute(fedora());
+		assertEquals(200, response.getStatus());
+
+		List<String> pids = response.getPids();
+
+		assertEquals(3, pids.size());
+		assertTrue(response.hasNext());
+		response = findObjects().pid().sessionToken(response.getToken())
+				.maxResults(3).terms("*").resultFormat("xml").execute(fedora());
+
+		pids = response.getPids();
+
+		assertEquals(2, pids.size());
+		assertFalse(response.hasNext());
+	}
+
+	@Test
+	public void testFindDCTitle() throws Exception {
+		FindObjectsResponse response = null;
+
+		response = findObjects().pid().title().terms("*").execute(fedora());
+		assertEquals(200, response.getStatus());
+		List<String> pids = response.getPids();
+		assertEquals(5, pids.size());
+
+		List<String> titles;
+		for (String pid : pids) {
+			titles = response.getObjectField(pid, "title");
+			if (pid.equals(testPid)) {
+				assertEquals(0, titles.size());
+			} else {
+				assertEquals(1, titles.size());
+			}
+		}
+	}
+
+	@Test
+	public void testFindInvalidField() throws Exception {
+		FindObjectsResponse response = null;
+
+		response = findObjects().pid().identifier().terms("*")
+				.execute(fedora());
+		assertEquals(200, response.getStatus());
+		List<String> pids = response.getPids();
+		assertEquals(5, pids.size());
+
+		List<String> identifiers;
+		for (String pid : pids) {
+			identifiers = response.getObjectField(pid, "InvalidField");
+			assertEquals(0, identifiers.size());
+		}
+	}
 }
