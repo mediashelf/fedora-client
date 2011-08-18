@@ -143,6 +143,10 @@ public class AddDatastreamIT
         }
     }
 
+    /**
+     * Ignored pending resolution of https://jira.duraspace.org/browse/FCREPO-190
+     * @throws Exception
+     */
     @Ignore
     @Test
     public void testInlineChecksum() throws Exception {
