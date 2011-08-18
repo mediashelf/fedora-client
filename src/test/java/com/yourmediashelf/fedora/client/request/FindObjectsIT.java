@@ -64,6 +64,15 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 		assertEquals(2, pids.size());
 		assertFalse(response.hasNext());
 	}
+	
+	@Test
+	public void testFindByQuery() throws Exception {
+		FindObjectsResponse response = null;
+
+		response = findObjects().pid().title().query("pid=" + testPid).execute(fedora());
+		assertEquals(200, response.getStatus());
+		assertEquals(1, response.getPids().size());
+	}
 
 	@Test
 	public void testFindDCTitle() throws Exception {
