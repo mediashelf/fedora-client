@@ -21,7 +21,29 @@ mvn license:format
 mvn release:prepare -DdryRun
 mvn release:clean && mvn release:prepare
 mvn release:perform
+
 +--
+
+Release without generating site
+
++--
+mvn release:perform -Dgoals=deploy
++--
+
+Release from a tag (e.g. if a release fails after a tag has been generated 
+and the pom versions have been incremented, there should be no need to 
+perform a mvn release:rollback. Instead, perform the release from the tag.
+
++--
+mvn release:perform -DconnectionUrl=scm:git:git://github.com/mediashelf/fedora-client -Dtag=fedora-client-0.1.7
++--
+
+Release using a SOCKS proxy
+
++--
+MAVEN_OPTS="-DsocksProxyHost=localhost -DsocksProxyPort=8000" mvn release:perform 
++--
+
 
 Fixing a botched release
 
@@ -45,3 +67,5 @@ git reset --hard thechecksum
 # reset remote repo
 git push origin +master
 +--
+
+
