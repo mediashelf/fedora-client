@@ -59,23 +59,20 @@ FedoraResponse.getEntity.
 
 * Including fedora-client in your Maven project
 
-    Add the following to your pom.xml (substituting the actual current version
-of fedora-client):
+    As of 0.1.7, fedora-client is now available via Maven Central. Prior 
+versions are available in the Duraspace Thirdparty Maven Repository 
+(https://m2.duraspace.org/content/repositories/thirdparty).
+    
+    Add the following to your pom.xml (substituting the actual, current 
+version of fedora-client):
     
 +--
-<repositories>
-    <repository>
-        <id>duraspace-thirdparty</id>
-        <name>Duraspace Thirdparty Maven Repository</name>
-        <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
-    </repository>
-</repositories>
 
 <dependencies>
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client</artifactId>
-        <version>0.1.5</version>
+        <version>0.1.7</version>
     </dependency>
 </dependencies>
 +--

@@ -32,7 +32,7 @@ with something like the following:
 Requirements
 ------------
 
-* Fedora 3.4 (earlier 3.x versions should work as well, minus some features)
+* Fedora 3.5 (earlier 3.x versions should work as well, minus some features)
 * Java 6
 
 Installation
@@ -48,8 +48,9 @@ Installation
         mvn install
         
     fedora-client ships with a number of integration tests that require a 
-    running instance of Fedora. Set the testing properties (e.g. username, 
-    password) in pom.xml, or to skip the tests:
+    running instance of Fedora that has the ResourceIndex module enabled. 
+    Set the testing properties (e.g. username, password) in pom.xml, or to 
+    skip the integration tests entirely:
    
         mvn install -DskipTests
         
@@ -70,4 +71,4 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright &copy; 2010 MediaShelf
+Copyright &copy; 2010-2011 MediaShelf
