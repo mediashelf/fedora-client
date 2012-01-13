@@ -25,6 +25,7 @@ import static com.yourmediashelf.fedora.client.FedoraClient.getDatastreamDissemi
 import static com.yourmediashelf.fedora.client.FedoraClient.modifyDatastream;
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -34,8 +35,11 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.FedoraClientException;
+import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.DatastreamProfileResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
+import com.yourmediashelf.fedora.client.response.ModifyDatastreamResponse;
 import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
 public class ModifyDatastreamIT
@@ -365,4 +369,51 @@ public class ModifyDatastreamIT
         assertEquals("DISABLED", profile.getDsChecksumType());
         assertEquals("none", profile.getDsChecksum());
     }
+    
+    /**
+     * Test modifying a managed RELS-EXT datastream.
+     * 
+     * <p>This test will fail against Fedora 3.5 and earlier as described in 
+     * <a href="https://jira.duraspace.org/browse/FCREPO-1045">FCREPO-1045</a>.
+     * @throws Exception
+     */
+    @Test
+	public void testModifyManagedRelsExt() throws Exception {
+		String dsId = "RELS-EXT";
+
+		AddDatastreamResponse adr = addDatastream(testPid, dsId)
+				.controlGroup("M")
+				.versionable(false)
+				.content(
+						"<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
+								+ "<rdf:Description rdf:about=\"info:fedora/"
+								+ testPid + "\" /></rdf:RDF>").execute(fedora());
+
+		assertEquals(201, adr.getStatus());
+
+		ModifyDatastreamResponse mdr = modifyDatastream(testPid, dsId).dsLabel(
+				"a test label").logMessage("testModifyManagedRelsExt").execute(fedora());
+		assertEquals(200, mdr.getStatus());
+
+		// The fix for FCREPO-1045 skips validation if the dsLocation is
+		// unchanged or copy://. Want to ensure that updating the content of an 
+		// unversioned RELS-EXT still triggers validation.
+		mdr = modifyDatastream(testPid, dsId).versionable(false)
+				.logMessage("testModifyManagedRelsExt setting versionable false")
+				.execute(fedora());
+		GetDatastreamResponse gdr = getDatastream(testPid, dsId).execute(fedora());
+        DatastreamProfile dsp = gdr.getDatastreamProfile();
+        assertFalse(Boolean.parseBoolean(dsp.getDsVersionable()));
+		
+		try {
+			modifyDatastream(testPid, dsId)
+				.content("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
+						+ "<rdf:Description rdf:about=\"info:fedora/"
+						+ "AnInvalidPID\" /></rdf:RDF>")
+				.logMessage("testModifyManagedRelsExt request that should fail")
+				.execute(fedora());
+			fail("Should have thrown an exception because of an invalid RELS-EXT");
+		} catch (FedoraClientException e) {
+		}
+	}
 }
