@@ -65,7 +65,7 @@ public class FedoraClientIT {
 
 	@Test
 	public void testGetMimeType() throws Exception {
-	    File f = new File("src/test/resources/foo.xml");
+	    File f = new File("src/test/resources/testGetMimeType.xml");
 	    assertEquals("text/xml", client.getMimeType(f));
 	}
 

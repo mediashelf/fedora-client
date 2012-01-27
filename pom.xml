@@ -10,95 +10,27 @@
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
   <version>0.1.8-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <name>MediaShelf ${project.artifactId}</name>
   <description>Java client library for Fedora</description>
   <url>http://mediashelf.github.com/${project.artifactId}</url>
+  
+  <modules>
+    <module>fedora-client-core</module>
+    <module>fedora-client-messaging</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <jersey.version>1.9</jersey.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <!-- begin messaging-specific dependencies -->
-      <dependency>
-        <groupId>org.apache.abdera</groupId>
-        <artifactId>abdera-core</artifactId>
-        <version>1.1.2</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-core</artifactId>
-        <version>5.5.0</version>
-        <exclusions>
-          <!-- So far as I can tell, protobuf is already included in activemq-core -->
-          <exclusion>
-            <groupId>org.apache.activemq.protobuf</groupId>
-            <artifactId>activemq-protobuf</artifactId>
-          </exclusion>
-        </exclusions> 
-      </dependency>
-      <!-- end messaging dependencies -->
-
-      <dependency>
-        <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-client</artifactId>
-        <version>${jersey.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-multipart</artifactId>
-        <version>${jersey.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>eu.medsea.mimeutil</groupId>
-        <artifactId>mime-util</artifactId>
-        <version>2.1.3</version>
-      </dependency>
-      <dependency>
-        <groupId>joda-time</groupId>
-        <artifactId>joda-time</artifactId>
-        <version>2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>com.hp.hpl.jena</groupId>
-        <artifactId>jena</artifactId>
-        <version>2.6.4</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.santuario</groupId>
-        <artifactId>xmlsec</artifactId>
-        <version>1.4.6</version>
-      </dependency>
-      <dependency>
-        <groupId>org.codehaus.jackson</groupId>
-        <artifactId>jackson-mapper-lgpl</artifactId>
-        <version>1.9.3</version>
-      </dependency>
-      <dependency>
-        <groupId>xerces</groupId>
-        <artifactId>xercesImpl</artifactId>
-        <version>2.10.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-all</artifactId>
-        <version>1.9.0</version>
-        <scope>test</scope>
-      </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.10</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>xmlunit</groupId>
-        <artifactId>xmlunit</artifactId>
-        <version>1.3</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -106,58 +38,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.abdera</groupId>
-      <artifactId>abdera-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-multipart</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>eu.medsea.mimeutil</groupId>
-      <artifactId>mime-util</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.hp.hpl.jena</groupId>
-      <artifactId>jena</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.santuario</groupId>
-      <artifactId>xmlsec</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-lgpl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>xmlunit</groupId>
-      <artifactId>xmlunit</artifactId>
     </dependency>
   </dependencies>
 
@@ -288,9 +170,52 @@
           <artifactId>maven-jaxb2-plugin</artifactId>
           <version>0.8.0</version>
         </plugin>
+        <!--This plugin's configuration is used to store Eclipse 
+                m2e settings only. It has no influence on the Maven build itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <versionRange>[1.0,)</versionRange>
+                    <goals>
+                      <goal>enforce</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <versionRange>[2.4.1,)</versionRange>
+                    <goals>
+                      <goal>clean</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.eclipse.m2e</groupId>
+        <artifactId>lifecycle-mapping</artifactId>
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
       </plugin>
@@ -327,43 +252,12 @@
         </dependencies>
       </plugin>
       <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-access</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <schemaDirectory>src/main/resources/xsd/access</schemaDirectory>
-              <generatePackage>com.yourmediashelf.fedora.generated.access</generatePackage>
-              <generateDirectory>${project.build.directory}/generated-sources/access</generateDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>generate-management</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <schemaDirectory>src/main/resources/xsd/management</schemaDirectory>
-              <generatePackage>com.yourmediashelf.fedora.generated.management</generatePackage>
-              <generateDirectory>${project.build.directory}/generated-sources/management</generateDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>generate-foxml</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <schemaDirectory>src/main/resources/xsd/foxml</schemaDirectory>
-              <generatePackage>com.yourmediashelf.fedora.generated.foxml</generatePackage>
-              <generateDirectory>${project.build.directory}/generated-sources/foxml</generateDirectory>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
@@ -399,32 +293,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-shade-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <artifactSet>
-                <excludes>
-                  <exclude>classworlds:classworlds</exclude>
-                  <exclude>junit:junit</exclude>
-                  <exclude>mockito:*</exclude>
-                  <exclude>*:xml-apis</exclude>
-                  <exclude>org.apache.maven:lib:tests</exclude>
-                  <exclude>log4j:log4j:jar:</exclude>
-                </excludes>
-              </artifactSet>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
-              <shadedClassifierName>with-dependencies</shadedClassifierName>
-              <minimizeJar>true</minimizeJar>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <!-- site plugin reporting moved here as of Maven 3 -->
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
@@ -447,6 +315,7 @@
               <version>2.11</version>
                 <configuration>
                   <outputName>surefire-report</outputName>
+                  <aggregate>true</aggregate>
                   <reportsDirectories>
                     <reportsDirectory>${project.build.directory}/surefire-reports/</reportsDirectory>
                     <reportsDirectory>${project.build.directory}/failsafe-reports/</reportsDirectory>
@@ -468,6 +337,9 @@
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>cobertura-maven-plugin</artifactId>
               <version>2.5.1</version>
+              <configuration>
+                <aggregate>true</aggregate>
+              </configuration>
             </plugin>
           </reportPlugins>
         </configuration>

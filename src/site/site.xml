@@ -38,5 +38,6 @@
         <item name="Test JavaDocs" href="testapidocs/index.html"/>
         <item name="Browse Test Source Code" href="xref-test/index.html"/>
     </menu>
+    <menu ref="modules"/>
   </body>
 </project>
