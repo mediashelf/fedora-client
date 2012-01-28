@@ -23,6 +23,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
+    replacements of "fedora-client" in child modules -->
+    <project_name>fedora-client</project_name>
   </properties>
 
   <dependencyManagement>
@@ -71,11 +74,11 @@
   </organization>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:git:git://github.com/mediashelf/${project.artifactId}.git
+    <connection>scm:git:git://github.com/mediashelf/${project_name}.git
     </connection>
-    <developerConnection>scm:git:git@github.com:mediashelf/${project.artifactId}.git
+    <developerConnection>scm:git:git@github.com:mediashelf/${project_name}.git
     </developerConnection>
-    <url>http://github.com/mediashelf/${project.artifactId}</url>
+    <url>http://github.com/mediashelf/${project_name}</url>
   </scm>
 
   <issueManagement>
@@ -99,7 +102,7 @@
   <distributionManagement>
     <site>
       <id>gh-pages</id>
-      <url>gitsite:git@github-mshlf/mediashelf/${project.artifactId}.git</url>
+      <url>gitsite:git@github.com/mediashelf/${project_name}.git</url>
     </site>
   </distributionManagement>
   <build>
@@ -117,7 +120,7 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>2.3.2</version>
           <configuration>
-            <debug>true</debug>
+            <debug>false</debug>
             <source>1.6</source>
             <target>1.6</target>
           </configuration>
@@ -186,19 +189,6 @@
                     <versionRange>[1.0,)</versionRange>
                     <goals>
                       <goal>enforce</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />&gt;
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <versionRange>[2.4.1,)</versionRange>
-                    <goals>
-                      <goal>clean</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
@@ -326,7 +316,7 @@
               <artifactId>maven-changelog-plugin</artifactId>
               <version>2.2</version>
               <configuration>
-                <displayFileDetailUrl>http://github.com/mediashelf/${project.artifactId}/blob/master/%FILE% </displayFileDetailUrl>
+                <displayFileDetailUrl>http://github.com/mediashelf/${project_name}/blob/master/%FILE% </displayFileDetailUrl>
               </configuration>
             </plugin>
             <plugin>
@@ -359,7 +349,7 @@
       <extension>
         <groupId>org.kathrynhuxtable.maven.wagon</groupId>
         <artifactId>wagon-gitsite</artifactId>
-        <version>0.3.1</version>
+        <version>0.4-SNAPSHOT</version>
       </extension>
     </extensions>
   </build>
