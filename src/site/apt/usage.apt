@@ -62,6 +62,12 @@ FedoraResponse.getEntity.
     As of 0.1.7, fedora-client is now available via Maven Central. Prior 
 versions are available in the Duraspace Thirdparty Maven Repository 
 (https://m2.duraspace.org/content/repositories/thirdparty).
+
+    As of 0.1.8, fedora-client is now a Maven multi-module project, producing 
+fedora-client-core and fedora-client-messaging artifacts. Unless you 
+specifically require support for Fedora Messaging, fedora-client-core is all you 
+need. Similarly, if you only need support for Fedora Messaging and not Fedora's 
+REST API, fedora-client-messaging is all you need.
     
     Add the following to your pom.xml (substituting the actual, current 
 version of fedora-client):
@@ -71,14 +77,19 @@ version of fedora-client):
 <dependencies>
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
-        <artifactId>fedora-client</artifactId>
-        <version>0.1.7</version>
+        <artifactId>fedora-client-core</artifactId>
+        <version>0.1.8</version>
+    </dependency>
+    <dependency>
+        <groupId>com.yourmediashelf.fedora.client</groupId>
+        <artifactId>fedora-client-messaging</artifactId>
+        <version>0.1.8</version>
     </dependency>
 </dependencies>
 +--
 
 * Including fedora-client in your non-Maven project
 
-    As of version 0.1.5, fedora-client also distributes a jar 
-(fedora-client-N.N.N-with-dependencies.jar) that includes its dependencies 
-(except for log4j) for use with non-Maven-based projects.
+    As of version 0.1.5, fedora-client also distributes <-with-dependencies> 
+jars that bundle all dependencies (except for log4j) for use with 
+non-Maven-based projects.

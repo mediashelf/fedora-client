@@ -38,6 +38,18 @@ Requirements
 Installation
 ------------
 
+fedora-client is now available via [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.yourmediashelf.fedora.client%22).
+As of version 0.1.8, fedora-client is provided as two artifacts:
+
+* fedora-client-core, which supports Fedora's REST API and riSearch
+* fedora-client-messaging, which supports Fedora's Messaging
+
+Both artifacts are also available as *-with-dependencies* jars, which bundle their respective
+dependencies in a single jar for use with non-Maven projects.
+
+Building from source
+--------------------
+
 1. Download the source, e.g.
 
         git clone git://github.com/mediashelf/fedora-client.git
