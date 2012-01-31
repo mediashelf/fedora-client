@@ -25,12 +25,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.yourmediashelf.fedora.client.response.FedoraResponse;
+import com.yourmediashelf.fedora.client.response.GetObjectProfileResponse;
 
 public class GetObjectProfileIT extends BaseFedoraRequestIT {
     @Test
     public void testGetObjectXML() throws Exception {
-        FedoraResponse response = getObjectProfile(testPid).execute(fedora());
+    	GetObjectProfileResponse response = getObjectProfile(testPid).execute(fedora());
         assertEquals(200, response.getStatus());
+        assertEquals(testPid, response.getPid());
+        assertEquals("A", response.getState());
     }
 }

@@ -69,7 +69,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
     
     @Test
     public void testGetDatastreamAsOfDateTimeAsXML() throws Exception {
-    	GetDatastreamResponse response = null;
+        GetDatastreamResponse response = null;
 
         response = getDatastream(testPid, "DC").format("xml").asOfDateTime("9999-01-01T00:01:04.567Z").execute(fedora());
         DatastreamProfile profile = response.getDatastreamProfile();
@@ -84,7 +84,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
      */
     @Test
     public void testGetDatastreamState() throws Exception {
-    	GetDatastreamResponse response = null;
+        GetDatastreamResponse response = null;
 
         response = getDatastream(testPid, "DC").format("xml").execute(fedora());
         assertEquals(200, response.getStatus());
