@@ -180,11 +180,11 @@ public class ModifyDatastreamIT
         assertEquals(201, response.getStatus());
 
         // verify datastream properties before modify
-        DatastreamProfileResponse dspResponse;
-        dspResponse =
+        GetDatastreamResponse gdResponse;
+        gdResponse =
                 getDatastream(testPid, dsId).format("xml").execute(fedora());
-        assertEquals(200, dspResponse.getStatus());
-        DatastreamProfile profile = dspResponse.getDatastreamProfile();
+        assertEquals(200, gdResponse.getStatus());
+        DatastreamProfile profile = gdResponse.getDatastreamProfile();
         assertEquals(testPid, profile.getPid());
         assertEquals(dsId, profile.getDsID());
         assertEquals("", profile.getDsLabel());
@@ -211,9 +211,9 @@ public class ModifyDatastreamIT
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify
-        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        gdResponse = getDatastream(testPid, dsId).execute(fedora());
         assertEquals(200, response.getStatus());
-        profile = dspResponse.getDatastreamProfile();
+        profile = gdResponse.getDatastreamProfile();
 
         assertEquals(testPid, profile.getPid());
         assertEquals(dsId, profile.getDsID());
@@ -241,9 +241,9 @@ public class ModifyDatastreamIT
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify
-        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        gdResponse = getDatastream(testPid, dsId).execute(fedora());
         assertEquals(200, response.getStatus());
-        profile = dspResponse.getDatastreamProfile();
+        profile = gdResponse.getDatastreamProfile();
 
         assertEquals(testPid, profile.getPid());
         assertEquals(dsId, profile.getDsID());

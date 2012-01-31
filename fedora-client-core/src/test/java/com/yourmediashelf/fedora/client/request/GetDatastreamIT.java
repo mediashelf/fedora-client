@@ -34,6 +34,12 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
+/**
+ * Integration tests for GetDatastream
+ *
+ * @author Edwin Shin
+ *
+ */
 public class GetDatastreamIT extends BaseFedoraRequestIT {
 
     @Test
@@ -71,6 +77,30 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
         assertEquals("DC", profile.getDsID());
     }
 
+    /**
+     * Test retrieving the dsState of a datastream.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetDatastreamState() throws Exception {
+    	GetDatastreamResponse response = null;
+
+        response = getDatastream(testPid, "DC").format("xml").execute(fedora());
+        assertEquals(200, response.getStatus());
+
+        String dsState = response.getDatastreamProfile().getDsState();
+        assertEquals("A", dsState);
+    }
+
+    /**
+     * Helper method that returns an XHTML document, allowing xmlunit assertions
+     * to be made against badly formed HTML source.
+     *
+     * @param html HTML that may not be well-formed
+     * @return a DOM document that has converted the 'plain' HTML source into valid 'XHTML' 
+     * @throws Exception
+     */
     private Document buildTestDocument(String html) throws Exception {
         TolerantSaxDocumentBuilder tolerantSaxDocumentBuilder =
                 new TolerantSaxDocumentBuilder(XMLUnit.newTestParser());
