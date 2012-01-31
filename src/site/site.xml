@@ -18,6 +18,12 @@
       <item name="Developers" href="developers.html"/>
     </menu>
 
+    <menu ref="parent" inherit="top" />
+    <menu ref="reports" inherit="top" />
+    <menu ref="modules"/>
+    
+    <!-- These explicit menus don't seem to work right as inherited child menus
+     (the links go the parent reports)
     <menu name="Project Information">
         <item name="Dependencies" href="dependencies.html"/>
         <item name="Issue Tracking" href="issue-tracking.html"/>
@@ -38,6 +44,6 @@
         <item name="Test JavaDocs" href="testapidocs/index.html"/>
         <item name="Browse Test Source Code" href="xref-test/index.html"/>
     </menu>
-    <menu ref="modules"/>
+    -->
   </body>
 </project>
