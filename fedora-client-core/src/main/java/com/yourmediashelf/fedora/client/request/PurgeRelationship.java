@@ -31,11 +31,9 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  *
  * @author Edwin Shin
  */
-public class PurgeRelationship extends FedoraRequest<PurgeObject> {
-    private final String pid;
-
-    public PurgeRelationship(String pid) {
-        this.pid = pid;
+public class PurgeRelationship extends RelationshipsRequest {
+    public PurgeRelationship(String subject) {
+        super(subject);
     }
 
     public PurgeRelationship subject(String subject) {

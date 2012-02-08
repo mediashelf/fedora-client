@@ -23,6 +23,7 @@ package com.yourmediashelf.fedora.client.request;
 import static com.yourmediashelf.fedora.client.FedoraClient.addRelationship;
 import static com.yourmediashelf.fedora.client.FedoraClient.getRelationships;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -31,7 +32,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
-import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class GetRelationshipsIT
@@ -105,13 +105,27 @@ public class GetRelationshipsIT
     
     @Test
     public void testGetRelsIntRelationship() throws Exception {
-        
-    }
-    
-    private void addRelsInt() throws Exception {
-        AddDatastreamResponse response =
-                new AddDatastream(testPid, "RELS-INT")
-                        .content("<foo>?</foo>").execute();
-        assertEquals(201, response.getStatus());
+        String subject = String.format("info:fedora/%s/RELS-INT", testPid);
+        String predicate = "urn:foo/testGetRelsIntRelationship";
+        String object = "urn:bar/baz";
+        addRelationship(subject).predicate(predicate).object(object).execute();
+        FedoraResponse response = getRelationships(subject).execute();
+        assertEquals(200, response.getStatus());
+
+        Model model = ModelFactory.createDefaultModel();
+        model.read(response.getEntityInputStream(), null, FileUtils.langXML);
+        StmtIterator it = model.listStatements();
+        Statement s;
+        boolean found = false;
+        while (it.hasNext()) {
+            s = it.next();
+            if (s.getSubject().toString().equals(subject) &&
+                    s.getPredicate().toString().equals(predicate) &&
+                    s.getObject().toString().equals(object)) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
     }
 }

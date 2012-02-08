@@ -53,6 +53,12 @@ public abstract class FedoraRequest<T> {
         return execute(DEFAULT_CLIENT);
     }
 
+    /**
+     * Set the instance of {@link FedoraClient} that all {@link FedoraRequest}s
+     * should use by default.
+     * 
+     * @param client the instance of FedoraClient that requests should use by default
+     */
     public static void setDefaultClient(FedoraClient client) {
         DEFAULT_CLIENT = client;
     }

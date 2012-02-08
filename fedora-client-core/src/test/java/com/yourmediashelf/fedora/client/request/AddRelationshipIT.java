@@ -22,11 +22,15 @@ package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addRelationship;
 import static com.yourmediashelf.fedora.client.FedoraClient.getRelationships;
-import static com.yourmediashelf.fedora.client.FedoraClient.getDatastreamDissemination;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.util.FileUtils;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class AddRelationshipIT extends BaseFedoraRequestIT {
@@ -34,15 +38,24 @@ public class AddRelationshipIT extends BaseFedoraRequestIT {
     @Test
     public void testAddRelationship() throws Exception {
         FedoraResponse response = null;
+        String subject = String.format("info:fedora/%s", testPid);
         String predicate = "urn:foo/testAddRelationship";
         String object = "urn:foo/한";
 
         response = addRelationship(testPid).predicate(predicate).object(object).execute();
         assertEquals(200, response.getStatus());
         
-        System.out.println(
-                getRelationships(testPid).predicate(predicate).format(null).execute().getEntity(String.class));
-        
+        response = getRelationships(testPid).predicate(predicate).execute();
+        Model model = ModelFactory.createDefaultModel();
+        model.read(response.getEntityInputStream(), null, FileUtils.langXML);
+        StmtIterator it = model.listStatements();
+        Statement s;
+        while (it.hasNext()) {
+            s = it.next();
+            assertEquals(subject, s.getSubject().toString());
+            assertEquals(predicate, s.getPredicate().toString());
+            assertEquals(object, s.getObject().toString());
+        }
     }
 
     @Test
@@ -64,20 +77,5 @@ public class AddRelationshipIT extends BaseFedoraRequestIT {
 
         response = addRelationship(testPid).predicate(predicate).object(object, datatype).execute();
         assertEquals(200, response.getStatus());
-    }
-    
-    @Test
-    public void testAddRelsIntStatement() throws Exception {       
-        String subject = String.format("info:fedora/%s/RELS-INT", testPid);
-        String predicate = "urn:foo/testAddRelsIntStatement";
-        String object = "foo";
-        
-        addRelationship(testPid).subject(subject).predicate(predicate).object(object, true).execute();
-        
-        FedoraResponse response = getDatastreamDissemination(testPid, "RELS-INT").execute();
-        System.out.println("***");
-        System.out.println(response.getEntity(String.class));
-        System.out.println("===");
-        
     }
 }

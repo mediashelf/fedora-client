@@ -33,12 +33,10 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @author Edwin Shin
  */
 public class AddRelationship
-        extends FedoraRequest<AddRelationship> {
+        extends RelationshipsRequest {
 
-    private final String pid;
-
-    public AddRelationship(String pid) {
-        this.pid = pid;
+    public AddRelationship(String subject) {
+        super(subject);
     }
 
     /**
@@ -47,6 +45,7 @@ public class AddRelationship
      * 
      * @param subject the subject of the relationship
      * @return this builder
+     * @deprecated use constructor
      */
     public AddRelationship subject(String subject) {
         addQueryParam("subject", subject);
