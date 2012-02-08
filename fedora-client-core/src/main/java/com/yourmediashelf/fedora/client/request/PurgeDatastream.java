@@ -80,6 +80,11 @@ public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
         addQueryParam("endDT", DateUtility.getXSDDateTime(endDT));
         return this;
     }
+    
+    @Override
+    public PurgeDatastreamResponse execute() throws FedoraClientException {
+        return (PurgeDatastreamResponse)super.execute();
+    }
 
     @Override
     public PurgeDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {

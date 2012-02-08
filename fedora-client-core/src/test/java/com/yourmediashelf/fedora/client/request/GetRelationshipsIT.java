@@ -31,6 +31,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
+import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class GetRelationshipsIT
@@ -39,9 +40,8 @@ public class GetRelationshipsIT
     @Test
     public void testGetAllRelationships() throws Exception {
         FedoraResponse response = null;
-        String subject = String.format("info:fedora/%s", testPid);
-
-        response = fedora().execute(getRelationships(testPid).subject(subject));
+        response = getRelationships(testPid).execute();
+        //TODO: better test
         assertEquals(200, response.getStatus());
     }
 
@@ -54,14 +54,11 @@ public class GetRelationshipsIT
 
         // first add a relationship
         response =
-                fedora().execute(addRelationship(testPid).subject(subject)
-                        .predicate(predicate).object(object).isLiteral(true));
+                addRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
 
         // now get it
-        response =
-                fedora().execute(getRelationships(testPid).subject(subject)
-                        .predicate(predicate));
+        response = getRelationships(testPid).predicate(predicate).execute();
         assertEquals(200, response.getStatus());
 
         Model model = ModelFactory.createDefaultModel();
@@ -85,15 +82,12 @@ public class GetRelationshipsIT
         String datatype = "http://www.w3.org/2001/XMLSchema#dateTime";
 
         response =
-                addRelationship(testPid).subject(subject).predicate(predicate)
-                        .object(object).isLiteral(true).datatype(datatype)
-                        .execute(fedora());
+                addRelationship(testPid).predicate(predicate)
+                        .object(object, datatype).execute();
         assertEquals(200, response.getStatus());
 
         // now get it
-        response =
-                getRelationships(testPid).subject(subject)
-                        .predicate(predicate).execute(fedora());
+        response = getRelationships(testPid).predicate(predicate).execute();
         assertEquals(200, response.getStatus());
 
         Model model = ModelFactory.createDefaultModel();
@@ -107,5 +101,17 @@ public class GetRelationshipsIT
             assertEquals(object, s.getLiteral().getLexicalForm());
             assertEquals(datatype, s.getLiteral().getDatatypeURI());
         }
+    }
+    
+    @Test
+    public void testGetRelsIntRelationship() throws Exception {
+        
+    }
+    
+    private void addRelsInt() throws Exception {
+        AddDatastreamResponse response =
+                new AddDatastream(testPid, "RELS-INT")
+                        .content("<foo>?</foo>").execute();
+        assertEquals(201, response.getStatus());
     }
 }

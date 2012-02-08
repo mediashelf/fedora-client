@@ -31,7 +31,7 @@ import com.yourmediashelf.fedora.generated.access.ObjectMethods;
 public class ListMethodsIT extends BaseFedoraRequestIT {
     @Test
     public void testListMethods() throws Exception {
-        ListMethodsResponse response = listMethods(testPid).execute(fedora());
+        ListMethodsResponse response = listMethods(testPid).execute();
         ObjectMethods methods = response.getObjectMethods();
         assertEquals(testPid, methods.getPid());
         //System.out.println(response.getEntity(String.class));

@@ -172,6 +172,11 @@ public class Ingest extends FedoraRequest<Ingest> {
     }
 
     @Override
+    public IngestResponse execute() throws FedoraClientException {
+        return (IngestResponse)super.execute();
+    }
+    
+    @Override
     public IngestResponse execute(FedoraClient fedora) throws FedoraClientException {
         ClientResponse response = null;
         String path;

@@ -57,6 +57,11 @@ public class Upload
     public Upload(File file) {
         this.file = file;
     }
+    
+    @Override
+    public UploadResponse execute() throws FedoraClientException {
+        return (UploadResponse) super.execute();
+    }
 
     @Override
     public UploadResponse execute(FedoraClient fedora) throws FedoraClientException {

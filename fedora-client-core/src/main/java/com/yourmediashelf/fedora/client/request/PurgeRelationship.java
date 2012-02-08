@@ -48,16 +48,66 @@ public class PurgeRelationship extends FedoraRequest<PurgeObject> {
         return this;
     }
 
+    /**
+     * The object of the relationship.
+     * 
+     * <p>Unless otherwise indicated with the now-deprecated 
+     * {@link #isLiteral(boolean)} method, the object will be treated as a 
+     * resource (i.e. a URI, not as a literal).
+     * 
+     * @param object the object of the relationship
+     * @return this builder
+     */
     public PurgeRelationship object(String object) {
         addQueryParam("object", object);
         return this;
     }
+    
+    /**
+     * The object of the relationship as a plain literal.
+     * 
+     * @param object the object of the relationship
+     * @param isLiteral whether or not the object is a literal.
+     * @return this builder
+     */
+    public PurgeRelationship object(String object, boolean isLiteral) {
+        addQueryParam("object", object);
+        addQueryParam("isLiteral", Boolean.toString(isLiteral));
+        return this;
+    }
+    
+    /**
+     * The object of the relationship as a datatyped literal. 
+     * 
+     * @param object the object of the relationship
+     * @param datatype The URI of the XML Schema Datatype of the object literal, 
+     * e.g. "http://www.w3.org/2001/XMLSchema#dateTime".
+     * @return this builder
+     */
+    public PurgeRelationship object(String object, String datatype) {
+        addQueryParam("object", object);
+        addQueryParam("isLiteral", Boolean.toString(true));
+        addQueryParam("datatype", datatype);
+        return this;
+    }
 
+    /**
+     * 
+     * @param isLiteral
+     * @return this builder
+     * @deprecated use {@link #object(String, boolean)}
+     */
     public PurgeRelationship isLiteral(boolean isLiteral) {
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
         return this;
     }
 
+    /**
+     * 
+     * @param datatype
+     * @return
+     * @deprecated use {@link #object(String, String)}
+     */
     public PurgeRelationship datatype(String datatype) {
         addQueryParam("datatype", datatype);
         return this;

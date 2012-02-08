@@ -41,10 +41,10 @@ public class ListDatastreamsIT extends BaseFedoraRequestIT {
         String dsId = "testListDatastreams";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
-        addDatastream(testPid, dsId).content(content).execute(fedora());
+        addDatastream(testPid, dsId).content(content).execute();
 
         // list datastreams
-        ListDatastreamsResponse response = listDatastreams(testPid).execute(fedora());
+        ListDatastreamsResponse response = listDatastreams(testPid).execute();
         assertEquals(200, response.getStatus());
         assertEquals(testPid, response.getPid());
         // response baseUrl is appending a /

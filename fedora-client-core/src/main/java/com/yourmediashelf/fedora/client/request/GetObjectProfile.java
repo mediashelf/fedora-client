@@ -72,6 +72,11 @@ public class GetObjectProfile
     }
 
     @Override
+    public GetObjectProfileResponse execute() throws FedoraClientException {
+        return (GetObjectProfileResponse)super.execute();
+    }
+    
+    @Override
     public GetObjectProfileResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {

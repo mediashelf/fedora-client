@@ -54,6 +54,11 @@ public class Validate
        return this;
    }
 
+   @Override
+   public ValidateResponse execute() throws FedoraClientException {
+       return (ValidateResponse)super.execute();
+   }
+   
     @Override
     public ValidateResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();

@@ -47,11 +47,11 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         String object = "你好";
 
         // first add a relationship
-        response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        response = addRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
 
         // verify it was added
-        response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
+        response = getRelationships(testPid).predicate(predicate).execute();
         assertEquals(200, response.getStatus());
         model = ModelFactory.createDefaultModel();
         model.read(response.getEntityInputStream(), null, FileUtils.langXML);
@@ -64,12 +64,12 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         }
 
         // now delete it
-        response = fedora().execute(purgeRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        response = purgeRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
         assertEquals("true", response.getEntity(String.class));
 
         // verify it's gone
-        response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
+        response = getRelationships(testPid).predicate(predicate).execute();
         assertEquals(200, response.getStatus());
         model = ModelFactory.createDefaultModel();
         model.read(response.getEntityInputStream(), null, FileUtils.langXML);
@@ -98,11 +98,11 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         String object = "你好";
 
         // first add a relationship
-        response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        response = addRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
 
         // verify it was added
-        response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
+        response = getRelationships(testPid).predicate(predicate).execute();
         assertEquals(200, response.getStatus());
         model = ModelFactory.createDefaultModel();
         model.read(response.getEntityInputStream(), null, FileUtils.langXML);
@@ -115,12 +115,12 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         }
 
         // now delete it
-        response = fedora().execute(purgeRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        response = purgeRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
         assertEquals("true", response.getEntity(String.class));
 
         // verify it's gone
-        response = fedora().execute(getRelationships(testPid).subject(subject).predicate(predicate));
+        response = getRelationships(testPid).predicate(predicate).execute();
         assertEquals(200, response.getStatus());
         model = ModelFactory.createDefaultModel();
         model.read(response.getEntityInputStream(), null, FileUtils.langXML);
@@ -131,7 +131,7 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
             assertFalse(object.equals(s.getObject().toString()));
         }
 
-        response = purgeRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true).execute(fedora());
+        response = purgeRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
         assertEquals("false", response.getEntity(String.class));
     }

@@ -62,6 +62,11 @@ public class GetObjectHistory
     }
 
     @Override
+    public GetObjectHistoryResponse execute() throws FedoraClientException {
+        return (GetObjectHistoryResponse)super.execute();
+    }
+    
+    @Override
     public GetObjectHistoryResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {

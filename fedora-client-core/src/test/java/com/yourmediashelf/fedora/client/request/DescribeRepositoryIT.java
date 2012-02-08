@@ -32,8 +32,7 @@ public class DescribeRepositoryIT
 
     @Test
     public void testDescribe() throws Exception {
-        DescribeRepositoryResponse response =
-                describeRepository().execute(fedora());
+        DescribeRepositoryResponse response = describeRepository().execute();
         assertEquals(200, response.getStatus());
         System.out.println(response.getRepositoryVersion());
     }

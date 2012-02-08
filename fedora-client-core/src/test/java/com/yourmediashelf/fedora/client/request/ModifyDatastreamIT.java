@@ -52,18 +52,18 @@ public class ModifyDatastreamIT
         String content = "<foo>bar</foo>";
         FedoraResponse response;
         response =
-                addDatastream(testPid, dsId).content(content).execute(fedora());
+                addDatastream(testPid, dsId).content(content).execute();
         assertEquals(201, response.getStatus());
 
         // verify datastream content before modify
-        response = getDatastreamDissemination(testPid, dsId).execute(fedora());
+        response = getDatastreamDissemination(testPid, dsId).execute();
         assertEquals(200, response.getStatus());
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties before modify
         DatastreamProfileResponse dspResponse;
         dspResponse =
-                getDatastream(testPid, dsId).format("xml").execute(fedora());
+                getDatastream(testPid, dsId).format("xml").execute();
         assertEquals(200, response.getStatus());
         DatastreamProfile profile = dspResponse.getDatastreamProfile();
         assertEquals(testPid, profile.getPid());
@@ -89,17 +89,17 @@ public class ModifyDatastreamIT
         String newDsLabel = "asdf";
         response =
                 modifyDatastream(testPid, dsId).content(content)
-                        .dsLabel(newDsLabel).execute(fedora());
+                        .dsLabel(newDsLabel).execute();
         assertEquals(200, response.getStatus());
 
         // verify datastream content after modify
-        response = getDatastreamDissemination(testPid, dsId).execute(fedora());
+        response = getDatastreamDissemination(testPid, dsId).execute();
         assertEquals(200, response.getStatus());
         assertXMLEqual(content, response.getEntity(String.class));
 
         // verify datastream properties after modify
         dspResponse =
-                getDatastream(testPid, dsId).format("xml").execute(fedora());
+                getDatastream(testPid, dsId).format("xml").execute();
         assertEquals(200, dspResponse.getStatus());
         profile = dspResponse.getDatastreamProfile();
 
@@ -125,11 +125,11 @@ public class ModifyDatastreamIT
     @Test
     public void testOptimisticLocking() throws Exception {
         DateTime lastModifiedDate =
-                new DateTime(fedora().getLastModifiedDate(testPid, "DC"));
+                new DateTime(fedora.getLastModifiedDate(testPid, "DC"));
         try {
             modifyDatastream(testPid, "DC").dsLabel("testOptimisticLocking")
                     .lastModifiedDate(lastModifiedDate.minusHours(1))
-                    .execute(fedora());
+                    .execute();
             fail("modifyDatastream succeeded, but should have failed");
         } catch (FedoraClientException expected) {
             assertEquals(409, expected.getStatus());
@@ -140,27 +140,27 @@ public class ModifyDatastreamIT
     public void testNullAndEmptyPidAndDsId() throws Exception {
         String dsId = "testNullAndEmptyPidAndDsId";
         try {
-            modifyDatastream(null, dsId).logMessage("test null pid").execute(fedora());
+            modifyDatastream(null, dsId).logMessage("test null pid").execute();
             fail("Null pid should throw an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {}
         try {
-            modifyDatastream("", dsId).logMessage("test empty pid").execute(fedora());
+            modifyDatastream("", dsId).logMessage("test empty pid").execute();
             fail("Empty pid should throw an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {}
         try {
-            modifyDatastream(null, null).logMessage("test null pid & dsid").execute(fedora());
+            modifyDatastream(null, null).logMessage("test null pid & dsid").execute();
             fail("Null pid & dsId should throw an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {}
         try {
-            modifyDatastream("", "").logMessage("test empty pid & dsid").execute(fedora());
+            modifyDatastream("", "").logMessage("test empty pid & dsid").execute();
             fail("Empty pid & dsId should throw an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {}
         try {
-            modifyDatastream(testPid, null).logMessage("test null dsid").execute(fedora());
+            modifyDatastream(testPid, null).logMessage("test null dsid").execute();
             fail("Null dsId should throw an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {}
         try {
-            modifyDatastream(testPid, "").logMessage("test empty dsid").execute(fedora());
+            modifyDatastream(testPid, "").logMessage("test empty dsid").execute();
             fail("Empty dsId should throw an IllegalArgumentException");
         } catch (IllegalArgumentException expected) {}
     }
@@ -176,13 +176,13 @@ public class ModifyDatastreamIT
         String content = "<foo>bar</foo>";
         FedoraResponse response;
         response =
-                addDatastream(testPid, dsId).content(content).execute(fedora());
+                addDatastream(testPid, dsId).content(content).execute();
         assertEquals(201, response.getStatus());
 
         // verify datastream properties before modify
         GetDatastreamResponse gdResponse;
         gdResponse =
-                getDatastream(testPid, dsId).format("xml").execute(fedora());
+                getDatastream(testPid, dsId).format("xml").execute();
         assertEquals(200, gdResponse.getStatus());
         DatastreamProfile profile = gdResponse.getDatastreamProfile();
         assertEquals(testPid, profile.getPid());
@@ -207,11 +207,11 @@ public class ModifyDatastreamIT
         String newDsState = "I";
         response =
                 modifyDatastream(testPid, dsId).dsState(newDsState)
-                        .execute(fedora());
+                        .execute();
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify
-        gdResponse = getDatastream(testPid, dsId).execute(fedora());
+        gdResponse = getDatastream(testPid, dsId).execute();
         assertEquals(200, response.getStatus());
         profile = gdResponse.getDatastreamProfile();
 
@@ -237,11 +237,11 @@ public class ModifyDatastreamIT
         String newDsLabel = "testModifyState";
         response =
                 modifyDatastream(testPid, dsId).dsLabel(newDsLabel)
-                        .execute(fedora());
+                        .execute();
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify
-        gdResponse = getDatastream(testPid, dsId).execute(fedora());
+        gdResponse = getDatastream(testPid, dsId).execute();
         assertEquals(200, response.getStatus());
         profile = gdResponse.getDatastreamProfile();
 
@@ -276,13 +276,13 @@ public class ModifyDatastreamIT
         String content = "<foo>bar</foo>";
         FedoraResponse response;
         response =
-                addDatastream(testPid, dsId).content(content).execute(fedora());
+                addDatastream(testPid, dsId).content(content).execute();
         assertEquals(201, response.getStatus());
 
         // verify datastream properties before modify
         DatastreamProfileResponse dspResponse;
         dspResponse =
-                getDatastream(testPid, dsId).format("xml").execute(fedora());
+                getDatastream(testPid, dsId).format("xml").execute();
         assertEquals(200, dspResponse.getStatus());
         DatastreamProfile profile = dspResponse.getDatastreamProfile();
         assertEquals(testPid, profile.getPid());
@@ -311,11 +311,11 @@ public class ModifyDatastreamIT
         List<String> versionable = modifyDS.getQueryParam("versionable");
         assertEquals(1, versionable.size());
         assertEquals(Boolean.toString(newVersionable), versionable.get(0));
-        response = modifyDS.execute(fedora());
+        response = modifyDS.execute();
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify
-        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        dspResponse = getDatastream(testPid, dsId).execute();
         assertEquals(200, response.getStatus());
         profile = dspResponse.getDatastreamProfile();
 
@@ -342,11 +342,11 @@ public class ModifyDatastreamIT
         response =
                 modifyDatastream(testPid, dsId)
                         .logMessage("don't actually modify anything")
-                        .execute(fedora());
+                        .execute();
         assertEquals(200, response.getStatus());
 
         // verify datastream properties after modify
-        dspResponse = getDatastream(testPid, dsId).execute(fedora());
+        dspResponse = getDatastream(testPid, dsId).execute();
         assertEquals(200, response.getStatus());
         profile = dspResponse.getDatastreamProfile();
 
@@ -387,12 +387,12 @@ public class ModifyDatastreamIT
 				.content(
 						"<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
 								+ "<rdf:Description rdf:about=\"info:fedora/"
-								+ testPid + "\" /></rdf:RDF>").execute(fedora());
+								+ testPid + "\" /></rdf:RDF>").execute();
 
 		assertEquals(201, adr.getStatus());
 
 		ModifyDatastreamResponse mdr = modifyDatastream(testPid, dsId).dsLabel(
-				"a test label").logMessage("testModifyManagedRelsExt").execute(fedora());
+				"a test label").logMessage("testModifyManagedRelsExt").execute();
 		assertEquals(200, mdr.getStatus());
 
 		// The fix for FCREPO-1045 skips validation if the dsLocation is
@@ -400,8 +400,8 @@ public class ModifyDatastreamIT
 		// unversioned RELS-EXT still triggers validation.
 		mdr = modifyDatastream(testPid, dsId).versionable(false)
 				.logMessage("testModifyManagedRelsExt setting versionable false")
-				.execute(fedora());
-		GetDatastreamResponse gdr = getDatastream(testPid, dsId).execute(fedora());
+				.execute();
+		GetDatastreamResponse gdr = getDatastream(testPid, dsId).execute();
         DatastreamProfile dsp = gdr.getDatastreamProfile();
         assertFalse(Boolean.parseBoolean(dsp.getDsVersionable()));
 		
@@ -411,7 +411,7 @@ public class ModifyDatastreamIT
 						+ "<rdf:Description rdf:about=\"info:fedora/"
 						+ "AnInvalidPID\" /></rdf:RDF>")
 				.logMessage("testModifyManagedRelsExt request that should fail")
-				.execute(fedora());
+				.execute();
 			fail("Should have thrown an exception because of an invalid RELS-EXT");
 		} catch (FedoraClientException e) {
 		}

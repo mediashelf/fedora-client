@@ -78,6 +78,11 @@ public class ListMethods
     }
 
     @Override
+    public ListMethodsResponse execute() throws FedoraClientException {
+        return (ListMethodsResponse)super.execute();
+    }
+    
+    @Override
     public ListMethodsResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {

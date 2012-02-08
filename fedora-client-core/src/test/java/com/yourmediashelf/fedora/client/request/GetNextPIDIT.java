@@ -36,7 +36,7 @@ import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
 public class GetNextPIDIT extends BaseFedoraRequestIT {
     @Test
     public void testGetOnePid() throws Exception {
-        GetNextPIDResponse response = getNextPID().execute(fedora());
+        GetNextPIDResponse response = getNextPID().execute();
         assertEquals(200, response.getStatus());
         assertNotNull(response.getPid());
     }
@@ -44,7 +44,7 @@ public class GetNextPIDIT extends BaseFedoraRequestIT {
     @Test
     public void testGetOneNamespacedPid() throws Exception {
         String namespace = "foo";
-        GetNextPIDResponse response = getNextPID().namespace(namespace).execute(fedora());
+        GetNextPIDResponse response = getNextPID().namespace(namespace).execute();
         assertEquals(200, response.getStatus());
         assertTrue(response.getPid().startsWith(namespace));
     }
@@ -52,7 +52,7 @@ public class GetNextPIDIT extends BaseFedoraRequestIT {
     @Test
     public void testGetTwoPids() throws Exception {
         GetNextPIDResponse response = null;
-        response = getNextPID().numPIDs(2).execute(fedora()) ;
+        response = getNextPID().numPIDs(2).execute() ;
         assertEquals(200, response.getStatus());
         assertEquals(2, response.getPids().getPid().size());
     }
@@ -60,7 +60,7 @@ public class GetNextPIDIT extends BaseFedoraRequestIT {
     @Test
     public void testGetFormatHtml() throws Exception {
         GetNextPIDResponse response = null;
-        response = new GetNextPID().format("html").execute(fedora());
+        response = new GetNextPID().format("html").execute();
         try {
             response.getPid();
             fail("Should have failed with format=html");

@@ -46,7 +46,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
     public void testGetDatastreamAsHtml() throws Exception {
         FedoraResponse response = null;
 
-        response = getDatastream(testPid, "DC").format("html").execute(fedora());
+        response = getDatastream(testPid, "DC").format("html").execute();
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
 
@@ -59,7 +59,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
     public void testGetDatastreamAsXml() throws Exception {
         GetDatastreamResponse response = null;
 
-        response = getDatastream(testPid, "DC").format("xml").execute(fedora());
+        response = getDatastream(testPid, "DC").format("xml").execute();
         assertEquals(200, response.getStatus());
 
         DatastreamProfile profile = response.getDatastreamProfile();
@@ -71,7 +71,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
     public void testGetDatastreamAsOfDateTimeAsXML() throws Exception {
         GetDatastreamResponse response = null;
 
-        response = getDatastream(testPid, "DC").format("xml").asOfDateTime("9999-01-01T00:01:04.567Z").execute(fedora());
+        response = getDatastream(testPid, "DC").format("xml").asOfDateTime("9999-01-01T00:01:04.567Z").execute();
         DatastreamProfile profile = response.getDatastreamProfile();
         assertEquals(testPid, profile.getPid());
         assertEquals("DC", profile.getDsID());
@@ -86,7 +86,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
     public void testGetDatastreamState() throws Exception {
         GetDatastreamResponse response = null;
 
-        response = getDatastream(testPid, "DC").format("xml").execute(fedora());
+        response = getDatastream(testPid, "DC").format("xml").execute();
         assertEquals(200, response.getStatus());
 
         String dsState = response.getDatastreamProfile().getDsState();

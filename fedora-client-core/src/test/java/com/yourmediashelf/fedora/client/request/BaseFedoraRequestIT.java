@@ -46,17 +46,17 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
  * @author Edwin Shin
  */
 public abstract class BaseFedoraRequestIT {
-	private static String debug;
+	private static FedoraCredentials credentials;
 
-    private FedoraCredentials credentials;
-
-    private FedoraClient fedora;
+    protected static FedoraClient fedora;
 
     public final String testPid = "test-rest:1";
     
     @BeforeClass
-    public static void setDebug() {
-    	debug = System.getProperty("test.debug");
+    public static void setDefaultFedoraClient() throws Exception {
+        fedora = new FedoraClient(getCredentials());
+        fedora.debug(Boolean.parseBoolean(System.getProperty("test.debug")));
+        FedoraRequest.setDefaultClient(fedora);
     }
 
     @Before
@@ -69,7 +69,7 @@ public abstract class BaseFedoraRequestIT {
         purgeTestObject();
     }
 
-    public FedoraCredentials getCredentials() throws MalformedURLException {
+    public static FedoraCredentials getCredentials() throws MalformedURLException {
         if (credentials == null) {
             String baseUrl = System.getProperty("fedora.test.baseUrl");
             String username = System.getProperty("fedora.test.username");
@@ -80,28 +80,16 @@ public abstract class BaseFedoraRequestIT {
         return credentials;
     }
 
-    public FedoraClient fedora() throws FedoraClientException {
-        if (fedora == null) {
-            try {
-                fedora = new FedoraClient(getCredentials());
-                fedora.debug(Boolean.parseBoolean(debug));
-            } catch (MalformedURLException e) {
-                throw new FedoraClientException(e.getMessage(), e);
-            }
-        }
-        return fedora;
-    }
-
     public String getTestPid() {
         return testPid;
     }
 
     public void ingestTestObject() throws FedoraClientException {
-        ingest(testPid).logMessage("ingestTestObject for " + getClass()).execute(fedora());
+        ingest(testPid).logMessage("ingestTestObject for " + getClass()).execute();
     }
 
     public void purgeTestObject() throws FedoraClientException {
-        purgeObject(testPid).logMessage("purgeTestObject for " + getClass()).execute(fedora());
+        purgeObject(testPid).logMessage("purgeTestObject for " + getClass()).execute();
     }
 
     public XpathEngine getXpathEngine(Map<String, String> nsMap) {

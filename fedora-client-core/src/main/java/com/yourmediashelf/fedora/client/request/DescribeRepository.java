@@ -49,6 +49,11 @@ public class DescribeRepository
     }
 
     @Override
+    public DescribeRepositoryResponse execute() throws FedoraClientException {
+        return (DescribeRepositoryResponse) super.execute();
+    }
+    
+    @Override
     public DescribeRepositoryResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("xml") == null) {

@@ -67,6 +67,11 @@ public class ListDatastreams
     }
 
     @Override
+    public ListDatastreamsResponse execute() throws FedoraClientException {
+        return (ListDatastreamsResponse)super.execute();
+    }
+    
+    @Override
     public ListDatastreamsResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {

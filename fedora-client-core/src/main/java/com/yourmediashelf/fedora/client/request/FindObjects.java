@@ -256,6 +256,11 @@ public class FindObjects extends FedoraRequest<FindObjects> {
 	}
 
 	@Override
+    public FindObjectsResponse execute() throws FedoraClientException {
+	    return (FindObjectsResponse) super.execute();
+	}
+	
+	@Override
 	public FindObjectsResponse execute(FedoraClient fedora)
 			throws FedoraClientException {
 		// default to xml for the format, so we can parse the results

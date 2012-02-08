@@ -48,7 +48,7 @@ public class IngestIT extends BaseFedoraRequestIT {
     @After
     public void tearDown() throws Exception {
         if (pid != null) {
-            purgeObject(pid).logMessage("purging IngestTest object").execute(fedora());
+            purgeObject(pid).logMessage("purging IngestTest object").execute();
         }
     }
 
@@ -58,7 +58,7 @@ public class IngestIT extends BaseFedoraRequestIT {
         URI location = null;
 
         // empty object, no pid, no namespace
-        response = ingest().logMessage("testIngestDefault").execute(fedora());
+        response = ingest().logMessage("testIngestDefault").execute();
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/"));
@@ -71,7 +71,7 @@ public class IngestIT extends BaseFedoraRequestIT {
         URI location = null;
 
         // empty object, with namespace, but no pid
-        response = ingest().namespace("foospace").logMessage("testIngestWithNamespace").execute(fedora());
+        response = ingest().namespace("foospace").logMessage("testIngestWithNamespace").execute();
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/foospace"));
@@ -83,7 +83,7 @@ public class IngestIT extends BaseFedoraRequestIT {
         IngestResponse response = null;
 
         // empty object, with pid
-        response = ingest(testPid).logMessage("testIngestWithPid").execute(fedora());
+        response = ingest(testPid).logMessage("testIngestWithPid").execute();
         assertEquals(201, response.getStatus());
         pid = response.getPid();
         assertEquals(testPid, pid);

@@ -47,13 +47,13 @@ import com.yourmediashelf.fedora.util.XmlSerializer;
 
 public class AddDatastreamIT
         extends BaseFedoraRequestIT {
-
+    
     @Test
     public void testNewAddDatastream() throws Exception {
         String dsid = "testNewAddDatastream";
         AddDatastreamResponse response =
                 new AddDatastream(testPid, dsid).dsLabel("bar")
-                        .content("<foo>?</foo>").execute(fedora());
+                        .content("<foo>?</foo>").execute();
         assertEquals(201, response.getStatus());
         String expectedLocation =
                 String.format("%s/objects/%s/datastreams/%s", getCredentials()
@@ -72,14 +72,14 @@ public class AddDatastreamIT
         assertTrue(f.exists());
         FedoraResponse response =
                 addDatastream(testPid, dsid).controlGroup("M").content(f)
-                        .execute(fedora());
+                        .execute();
         assertEquals(201, response.getStatus());
     }
 
     @Test(expected = FedoraClientException.class)
     public void testMissingManagedContent() throws Exception {
         String dsid = "testMissingManagedContent";
-        addDatastream(testPid, dsid).controlGroup("M").execute(fedora());
+        addDatastream(testPid, dsid).controlGroup("M").execute();
     }
 
     @Test
@@ -91,7 +91,7 @@ public class AddDatastreamIT
                               testPid);
         AddDatastreamResponse response =
                 addDatastream(testPid, dsid).dsLocation(dsLocation)
-                        .controlGroup("R").execute(fedora());
+                        .controlGroup("R").execute();
         assertEquals(201, response.getStatus());
     }
 
@@ -101,7 +101,7 @@ public class AddDatastreamIT
         String content = "<foo>bar</foo>";
         AddDatastreamResponse response =
                 addDatastream(testPid, dsid).content(content)
-                        .logMessage("testDefaultValues").execute(fedora());
+                        .logMessage("testDefaultValues").execute();
         assertEquals(201, response.getStatus());
     }
 
@@ -112,7 +112,7 @@ public class AddDatastreamIT
         List<String> altIds = Arrays.asList("foo", "bar", "baz", "quuz");
         AddDatastreamResponse response =
                 addDatastream(testPid, dsid).altIDs(altIds).content(content)
-                        .execute(fedora());
+                        .execute();
         assertEquals(201, response.getStatus());
         assertTrue(response.getDatastreamProfile().getDsAltID()
                 .containsAll(altIds));
@@ -124,7 +124,7 @@ public class AddDatastreamIT
         String content = "<foo>bar</foo>";
         AddDatastreamResponse response =
                 addDatastream(testPid, dsid).content(content)
-                        .dsLabel("testDsLabel").execute(fedora());
+                        .dsLabel("testDsLabel").execute();
         assertEquals(201, response.getStatus());
     }
 
@@ -138,7 +138,7 @@ public class AddDatastreamIT
                     addDatastream(testPid, state).content(content)
                             .dsState(state)
                             .logMessage("testDsState with state: " + state)
-                            .execute(fedora());
+                            .execute();
             assertEquals(201, response.getStatus());
         }
     }
@@ -166,7 +166,7 @@ public class AddDatastreamIT
             response =
                     addDatastream(testPid, dsid).content(content)
                             .checksumType(type).checksum(value).logMessage(type
-                                    + ": " + value).execute(fedora());
+                                    + ": " + value).execute();
             assertEquals(201, response.getStatus());
         }
     }
@@ -185,9 +185,9 @@ public class AddDatastreamIT
             dsid = dsid + type;
             checksum = ChecksumUtility.checksum(type, new FileInputStream(f));
             response = addDatastream(testPid, dsid).controlGroup("M").content(f)
-                    .checksumType(type).checksum(checksum).execute(fedora());
+                    .checksumType(type).checksum(checksum).execute();
             assertEquals(201, response.getStatus());
-            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
+            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute();
             assertTrue(r.isChecksumValid());
         }
     }
@@ -199,7 +199,7 @@ public class AddDatastreamIT
         File f = new File("src/test/resources/21.edit.essay.zip");
         assertTrue(f.exists());
 
-        String dsLocation = upload(f).execute(fedora()).getUploadLocation();
+        String dsLocation = upload(f).execute().getUploadLocation();
         assertTrue("unexpected value for dsLocation: \"" + dsLocation + "\"",
                    dsLocation.startsWith("uploaded://"));
 
@@ -210,9 +210,9 @@ public class AddDatastreamIT
             dsid = dsid + type;
             checksum = ChecksumUtility.checksum(type, new FileInputStream(f));
             response = addDatastream(testPid, dsid).controlGroup("M").dsLocation(dsLocation)
-                    .checksumType(type).checksum(checksum).execute(fedora());
+                    .checksumType(type).checksum(checksum).execute();
             assertEquals(201, response.getStatus());
-            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
+            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute();
             assertTrue(r.isChecksumValid());
         }
     }
@@ -230,9 +230,9 @@ public class AddDatastreamIT
                                           baseUrl.getPort());
 
         response = addDatastream(testPid, dsid).controlGroup("M").dsLocation(dsLocation)
-                .checksumType("MD5").checksum("b8ebd781db53b856efa8e873fa4d2f6e").execute(fedora());
+                .checksumType("MD5").checksum("b8ebd781db53b856efa8e873fa4d2f6e").execute();
         assertEquals(201, response.getStatus());
-        GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute(fedora());
+        GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute();
         assertTrue(r.isChecksumValid());
     }
 }

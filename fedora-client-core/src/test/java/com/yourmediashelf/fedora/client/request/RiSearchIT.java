@@ -28,9 +28,17 @@ import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.response.RiSearchResponse;
 
+/**
+ * Test of the Resource Index Search API. The TQL and Sparql queries of course
+ * require a triplestore that supports TQL and Sparql (i.e. Mulgara and not 
+ * MPTStore).
+ * 
+ * @author Edwin Shin
+ *
+ */
 public class RiSearchIT extends BaseFedoraRequestIT {
 
-    @Test
+    //@Test
     public void testItqlQuery() throws Exception {
     	String pidUri = "info:fedora/" + getTestPid();
     	String query = String.format("select $subject from <#ri> " +
@@ -38,14 +46,14 @@ public class RiSearchIT extends BaseFedoraRequestIT {
 
         RiSearchResponse response = null;
 
-        response = riSearch(query).lang("itql").format("csv").execute(fedora());
+        response = riSearch(query).lang("itql").format("csv").execute();
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
         assertTrue(result.contains("\"subject\""));
         assertTrue(result.contains(getTestPid()));
     }
     
-    @Test
+    //@Test
     public void testSparqlQuery() throws Exception {
     	String pidUri = "info:fedora/" + getTestPid();
     	String query = String.format("select ?s from <#ri> " +
@@ -53,8 +61,20 @@ public class RiSearchIT extends BaseFedoraRequestIT {
     			"FILTER(STR(?s) = \"%s\")}", pidUri);
 
         RiSearchResponse response = null;
+        response = riSearch(query).flush(true).execute();
+        assertEquals(200, response.getStatus());
+        String result = response.getEntity(String.class);
+        assertTrue(result.contains(getTestPid()));
+    }
+    
+    @Test
+    public void testSPO() throws Exception {
+        String pidUri = "info:fedora/" + getTestPid();
+        String query = String.format("<%s> <fedora-model:hasModel> *", pidUri);
 
-        response = riSearch(query).flush(true).execute(fedora());
+        RiSearchResponse response = null;
+
+        response = riSearch(query).lang("spo").type("triples").flush(true).execute();
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
         assertTrue(result.contains(getTestPid()));

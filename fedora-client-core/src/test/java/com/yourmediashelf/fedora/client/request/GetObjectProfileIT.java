@@ -30,7 +30,7 @@ import com.yourmediashelf.fedora.client.response.GetObjectProfileResponse;
 public class GetObjectProfileIT extends BaseFedoraRequestIT {
     @Test
     public void testGetObjectXML() throws Exception {
-    	GetObjectProfileResponse response = getObjectProfile(testPid).execute(fedora());
+    	GetObjectProfileResponse response = getObjectProfile(testPid).execute();
         assertEquals(200, response.getStatus());
         assertEquals(testPid, response.getPid());
         assertEquals("A", response.getState());

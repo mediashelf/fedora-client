@@ -38,7 +38,7 @@ public class UploadIT
         File f = new File("src/test/resources/21.edit.essay.zip");
         assertTrue(f.exists());
         UploadResponse response =
-                upload(f).execute(fedora());
+                upload(f).execute();
         assertEquals(202, response.getStatus());
         assertTrue(response.getUploadLocation().startsWith("uploaded://"));
     }

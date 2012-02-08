@@ -44,6 +44,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     private final String pid;
     private final String dsId;
     private Object content;
+    private String mimeType;
 
     public ModifyDatastream(String pid, String dsId) {
         if (pid == null || pid.isEmpty()) {
@@ -165,6 +166,20 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     }
 
     /**
+     * Set the mime type of the datastream.
+     * 
+     * <p>If not set, fedora-client will make a best-guess based on the actual 
+     * content.
+     * 
+     * @param mimeType the mime type of the datastream.
+     * @return this builder
+     */
+    public ModifyDatastream mimeType(String mimeType) {
+        this.mimeType = mimeType;
+        return this;
+    }
+    
+    /**
      * Enable versioning of the datastream.
      *
      * @param versionable
@@ -186,6 +201,11 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
     }
 
     @Override
+    public ModifyDatastreamResponse execute() throws FedoraClientException {
+        return (ModifyDatastreamResponse)super.execute();
+    }
+    
+    @Override
     public ModifyDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         WebResource wr = fedora.resource();
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
@@ -195,11 +215,16 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         if (content == null) {
             response = wr.put(ClientResponse.class);
         } else if (content instanceof String) {
-            response = wr.type(MediaType.TEXT_XML_TYPE).put(ClientResponse.class,
+            if (mimeType == null) {
+                mimeType = MediaType.TEXT_XML_TYPE.toString();
+            }
+            response = wr.type(mimeType).put(ClientResponse.class,
                                                              content);
         } else if (content instanceof File) {
             File f = (File) content;
-            String mimeType = fedora.getMimeType(f);
+            if (mimeType == null) {
+                mimeType = fedora.getMimeType(f);
+            }
             response = wr.type(mimeType).put(ClientResponse.class, f);
         } else {
             throw new IllegalArgumentException("unknown request content type");

@@ -31,7 +31,7 @@ import com.yourmediashelf.fedora.client.response.GetObjectHistoryResponse;
 public class GetObjectHistoryIT extends BaseFedoraRequestIT {
     @Test
     public void testGetObjectHistory() throws Exception {
-        GetObjectHistoryResponse response = getObjectHistory(testPid).execute(fedora());
+        GetObjectHistoryResponse response = getObjectHistory(testPid).execute();
         assertEquals(testPid, response.getPid());
         assertTrue(response.getObjectChangeDate().size() == 1);
     }

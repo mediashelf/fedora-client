@@ -32,7 +32,7 @@ public class ExportIT extends BaseFedoraRequestIT {
     @Test
     public void testExport() throws Exception {
         String format = "info:fedora/fedora-system:FOXML-1.1";
-        FedoraResponse response = export(testPid).format(format).execute(fedora());
+        FedoraResponse response = export(testPid).format(format).execute();
         assertEquals(200, response.getStatus());
         DigitalObject foxml = response.getEntity(DigitalObject.class);
         assertEquals(testPid, foxml.getPID());

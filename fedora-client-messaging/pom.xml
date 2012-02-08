@@ -11,7 +11,6 @@
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <description>Java messaging client library for Fedora</description>
-  <url>http://mediashelf.github.com/${project.artifactId}</url>
 
   <dependencyManagement>
     <dependencies>

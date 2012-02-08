@@ -36,7 +36,7 @@ public class GetDisseminationIT extends BaseFedoraRequestIT {
         String objectPid = "fedora-system:FedoraObject-3.0";
         String sdefPid = "fedora-system:3";
         String method = "viewDublinCore";
-        response = getDissemination(objectPid, sdefPid, method).execute(fedora());
+        response = getDissemination(objectPid, sdefPid, method).execute();
         assertEquals(200, response.getStatus());
     }
 }

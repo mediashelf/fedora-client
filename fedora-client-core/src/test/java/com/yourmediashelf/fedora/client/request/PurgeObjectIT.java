@@ -52,12 +52,12 @@ public class PurgeObjectIT extends BaseFedoraRequestIT {
         String pid = null;
 
         // first, ingest object
-        response = ingest(null).execute(fedora());
+        response = ingest(null).execute();
         assertEquals(201, response.getStatus());
         pid = response.getPid();
 
         // now delete it
-        FedoraResponse purge = purgeObject(pid).execute(fedora());
+        FedoraResponse purge = purgeObject(pid).execute();
         assertEquals(200, purge.getStatus());
     }
 }

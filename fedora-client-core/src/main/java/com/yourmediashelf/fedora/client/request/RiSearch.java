@@ -79,6 +79,7 @@ public class RiSearch
      * @return this builder
      */
     public RiSearch lang(String lang) {
+        //FIXME set type=triples automatically if spo
     	validateLang(lang);
         addQueryParam("lang", lang);
         return this;
@@ -180,6 +181,11 @@ public class RiSearch
     public RiSearch template(String template) {
         addQueryParam("template", template);
         return this;
+    }
+    
+    @Override
+    public RiSearchResponse execute() throws FedoraClientException {
+        return (RiSearchResponse)super.execute();
     }
 
     @Override

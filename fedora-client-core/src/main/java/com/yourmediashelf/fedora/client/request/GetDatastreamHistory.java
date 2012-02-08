@@ -66,6 +66,11 @@ public class GetDatastreamHistory
     }
 
     @Override
+    public GetDatastreamHistoryResponse execute() throws FedoraClientException {
+        return (GetDatastreamHistoryResponse) super.execute();
+    }
+    
+    @Override
     public GetDatastreamHistoryResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {

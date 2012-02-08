@@ -172,6 +172,11 @@ public class AddDatastream
     }
 
     @Override
+    public AddDatastreamResponse execute() throws FedoraClientException {
+        return (AddDatastreamResponse) super.execute();
+    }
+    
+    @Override
     public AddDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
         // special handling for RELS-EXT and RELS-INT
         if (dsId.equals("RELS-EXT") || dsId.equals("RELS-INT")) {

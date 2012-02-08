@@ -21,6 +21,8 @@
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addRelationship;
+import static com.yourmediashelf.fedora.client.FedoraClient.getRelationships;
+import static com.yourmediashelf.fedora.client.FedoraClient.getDatastreamDissemination;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -32,34 +34,50 @@ public class AddRelationshipIT extends BaseFedoraRequestIT {
     @Test
     public void testAddRelationship() throws Exception {
         FedoraResponse response = null;
-        String subject = String.format("info:fedora/%s", testPid);
         String predicate = "urn:foo/testAddRelationship";
         String object = "urn:foo/한";
 
-        response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object));
+        response = addRelationship(testPid).predicate(predicate).object(object).execute();
         assertEquals(200, response.getStatus());
+        
+        System.out.println(
+                getRelationships(testPid).predicate(predicate).format(null).execute().getEntity(String.class));
+        
     }
 
     @Test
     public void testAddLiteral() throws Exception {
         FedoraResponse response = null;
-        String subject = String.format("info:fedora/%s", testPid);
         String predicate = "urn:foo/testAddLiteral";
         String object = "你好";
 
-        response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true));
+        response = addRelationship(testPid).predicate(predicate).object(object, true).execute();
         assertEquals(200, response.getStatus());
     }
 
     @Test
     public void testAddTypedLiteral() throws Exception {
         FedoraResponse response = null;
-        String subject = String.format("info:fedora/%s", testPid);
         String predicate = "urn:foo/testAddTypedLiteral";
         String object = "1970-01-01T00:00:00Z";
         String datatype = "http://www.w3.org/2001/XMLSchema#dateTime";
 
-        response = fedora().execute(addRelationship(testPid).subject(subject).predicate(predicate).object(object).isLiteral(true).datatype(datatype));
+        response = addRelationship(testPid).predicate(predicate).object(object, datatype).execute();
         assertEquals(200, response.getStatus());
+    }
+    
+    @Test
+    public void testAddRelsIntStatement() throws Exception {       
+        String subject = String.format("info:fedora/%s/RELS-INT", testPid);
+        String predicate = "urn:foo/testAddRelsIntStatement";
+        String object = "foo";
+        
+        addRelationship(testPid).subject(subject).predicate(predicate).object(object, true).execute();
+        
+        FedoraResponse response = getDatastreamDissemination(testPid, "RELS-INT").execute();
+        System.out.println("***");
+        System.out.println(response.getEntity(String.class));
+        System.out.println("===");
+        
     }
 }

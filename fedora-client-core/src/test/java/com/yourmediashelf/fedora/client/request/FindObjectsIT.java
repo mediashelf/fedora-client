@@ -37,7 +37,7 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 		FindObjectsResponse response = null;
 
 		response = findObjects().pid().terms("Content Model Object for Service Definition Objects")
-				.execute(fedora());
+				.execute();
 		assertEquals(200, response.getStatus());
 
 		List<String> pids = response.getPids();
@@ -50,7 +50,7 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 		FindObjectsResponse response = null;
 
 		response = findObjects().pid().maxResults(3).query("pid~fedora-system:*")
-				.execute(fedora());
+				.execute();
 		assertEquals(200, response.getStatus());
 
 		List<String> pids = response.getPids();
@@ -58,7 +58,7 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 		assertEquals(3, pids.size());
 		assertTrue(response.hasNext());
 		response = findObjects().pid().sessionToken(response.getToken())
-				.maxResults(3).resultFormat("xml").execute(fedora());
+				.maxResults(3).resultFormat("xml").execute();
 
 		pids = response.getPids();
 
@@ -70,7 +70,7 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 	public void testFindByQuery() throws Exception {
 		FindObjectsResponse response = null;
 
-		response = findObjects().pid().title().query("pid=" + testPid).execute(fedora());
+		response = findObjects().pid().title().query("pid=" + testPid).execute();
 		assertEquals(200, response.getStatus());
 		assertEquals(1, response.getPids().size());
 	}
@@ -79,7 +79,7 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 	public void testFindDCTitle() throws Exception {
 		FindObjectsResponse response = null;
 
-		response = findObjects().pid().title().query("pid~fedora-system:*").execute(fedora());
+		response = findObjects().pid().title().query("pid~fedora-system:*").execute();
 		assertEquals(200, response.getStatus());
 		List<String> pids = response.getPids();
 		assertEquals(4, pids.size());
@@ -96,7 +96,7 @@ public class FindObjectsIT extends BaseFedoraRequestIT {
 		FindObjectsResponse response = null;
 
 		response = findObjects().pid().identifier().query("pid~fedora-system:*")
-				.execute(fedora());
+				.execute();
 		assertEquals(200, response.getStatus());
 		List<String> pids = response.getPids();
 		assertEquals(4, pids.size());

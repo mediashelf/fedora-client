@@ -34,7 +34,7 @@ public class ValidateIT extends BaseFedoraRequestIT {
     public void testValidate() throws Exception {
         ValidateResponse response = null;
 
-        response = validate(testPid).execute(fedora());
+        response = validate(testPid).execute();
         assertEquals(testPid, response.getPid());
         assertTrue(response.isValid());
     }
@@ -43,7 +43,7 @@ public class ValidateIT extends BaseFedoraRequestIT {
     public void testValidateWithDateTime() throws Exception {
     	ValidateResponse response = null;
     	String dateTime = "9999-01-01T00:00:01.001Z";
-        response = validate(testPid).asOfDateTime(dateTime).execute(fedora());
+        response = validate(testPid).asOfDateTime(dateTime).execute();
         assertEquals(200, response.getStatus());
 
         assertEquals(testPid, response.getPid());

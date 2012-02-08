@@ -30,7 +30,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 public class GetObjectXMLIT extends BaseFedoraRequestIT {
     @Test
     public void testGetObjectXML() throws Exception {
-        FedoraResponse response = getObjectXML(testPid).execute(fedora());
+        FedoraResponse response = getObjectXML(testPid).execute();
         assertEquals(200, response.getStatus());
     }
 }

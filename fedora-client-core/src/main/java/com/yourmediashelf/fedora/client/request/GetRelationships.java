@@ -49,11 +49,25 @@ public class GetRelationships extends FedoraRequest<GetRelationships> {
         return this;
     }
 
+    /**
+     * The subject of the relationship. If <code>null</code>, defaults to the 
+     * URI form of the constructor-provided pid, e.g. <code>info:fedora/demo:1</code>.
+     * 
+     * @param subject the subject of the relationship.
+     * @return this builder
+     */
     public GetRelationships subject(String subject) {
         addQueryParam("subject", subject);
         return this;
     }
 
+    /**
+     * The predicate of the relationship. If <code>null<code>, match all 
+     * predicates.
+     * 
+     * @param predicate the predicate of the relationship
+     * @return this builder
+     */
     public GetRelationships predicate(String predicate) {
         addQueryParam("predicate", predicate);
         return this;

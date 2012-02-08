@@ -41,6 +41,13 @@ public class AddRelationship
         this.pid = pid;
     }
 
+    /**
+     * The subject of the relationship. If <code>null</code>, defaults to the 
+     * URI form of the constructor-provided pid, e.g. <code>info:fedora/demo:1</code>.
+     * 
+     * @param subject the subject of the relationship
+     * @return this builder
+     */
     public AddRelationship subject(String subject) {
         addQueryParam("subject", subject);
         return this;
@@ -51,8 +58,46 @@ public class AddRelationship
         return this;
     }
 
+    /**
+     * Add the object of the relationship.
+     * 
+     * <p>Unless otherwise indicated with the now-deprecated 
+     * {@link #isLiteral(boolean)} method, the object will be added as a 
+     * resource (i.e. a URI, not as a literal).
+     * 
+     * @param object the object of the relationship
+     * @return this builder
+     */
     public AddRelationship object(String object) {
         addQueryParam("object", object);
+        return this;
+    }
+    
+    /**
+     * Add the object of the relationship as a plain literal.
+     * 
+     * @param object the object of the relationship
+     * @param isLiteral whether or not the object is a literal.
+     * @return this builder
+     */
+    public AddRelationship object(String object, boolean isLiteral) {
+        addQueryParam("object", object);
+        addQueryParam("isLiteral", Boolean.toString(isLiteral));
+        return this;
+    }
+    
+    /**
+     * Add the object of the relationship as a datatyped literal. 
+     * 
+     * @param object the object of the relationship
+     * @param datatype The URI of the XML Schema Datatype of the object literal, 
+     * e.g. "http://www.w3.org/2001/XMLSchema#dateTime".
+     * @return this builder
+     */
+    public AddRelationship object(String object, String datatype) {
+        addQueryParam("object", object);
+        addQueryParam("isLiteral", Boolean.toString(true));
+        addQueryParam("datatype", datatype);
         return this;
     }
 
@@ -61,6 +106,7 @@ public class AddRelationship
      *
      * @param isLiteral indicate whether the object is a literal.
      * @return this builder
+     * @deprecated use {@link #object(String, boolean)}
      */
     public AddRelationship isLiteral(boolean isLiteral) {
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
@@ -73,6 +119,7 @@ public class AddRelationship
      *
      * @param datatype the datatype of the literal
      * @return this builder
+     * @deprecated use {@link #object(String, String)}
      */
     public AddRelationship datatype(String datatype) {
         addQueryParam("datatype", datatype);

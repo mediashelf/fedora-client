@@ -35,10 +35,28 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
  * @author Edwin Shin
  */
 public abstract class FedoraRequest<T> {
+    private static FedoraClient DEFAULT_CLIENT;
 
     private final MultivaluedMap<String, String> queryParams =
             new MultivaluedMapImpl();
+    
+    /**
+     * <p>Executes this request against the {@link #DEFAULT_CLIENT}
+     * 
+     * @return the FedoraResponse to this request
+     * @throws FedoraClientException if {@link #DEFAULT_CLIENT} is <code>null</code>
+     */
+    public FedoraResponse execute() throws FedoraClientException {
+        if (DEFAULT_CLIENT == null) {
+            throw new FedoraClientException("No default FedoraClient was set.");
+        }
+        return execute(DEFAULT_CLIENT);
+    }
 
+    public static void setDefaultClient(FedoraClient client) {
+        DEFAULT_CLIENT = client;
+    }
+    
     /**
      * <p>Execute this request using the supplied FedoraClient instance.</p>
      *
@@ -47,7 +65,7 @@ public abstract class FedoraRequest<T> {
      * @throws FedoraClientException if the HTTP status code of the response is
      * >= 400.
      */
-    abstract public FedoraResponse execute(FedoraClient fedora)
+    abstract public <F extends FedoraResponse> FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException;
 
     /**

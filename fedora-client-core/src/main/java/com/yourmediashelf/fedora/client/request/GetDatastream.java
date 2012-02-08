@@ -72,6 +72,11 @@ public class GetDatastream
         addQueryParam("validateChecksum", Boolean.toString(validateChecksum));
         return this;
     }
+    
+    @Override
+    public GetDatastreamResponse execute() throws FedoraClientException {
+        return (GetDatastreamResponse) super.execute();
+    }
 
     @Override
     public GetDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {

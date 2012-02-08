@@ -75,6 +75,11 @@ public class GetNextPID
     }
 
     @Override
+    public GetNextPIDResponse execute() throws FedoraClientException {
+        return (GetNextPIDResponse) super.execute();
+    }
+    
+    @Override
     public GetNextPIDResponse execute(FedoraClient fedora) throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
