@@ -140,6 +140,12 @@ public class FedoraClient {
      * FedoraClient to the FedoraRequest, e.g.</p>
      *
      * <pre>    IngestResponse r = new Ingest("my:pid").execute(client);</pre>
+     * 
+     * <p>As a further shorthand, if the default instance of FedoraClient that 
+     * FedoraRequests should use is set ({@link FedoraRequest#setDefaultClient(FedoraClient)}),
+     * then you can use the following:</p>
+     * 
+     * <pre>    IngestResponse r = new Ingest("my:pid").execute();</pre>
      *
      * <p>Finally, FedoraClient provides a number of static convenience methods
      * for FedoraRequests. Therefore, with a static import, the following,
@@ -147,7 +153,7 @@ public class FedoraClient {
      *
      * <pre>import static com.yourmediashelf.fedora.client.FedoraClient.*;
      * ...
-     *     IngestResponse r = ingest("my:pid").execute(client);</pre>
+     *     IngestResponse r = ingest("my:pid").execute();</pre>
      *
      * @param method a FedoraRequest
      * @return the wrapped HTTP response
