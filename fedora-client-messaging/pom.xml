@@ -11,6 +11,7 @@
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <description>Java messaging client library for Fedora</description>
+  <url>http://mediashelf.github.com/${project.artifactId}</url>
 
   <dependencyManagement>
     <dependencies>
@@ -56,14 +57,6 @@
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>1.5</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
