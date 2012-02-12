@@ -103,7 +103,7 @@ public class PurgeRelationship extends RelationshipsRequest {
     /**
      * 
      * @param datatype
-     * @return
+     * @return this builder
      * @deprecated use {@link #object(String, String)}
      */
     public PurgeRelationship datatype(String datatype) {

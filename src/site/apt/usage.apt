@@ -6,7 +6,9 @@
 
 Usage
 
-    Create an instance of FedoraClient:
+    Usage is simple: 
+    
+    [[1]] Create an instance of FedoraClient
     
 +--
 FedoraCredentials credentials = 
@@ -14,21 +16,28 @@ FedoraCredentials credentials =
 FedoraClient fedora = new FedoraClient(credentials);
 +--
 
-    Build the request, execute it, and evaluate the response
+    [[2]] Optionally, set this instance of FedoraClient as the default for all requests
     
 +--
-IngestResponse response = new Ingest("test:pid").label("foo").execute(fedora);
+FedoraRequest.setDefaultClient(fedora);
++--
+
+    [[3]] Build a <<<FedoraRequest>>> for the Fedora API method and execute the request
+    
++--
+IngestResponse response = new Ingest("test:pid").label("foo").execute();
 String pid = response.getPid();
 +--
+
+    []
 
     Using static imports, you can use a more abbreviated syntax:
     
 +--
 import static com.yourmediashelf.fedora.client.FedoraClient.*;
-
 ...
 
-    ingest("test:pid").execute(fedora);
+    ingest("test:pid").execute();
 +--
 
     Use optimistic locking for modifyObject by passing the lastModifiedDate as a
@@ -38,7 +47,7 @@ the object's, the request will fail with a HTTP 409 Conflict error.
 +--
 Date lastModifiedDate = fedora.getLastModifiedDate("test:pid");
 try {
-    modifyObject("test:pid").label("bar").lastModifiedDate(lastModifiedDate).execute(fedora);
+    modifyObject("test:pid").label("bar").lastModifiedDate(lastModifiedDate).execute();
 } catch(FedoraClientException e) {
     if (e.getStatus() == 409) {
         // do something
@@ -78,12 +87,12 @@ version of fedora-client):
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client-core</artifactId>
-        <version>0.1.8</version>
+        <version>0.2</version>
     </dependency>
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client-messaging</artifactId>
-        <version>0.1.8</version>
+        <version>0.2</version>
     </dependency>
 </dependencies>
 +--

@@ -1,0 +1,56 @@
+    ---
+    History
+    ---
+    Edwin Shin
+    ---
+
+History
+
+    * 0.2 (8 February 2012)
+    
+        * Enable setting a default client for FedoraRequests so that callers can 
+          use the shorter .execute() rather than .execute(fedora)
+          
+        * The constructors for the various Relationships API methods handle 
+          processing the subject of the relationship requests. The explicit 
+          subject(String) method is now deprecated.
+          
+        * Added modifyDatastream.mimeType(String) to support setting the mimeType 
+          of a datastream manually.
+    
+    * 0.1.8 (28 January 2012)
+    
+        * Now a Maven multi-module project. Instead of just the one fedora-client
+          artifact, now produce fedora-client-core and fedora-client-messaging
+          artifacts.
+          
+        * Minimize the -with-dependencies jars to only include the classes that are 
+          actually used.
+    
+    * 0.1.7 (7 January 2012)
+    
+        * Now available via Maven Central
+    
+    * 0.1.6 (3 June 2011)
+    
+        * FindObjects now returns FindObjectsResponse
+        
+    * 0.1.5 (2 June 2011)
+    
+        * Fix for https://jira.duraspace.org/browse/FCREPO-949
+        
+        * Fix for https://jira.duraspace.org/browse/FCREPO-876
+        
+        * Support riSearch queries
+    
+    * 0.1.0 (8 June 2010)
+    
+        * Support for DescribeRepository and Upload
+    
+    * 0.0.1 (21 May 2010)
+    
+        * Initial release
+    
+    
+    
+    
