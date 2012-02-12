@@ -31,7 +31,7 @@ String pid = response.getPid();
 
     []
 
-    Using static imports, you can use a more abbreviated syntax:
+    Using static imports, you can use an even more abbreviated syntax:
     
 +--
 import static com.yourmediashelf.fedora.client.FedoraClient.*;
@@ -40,9 +40,12 @@ import static com.yourmediashelf.fedora.client.FedoraClient.*;
     ingest("test:pid").execute();
 +--
 
-    Use optimistic locking for modifyObject by passing the lastModifiedDate as a
-request parameter. If the request's lastModifiedDate is earlier than 
-the object's, the request will fail with a HTTP 409 Conflict error.
+* Optimistic locking
+
+    Use optimistic locking for <<<modifyObject>>> by passing the 
+<<<lastModifiedDate>>> as a request parameter. If the request's 
+<<<lastModifiedDate>>> is earlier than the object's, the request will fail with 
+a HTTP 409 Conflict error.
 
 +--
 Date lastModifiedDate = fedora.getLastModifiedDate("test:pid");
@@ -57,14 +60,36 @@ try {
 
 * Parsing a response
 
-    FedoraRequests return instances of a FedoraResponse. 
-The response-specific implementations (e.g. AddDatastreamResponse, 
-GetDatastreamResponse, etc.) provide convenience methods that parse the 
+    FedoraRequests return instances of a <<<FedoraResponse>>>. 
+The response-specific implementations (e.g. <<<AddDatastreamResponse>>>, 
+<<<GetDatastreamResponse>>>, etc.) provide convenience methods that parse the 
 response body. However, at this writing, not every request has a corresponding 
 response implemented (yet). In those cases, it is necessary to parse the "raw"
-response, as returned by FedoraReponse.getEntityInputStream or 
-FedoraResponse.getEntity.
+response, as returned by <<<FedoraReponse.getEntityInputStream>>> or 
+<<<FedoraResponse.getEntity>>>.
 
++--
+FedoraResponse r = getDatastream("test:pid", "DC").format("html").execute();
+String htmlResponseBody = r.getEntity(String.class);
+
+GetDatastreamResponse gdr = getDatastream("test:pid", "DC").execute();
+assert("A".equals(gdr.getDatastreamProfile().getDsState());
++--
+
+* Passing requests to multiple Fedora instances
+
+    The same FedoraRequest can be re-used across multiple Fedora instances:
+
++--
+FedoraClient f1 = new FedoraClient(new FedoraCredentials("http://localhost:8080/fedora", 
+    "fedoraAdmin", "pass1"));
+FedoraClient f2 = new FedoraClient(new FedoraCredentials("http://example.com/fedora", 
+    "fedoraAdmin", "pass2"));
+
+Ingest ingest = new Ingest("test:pid").label("foo");
+ingest.execute(f1);
+ingest.execute(f2);
++--
 
 * Including fedora-client in your Maven project
 
