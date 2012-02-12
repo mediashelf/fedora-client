@@ -29,8 +29,6 @@ IngestResponse response = new Ingest("test:pid").label("foo").execute();
 String pid = response.getPid();
 +--
 
-    []
-
     Using static imports, you can use an even more abbreviated syntax:
     
 +--
@@ -73,12 +71,12 @@ FedoraResponse r = getDatastream("test:pid", "DC").format("html").execute();
 String htmlResponseBody = r.getEntity(String.class);
 
 GetDatastreamResponse gdr = getDatastream("test:pid", "DC").execute();
-assert("A".equals(gdr.getDatastreamProfile().getDsState());
+assert("A".equals(gdr.getDatastreamProfile().getDsState()));
 +--
 
 * Passing requests to multiple Fedora instances
 
-    The same FedoraRequest can be re-used across multiple Fedora instances:
+    The same <<<FedoraRequest>> can be re-used across multiple Fedora instances:
 
 +--
 FedoraClient f1 = new FedoraClient(new FedoraCredentials("http://localhost:8080/fedora", 
