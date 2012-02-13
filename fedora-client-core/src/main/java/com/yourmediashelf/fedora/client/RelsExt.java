@@ -98,9 +98,7 @@ public class RelsExt {
 	    try {
             return bout.toString("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e.getMessage(), e);
         }
 	}
 
