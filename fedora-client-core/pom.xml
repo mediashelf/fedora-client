@@ -14,7 +14,7 @@
   <url>http://mediashelf.github.com/${project.artifactId}</url>
 
   <properties>
-    <jersey.version>1.9</jersey.version>
+    <jersey.version>1.11</jersey.version>
   </properties>
 
   <dependencyManagement>
@@ -52,7 +52,7 @@
       <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-mapper-lgpl</artifactId>
-        <version>1.9.3</version>
+        <version>1.9.4</version>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>

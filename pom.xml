@@ -62,9 +62,20 @@
       <organization>MediaShelf</organization>
       <organizationUrl>http://www.yourmediashelf.com/</organizationUrl>
       <roles>
-        <role>lead developer</role>
+        <role>developer</role>
       </roles>
       <timezone>+8</timezone>
+    </developer>
+    <developer>
+      <id>cwilper</id>
+      <name>Chris Wilper</name>
+      <email>cwilper @ (domain of organization url)</email>
+      <organization>DuraSpace</organization>
+      <organizationUrl>http://www.duraspace.org/</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-5</timezone>
     </developer>
   </developers>
 
@@ -80,6 +91,10 @@
     </developerConnection>
     <url>http://github.com/mediashelf/${project_name}</url>
   </scm>
+  
+  <prerequisites>
+    <maven>2.2.0</maven>
+  </prerequisites>
 
   <issueManagement>
     <system>JIRA</system>
@@ -122,6 +137,10 @@
           </configuration>
         </plugin>
         <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>2.12</version>
           <executions>
@@ -140,12 +159,20 @@
           </executions>
         </plugin>
         <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>2.4</version>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.2.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.5</version>
         </plugin>
         <plugin>
           <artifactId>maven-shade-plugin</artifactId>

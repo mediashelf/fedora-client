@@ -23,7 +23,7 @@
       <dependency>
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-core</artifactId>
-        <version>5.5.0</version>
+        <version>5.5.1</version>
         <exclusions>
           <!-- So far as I can tell, protobuf is already included in activemq-core -->
           <exclusion>
