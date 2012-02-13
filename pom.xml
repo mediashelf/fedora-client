@@ -389,7 +389,22 @@
       </build>
     </profile>
   </profiles>
+  <repositories>
+    <!-- only needed for wagon-gitsite-0.3.1a, and only needed in this section for Maven 2 -->
+    <repository>
+      <id>duraspace-thirdparty</id>
+      <name>Duraspace Thirdparty Maven Repository</name>
+      <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
   <pluginRepositories>
+    <!-- only needed for wagon-gitsite-0.3.1a -->
     <pluginRepository>
       <id>duraspace-thirdparty</id>
       <name>Duraspace Thirdparty Maven Repository</name>
