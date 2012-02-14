@@ -28,6 +28,7 @@ with something like the following:
     "http://localhost:8080/fedora/get/fedora-system:ContentModel-3.0/DC", "M", 
     "A", null, null, null);
 
+For complete documentation see: http://mediashelf.github.com/fedora-client/
 
 Requirements
 ------------
