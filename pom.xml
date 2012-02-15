@@ -9,7 +9,7 @@
   
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.3</version>
   <packaging>pom</packaging>
   <name>MediaShelf ${project.artifactId}</name>
   <description>Java client library for Fedora</description>
@@ -250,7 +250,7 @@
                 <shadedArtifactAttached>true</shadedArtifactAttached>
                 <shadedClassifierName>with-dependencies</shadedClassifierName>
                 <transformers>
-                  <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                 </transformers>
               </configuration>
             </execution>
