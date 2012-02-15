@@ -42,12 +42,6 @@
           </exclusion>
         </exclusions> 
       </dependency>
-      <!-- Included to prevent: "SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder" -->
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.6.4</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -62,10 +56,6 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
     </dependency>
   </dependencies>
@@ -74,27 +64,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <artifactSet>
-                <excludes>
-                  <exclude>classworlds:classworlds</exclude>
-                  <exclude>junit:junit</exclude>
-                  <exclude>org.apache.maven:lib:tests</exclude>
-                  <exclude>log4j:log4j:jar:</exclude>
-                </excludes>
-              </artifactSet>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
-              <shadedClassifierName>with-dependencies</shadedClassifierName>
-              <minimizeJar>true</minimizeJar>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
