@@ -84,4 +84,4 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright &copy; 2010-2011 MediaShelf
+Copyright &copy; 2010-2012 MediaShelf

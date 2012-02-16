@@ -8,10 +8,10 @@ History
 
     * 0.3 (16 February 2012)
     
-        * -with-dependencies jars are no longer minimized (to resolve 
-        NoClassDefFoundErrors)
+        * -with-dependencies jars are no longer minimized since the minimized 
+        shaded jar wasn't actually including all the classes needed at runtime
         
-        * switch to SLF4J, banning other logging frameworks and bindings
+        * switched to SLF4J, banning other logging frameworks and bindings
 
     * 0.2 (8 February 2012)
     

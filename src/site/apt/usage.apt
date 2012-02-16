@@ -8,7 +8,7 @@ Usage
 
     Usage is simple: 
     
-    [[1]] Create an instance of FedoraClient
+    [[1]] Create an instance of {{{./apidocs/com/yourmediashelf/fedora/client/FedoraClient.html}FedoraClient}}
     
 +--
 FedoraCredentials credentials = 
@@ -16,7 +16,7 @@ FedoraCredentials credentials =
 FedoraClient fedora = new FedoraClient(credentials);
 +--
 
-    [[2]] Optionally, set this instance of FedoraClient as the default for all requests
+    [[2]] Optionally, set this instance of <<<FedoraClient>>> as the default for all requests
     
 +--
 FedoraRequest.setDefaultClient(fedora);
@@ -58,13 +58,14 @@ try {
 
 * Parsing a response
 
-    FedoraRequests return instances of a <<<FedoraResponse>>>. 
+    <<<FedoraRequest>>>s return instances of a <<<FedoraResponse>>>. 
 The response-specific implementations (e.g. <<<AddDatastreamResponse>>>, 
 <<<GetDatastreamResponse>>>, etc.) provide convenience methods that parse the 
 response body. However, at this writing, not every request has a corresponding 
 response implemented (yet). In those cases, it is necessary to parse the "raw"
-response, as returned by <<<FedoraReponse.getEntityInputStream>>> or 
-<<<FedoraResponse.getEntity>>>.
+response, as returned by 
+{{{.//apidocs/com/yourmediashelf/fedora/client/response/FedoraResponse.html#getEntity(java.lang.Class)}FedoraReponse.getEntityInputStream}} 
+or {{{./apidocs/com/yourmediashelf/fedora/client/response/FedoraResponse.html#getEntityInputStream()}FedoraResponse.getEntity}}.
 
 +--
 FedoraResponse r = getDatastream("test:pid", "DC").format("html").execute();
@@ -91,9 +92,10 @@ ingest.execute(f2);
 
 * Including fedora-client in your Maven project
 
-    As of 0.1.7, fedora-client is now available via Maven Central. Prior 
-versions are available in the Duraspace Thirdparty Maven Repository 
-(https://m2.duraspace.org/content/repositories/thirdparty).
+    As of 0.1.7, fedora-client is now available via 
+{{{Maven Central}http://search.maven.org/#search|ga|1|fedora-client}}. Prior 
+versions are available in the 
+{{{DuraSpace Third-Party Maven Repository}https://m2.duraspace.org/content/repositories/thirdparty}} .
 
     As of 0.1.8, fedora-client is now a Maven multi-module project, producing 
 fedora-client-core and fedora-client-messaging artifacts. Unless you 
@@ -110,12 +112,12 @@ version of fedora-client):
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client-core</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </dependency>
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client-messaging</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </dependency>
 </dependencies>
 +--
