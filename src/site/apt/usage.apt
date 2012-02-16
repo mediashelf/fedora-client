@@ -66,8 +66,8 @@ The response-specific implementations (e.g. <<<AddDatastreamResponse>>>,
 response body. However, at this writing, not every request has a corresponding 
 response implemented (yet). In those cases, it is necessary to parse the "raw"
 response, as returned by 
-{{{.//apidocs/com/yourmediashelf/fedora/client/response/FedoraResponse.html#getEntity(java.lang.Class)}FedoraReponse.getEntityInputStream}} 
-or {{{./apidocs/com/yourmediashelf/fedora/client/response/FedoraResponse.html#getEntityInputStream()}FedoraResponse.getEntity}}.
+{{{.//apidocs/com/yourmediashelf/fedora/client/response/FedoraResponse.html#getEntity(java.lang.Class)}FedoraReponse.getEntity(Class)}} 
+or {{{./apidocs/com/yourmediashelf/fedora/client/response/FedoraResponse.html#getEntityInputStream()}FedoraResponse.getEntityInputStream()}}.
 
 +--
 FedoraResponse r = getDatastream("test:pid", "DC").format("html").execute();
