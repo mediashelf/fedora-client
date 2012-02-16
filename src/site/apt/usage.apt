@@ -22,7 +22,9 @@ FedoraClient fedora = new FedoraClient(credentials);
 FedoraRequest.setDefaultClient(fedora);
 +--
 
-    [[3]] Build a <<<FedoraRequest>>> for the Fedora API method and execute the request
+    [[3]] Build a 
+    {{{./apidocs/com/yourmediashelf/fedora/client/request/FedoraRequest.html}FedoraRequest}} 
+    for the Fedora API method and execute the request
     
 +--
 IngestResponse response = new Ingest("test:pid").label("foo").execute();
@@ -93,9 +95,9 @@ ingest.execute(f2);
 * Including fedora-client in your Maven project
 
     As of 0.1.7, fedora-client is now available via 
-{{{Maven Central}http://search.maven.org/#search|ga|1|fedora-client}}. Prior 
+{{{http://search.maven.org/#search|ga|1|fedora-client}Maven Central}}. Prior 
 versions are available in the 
-{{{DuraSpace Third-Party Maven Repository}https://m2.duraspace.org/content/repositories/thirdparty}} .
+{{{https://m2.duraspace.org/content/repositories/thirdparty}DuraSpace Third-Party Maven Repository}} .
 
     As of 0.1.8, fedora-client is now a Maven multi-module project, producing 
 fedora-client-core and fedora-client-messaging artifacts. Unless you 
