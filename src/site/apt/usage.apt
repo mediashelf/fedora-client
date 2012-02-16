@@ -76,7 +76,7 @@ assert("A".equals(gdr.getDatastreamProfile().getDsState()));
 
 * Passing requests to multiple Fedora instances
 
-    The same <<<FedoraRequest>> can be re-used across multiple Fedora instances:
+    The same <<<FedoraRequest>>> can be re-used across multiple Fedora instances:
 
 +--
 FedoraClient f1 = new FedoraClient(new FedoraCredentials("http://localhost:8080/fedora", 
