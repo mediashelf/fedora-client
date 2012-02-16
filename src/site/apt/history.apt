@@ -6,6 +6,13 @@
 
 History
 
+    * 0.3 (16 February 2012)
+    
+        * -with-dependencies jars are no longer minimized (to resolve 
+        NoClassDefFoundErrors)
+        
+        * switch to SLF4J, banning other logging frameworks and bindings
+
     * 0.2 (8 February 2012)
     
         * Enable setting a default client for FedoraRequests so that callers can 
