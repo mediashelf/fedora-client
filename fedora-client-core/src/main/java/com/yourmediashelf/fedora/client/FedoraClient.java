@@ -181,11 +181,30 @@ public class FedoraClient {
                 .toString();
     }
 
+    /**
+     * <p>Convenience method for returning the lastModifiedDate of an object.
+     * 
+     * <p>Equivalent to <code>getObjectProfile(pid).execute().getLastModifiedDate()</code>.
+     * 
+     * @param pid the pid of the object
+     * @return the lastModifiedDate of the requested object
+     * @throws FedoraClientException
+     */
     public Date getLastModifiedDate(String pid) throws FedoraClientException {
         GetObjectProfileResponse response = getObjectProfile(pid).execute(this);
         return response.getLastModifiedDate();
     }
 
+    /**
+     * <p>Convenience method for returning the lastModifiedDate of a datastream.
+     * 
+     * <p>Equivalent to <code>getDatastream(pid, dsId).execute().getLastModifiedDate()</code>.
+     * 
+     * @param pid the pid of the object
+     * @param dsId the datastream ID
+     * @return the lastModifiedDate of the requested datastream
+     * @throws FedoraClientException
+     */
     public Date getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
         GetDatastreamResponse response = getDatastream(pid, dsId).format("xml").execute(this);
         return response.getLastModifiedDate();
@@ -226,12 +245,14 @@ public class FedoraClient {
     //        static convenience methods      //
     ////////////////////////////////////////////
     /**
-     * Static convenience method for AddDatastream.
+     * <p>Static convenience method for the AddDatastream request.
+     * 
+     * <p>Equivalent to invoking: <code>new AddDatastream(pid, dsId)</code>.
      *
      * @param pid
-     *        the persistent identifier
+     *        the pid of the object to add the datastream to.
      * @param dsId
-     *        the datastream identifier
+     *        the identifier of the datastream to be added.
      * @return builder for the AddDatastream method
      * @see AddDatastream
      */
@@ -239,10 +260,28 @@ public class FedoraClient {
         return new AddDatastream(pid, dsId);
     }
 
-    public static AddRelationship addRelationship(String pid) {
-        return new AddRelationship(pid);
+    /**
+     * <p>Static convenience method for the AddRelationship request.
+     * 
+     * <p>Equivalent to invoking: <code>new AddRelationship(subject)</code>.
+     * 
+     * @param subject the subject of the object (e.g. <code>demo:123</code> or 
+     * <code>info:fedora/demo:123/DC</code>) 
+     * @return builder for the AddRelationship method
+     * @see AddRelationship
+     */
+    public static AddRelationship addRelationship(String subject) {
+        return new AddRelationship(subject);
     }
 
+    /**
+     * <p>Static convenience method for the DescribeRepository request.
+     * 
+     * <p>Equivalent to invoking: <code>new DescribeRepository()</code>.
+     * 
+     * @return builder for the DescribeRepository method
+     * @see DescribeRepository
+     */
     public static DescribeRepository describeRepository() {
         return new DescribeRepository();
     }
@@ -291,8 +330,8 @@ public class FedoraClient {
         return new GetObjectXML(pid);
     }
 
-    public static GetRelationships getRelationships(String pid) {
-        return new GetRelationships(pid);
+    public static GetRelationships getRelationships(String subject) {
+        return new GetRelationships(subject);
     }
 
     /**
@@ -341,8 +380,8 @@ public class FedoraClient {
         return new PurgeObject(pid);
     }
 
-    public static PurgeRelationship purgeRelationship(String pid) {
-        return new PurgeRelationship(pid);
+    public static PurgeRelationship purgeRelationship(String subject) {
+        return new PurgeRelationship(subject);
     }
     
     public static RiSearch riSearch(String query) {

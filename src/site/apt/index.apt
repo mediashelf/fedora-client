@@ -13,13 +13,13 @@ is a Java client for the
     Every REST API method is fully supported. This includes new features 
 implemented since the release of Fedora 3.3 such as <<<getRelationships>>>, 
 <<<upload>>> and optimistic locking for <<<modifyObject>>> and 
-<<<modify datastream>>> requests.
+<<<modifyDatastream>>> requests.
 
     fedora-client also supports Resource Index queries and consuming messages 
 from Fedora's Messaging service.
 
     For examples of how to use fedora-client, see the {{{./usage.html}Usage}} 
-section and the project's JUnit integration tests.
+section and the project's JUnit {{{./xref-test/index.html}integration tests}}.
 
 A Note about Versions and Compatibility
 
@@ -36,8 +36,9 @@ fedora-client's convenience methods could no longer parse the buggy responses
 from older versions of Fedora.
 
     Even so, you can safely fall back to methods such as 
-FedoraResponse.getEntityInputStream() and FedoraResponse.getEntity() which 
-provide unmediated access to the server response.
+<<<FedoraResponse.getEntityInputStream()>>> and 
+<<<FedoraResponse.getEntity(Class)>>> which provide unmediated access to the 
+server response.
     
     Future versions of fedora-client will hopefully provide better means of 
 negotiating against multiple versions of Fedora. Ideas and code contributions 
@@ -45,5 +46,5 @@ are always welcome!
 
     * fedora-client-0.1.3 is the recommended version to use with Fedora 3.4.x
     
-    * fedora-client-0.2 is the recommended version to use with Fedora 3.5.0
+    * fedora-client-0.3 is the recommended version to use with Fedora 3.5.0
     
