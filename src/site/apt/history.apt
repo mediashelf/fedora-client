@@ -6,12 +6,16 @@
 
 History
 
+    * 0.4 (21 February 2012)
+    
+        * Workaround for memory-leak in mime-util (FCREPO-964).
+        
     * 0.3 (16 February 2012)
     
         * -with-dependencies jars are no longer minimized since the minimized 
-        shaded jar wasn't actually including all the classes needed at runtime
+        shaded jar wasn't actually including all the classes needed at runtime.
         
-        * switched to SLF4J, banning other logging frameworks and bindings
+        * Switched to SLF4J, banning other logging frameworks and bindings.
 
     * 0.2 (8 February 2012)
     
