@@ -80,13 +80,21 @@ public class FedoraClient {
 
     private final Client client;
 
-    private final MimeUtil2 mimeUtil;
-
     private String serverVersion;
 
     private boolean debug = false;
 
-    //private final NamespaceContextImpl nsCtx;
+    private static MimeUtil2 mimeUtil;
+
+    // Workaround for MimeUtil2 memory leak
+    // see: https://sourceforge.net/tracker/index.php?func=detail&aid=3152843&group_id=205064&atid=992132
+    // and also: https://jira.duraspace.org/browse/FCREPO-964
+    static {
+        if (mimeUtil == null) {
+            mimeUtil = new MimeUtil2();
+            mimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
+        }
+    }
 
     /**
      * Constructor for FedoraClient.
@@ -95,11 +103,6 @@ public class FedoraClient {
      */
     public FedoraClient(FedoraCredentials fc) {
         this.fc = fc;
-        //nsCtx = new NamespaceContextImpl();
-        //nsCtx.addNamespace("f", "info:fedora/fedora-system:def/foxml#");
-        mimeUtil = new MimeUtil2();
-        mimeUtil
-                .registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
 
         // TODO validate fc
         // null check for username & password
