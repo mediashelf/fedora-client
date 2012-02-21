@@ -9,7 +9,7 @@
   
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
-  <version>0.4</version>
+  <version>0.5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>MediaShelf ${project.artifactId}</name>
   <description>Java client library for Fedora</description>
