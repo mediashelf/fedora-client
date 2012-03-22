@@ -64,6 +64,15 @@ public abstract class FedoraRequest<T> {
     }
     
     /**
+     * Return boolean indicating whether {@link #DEFAULT_CLIENT} has been set.
+     * 
+     * @return boolean
+     */
+    public static boolean isDefaultClientSet() {
+    	return (DEFAULT_CLIENT != null);
+    }
+    
+    /**
      * <p>Execute this request using the supplied FedoraClient instance.</p>
      *
      * @param fedora an instance of FedoraClient
