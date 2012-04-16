@@ -24,6 +24,7 @@ import static com.yourmediashelf.fedora.client.FedoraClient.purgeObject;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.net.URI;
 
 import org.junit.After;
@@ -87,5 +88,16 @@ public class IngestIT extends BaseFedoraRequestIT {
         assertEquals(201, response.getStatus());
         pid = response.getPid();
         assertEquals(testPid, pid);
+    }
+
+    @Test
+    public void testIngestAtomZip() throws Exception {
+        File f = new File("src/test/resources/demo1001.zip");
+        IngestResponse response = null;
+        response =
+                ingest("demo:1001").format(
+                        "info:fedora/fedora-system:ATOMZip-1.1").content(f)
+                        .logMessage("testIngestAtomZip").execute();
+        assertEquals(201, response.getStatus());
     }
 }
