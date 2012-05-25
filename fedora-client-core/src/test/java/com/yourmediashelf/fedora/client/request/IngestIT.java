@@ -92,12 +92,14 @@ public class IngestIT extends BaseFedoraRequestIT {
 
     @Test
     public void testIngestAtomZip() throws Exception {
-        File f = new File("src/test/resources/demo1001.zip");
+        File f = new File("src/test/resources/test-rest1.zip");
         IngestResponse response = null;
         response =
-                ingest("demo:1001").format(
-                        "info:fedora/fedora-system:ATOMZip-1.1").content(f)
-                        .logMessage("testIngestAtomZip").execute();
+                ingest(testPid).format("info:fedora/fedora-system:ATOMZip-1.1")
+                        .content(f).logMessage("testIngestAtomZip").ignoreMime(
+                                true).execute();
         assertEquals(201, response.getStatus());
+        pid = response.getPid();
+        assertEquals(testPid, pid);
     }
 }

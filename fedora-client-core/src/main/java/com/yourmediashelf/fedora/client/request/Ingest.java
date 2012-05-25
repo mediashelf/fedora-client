@@ -196,9 +196,14 @@ public class Ingest extends FedoraRequest<Ingest> {
                                                           content);
         } else if (content instanceof File) {
             File f = (File) content;
-            response =
-                    wr.type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class,
-                                                          f);
+            MediaType mimeType = MediaType.TEXT_XML_TYPE;
+            // FCREPO-1070 (https://jira.duraspace.org/browse/FCREPO-1070):
+            //   requires that we do *not* set the mimeType to application/zip
+            //if (getQueryParam("format").contains(
+            //        "info:fedora/fedora-system:ATOMZip-1.1")) {
+            //    mimeType = MediaType.valueOf("application/zip");
+            //}
+            response = wr.type(mimeType).post(ClientResponse.class, f);
         } else {
             throw new IllegalArgumentException("unknown request content type");
         }
