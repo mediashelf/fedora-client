@@ -31,10 +31,13 @@ import com.yourmediashelf.fedora.client.request.Ingest;
  * @author Edwin Shin
  */
 public class IngestResponse extends FedoraResponseImpl {
+
     private String pid;
+
     private final URI location;
 
-    public IngestResponse(ClientResponse cr) throws FedoraClientException {
+    public IngestResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
         location = cr.getLocation();
     }

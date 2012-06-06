@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.response;
 
 import java.util.Date;
@@ -33,8 +32,7 @@ import com.yourmediashelf.fedora.util.DateUtility;
  *
  * @author Edwin Shin
  */
-public class GetObjectProfileResponse
-        extends FedoraResponseImpl {
+public class GetObjectProfileResponse extends FedoraResponseImpl {
 
     private ObjectProfile objectProfile;
 
@@ -44,9 +42,8 @@ public class GetObjectProfileResponse
     }
 
     public Date getCreateDate() throws FedoraClientException {
-        return DateUtility.parseXSDDateTime(getObjectProfile()
-                                            .getObjCreateDate()
-                                            .toXMLFormat()).toDate();
+        return DateUtility.parseXSDDateTime(
+                getObjectProfile().getObjCreateDate().toXMLFormat()).toDate();
     }
 
     public String getLabel() throws FedoraClientException {
@@ -59,9 +56,8 @@ public class GetObjectProfileResponse
      * @throws FedoraClientException
      */
     public Date getLastModifiedDate() throws FedoraClientException {
-        return DateUtility.parseXSDDateTime(getObjectProfile()
-                                            .getObjLastModDate()
-                                            .toXMLFormat()).toDate();
+        return DateUtility.parseXSDDateTime(
+                getObjectProfile().getObjLastModDate().toXMLFormat()).toDate();
     }
 
     public String getOwnerId() throws FedoraClientException {
@@ -84,7 +80,8 @@ public class GetObjectProfileResponse
 
     public ObjectProfile getObjectProfile() throws FedoraClientException {
         if (objectProfile == null) {
-        	objectProfile = (ObjectProfile) unmarshallResponse(ContextPath.Access);
+            objectProfile =
+                    (ObjectProfile) unmarshallResponse(ContextPath.Access);
         }
         return objectProfile;
     }

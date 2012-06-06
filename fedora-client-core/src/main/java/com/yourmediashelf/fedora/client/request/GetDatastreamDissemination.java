@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -32,10 +31,11 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  *
  * @author Edwin Shin
  */
-public class GetDatastreamDissemination
-        extends FedoraRequest<GetDatastreamDissemination> {
+public class GetDatastreamDissemination extends
+        FedoraRequest<GetDatastreamDissemination> {
 
     private final String pid;
+
     private final String dsId;
 
     /**
@@ -58,11 +58,14 @@ public class GetDatastreamDissemination
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
-        String path = String.format("objects/%s/datastreams/%s/content", pid, dsId);
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource();
+        String path =
+                String.format("objects/%s/datastreams/%s/content", pid, dsId);
 
-        return new FedoraResponseImpl(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new FedoraResponseImpl(wr.path(path).queryParams(
+                getQueryParams()).get(ClientResponse.class));
     }
 
 }

@@ -33,16 +33,18 @@ import com.yourmediashelf.fedora.util.DateUtility;
  *
  * @author Edwin Shin
  */
-public class DatastreamProfileResponse
-        extends FedoraResponseImpl {
+public class DatastreamProfileResponse extends FedoraResponseImpl {
+
     private DatastreamProfile datastreamProfile;
 
-    public DatastreamProfileResponse(ClientResponse cr) throws FedoraClientException {
+    public DatastreamProfileResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
 
     public boolean isChecksumValid() throws FedoraClientException {
-        return Boolean.parseBoolean(getDatastreamProfile().getDsChecksumValid());
+        return Boolean
+                .parseBoolean(getDatastreamProfile().getDsChecksumValid());
     }
 
     /**
@@ -55,9 +57,9 @@ public class DatastreamProfileResponse
      * @throws FedoraClientException
      */
     public Date getLastModifiedDate() throws FedoraClientException {
-        return DateUtility.parseXSDDateTime(getDatastreamProfile()
-                                            .getDsCreateDate()
-                                            .toXMLFormat()).toDate();
+        return DateUtility.parseXSDDateTime(
+                getDatastreamProfile().getDsCreateDate().toXMLFormat())
+                .toDate();
     }
 
     /**
@@ -67,10 +69,11 @@ public class DatastreamProfileResponse
      * @return the DatastreamProfile
      * @throws FedoraClientException
      */
-    public DatastreamProfile getDatastreamProfile() throws FedoraClientException {
+    public DatastreamProfile getDatastreamProfile()
+            throws FedoraClientException {
         if (datastreamProfile == null) {
-        	datastreamProfile =
-                (DatastreamProfile) unmarshallResponse(ContextPath.Management);
+            datastreamProfile =
+                    (DatastreamProfile) unmarshallResponse(ContextPath.Management);
         }
         return datastreamProfile;
     }

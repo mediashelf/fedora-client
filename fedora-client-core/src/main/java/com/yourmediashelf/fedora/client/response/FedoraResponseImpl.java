@@ -44,122 +44,129 @@ import com.yourmediashelf.fedora.util.NamespaceContextImpl;
  * @author Edwin Shin
  */
 public class FedoraResponseImpl implements FedoraResponse {
-	private final ClientResponse cr;
-	private final int status;
-	private final NamespaceContextImpl nsCtx;
-	private Boolean validateSchema = null;
 
-	/**
-	 * Constructor for a FedoraResponseImpl.
-	 * 
-	 * @param cr
-	 * @throws FedoraClientException
-	 *             if the HTTP status code of the response is >= 400.
-	 */
-	public FedoraResponseImpl(ClientResponse cr) throws FedoraClientException {
-		this.cr = cr;
-		nsCtx = new NamespaceContextImpl();
-		nsCtx.addNamespace("f", "info:fedora/fedora-system:def/foxml#");
+    private final ClientResponse cr;
 
-		this.status = cr.getStatus();
-		if (status >= 400) {
-			String msg = cr.getEntity(String.class);
-			throw new FedoraClientException(status, String.format(
-					"HTTP %d Error: %s", status, msg));
-		}
-	}
+    private final int status;
 
-	@Override
-	public int getStatus() {
-		return status;
-	}
+    private final NamespaceContextImpl nsCtx;
 
-	@Override
-	public InputStream getEntityInputStream() {
-		return cr.getEntityInputStream();
-	}
+    private Boolean validateSchema = null;
 
-	@Override
-	public <T> T getEntity(Class<T> c) {
-		return cr.getEntity(c);
-	}
+    /**
+     * Constructor for a FedoraResponseImpl.
+     * 
+     * @param cr
+     * @throws FedoraClientException
+     *             if the HTTP status code of the response is >= 400.
+     */
+    public FedoraResponseImpl(ClientResponse cr)
+            throws FedoraClientException {
+        this.cr = cr;
+        nsCtx = new NamespaceContextImpl();
+        nsCtx.addNamespace("f", "info:fedora/fedora-system:def/foxml#");
 
-	protected XPath getXPath() {
-		XPathFactory factory = XPathFactory.newInstance();
-		XPath xpath = factory.newXPath();
-		xpath.setNamespaceContext(nsCtx);
-		return xpath;
-	}
+        this.status = cr.getStatus();
+        if (status >= 400) {
+            String msg = cr.getEntity(String.class);
+            throw new FedoraClientException(status, String.format(
+                    "HTTP %d Error: %s", status, msg));
+        }
+    }
 
-	/**
-	 * Unmarshall the Fedora ClientResponse using the JAXB schema-generated
-	 * classes (see: target/generated-sources/).
-	 * 
-	 * @param contextPath
-	 *            JAXB contextPath
-	 * @return the unmarshalled XML
-	 * @throws FedoraClientException
-	 */
-	public Object unmarshallResponse(ContextPath contextPath)
-			throws FedoraClientException {
-		Object response = null;
-		Schema schema = null;
+    @Override
+    public int getStatus() {
+        return status;
+    }
 
-		if (validateSchema()) {
-			try {
-				SchemaFactory schemaFactory = SchemaFactory
-						.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-				schema = schemaFactory.newSchema();
-			} catch (SAXException e) {
-				throw new FedoraClientException(e.getMessage(), e);
-			}
-		}
+    @Override
+    public InputStream getEntityInputStream() {
+        return cr.getEntityInputStream();
+    }
 
-		try {
-			JAXBContext context = JAXBContext.newInstance(contextPath.path());
-			Unmarshaller unmarshaller = context.createUnmarshaller();
-			unmarshaller.setSchema(schema);
-			response = unmarshaller.unmarshal(new BufferedReader(
-					new InputStreamReader(getEntityInputStream())));
-		} catch (JAXBException e) {
-			throw new FedoraClientException(e.getMessage(), e);
-		}
-		return response;
-	}
-	
-	private boolean validateSchema() {
-		if (validateSchema == null) {
-			String validate = System.getProperty("test.validate");			
-			validateSchema = Boolean.parseBoolean(validate);
-		}
-		return validateSchema.booleanValue();
-	}
+    @Override
+    public <T> T getEntity(Class<T> c) {
+        return cr.getEntity(c);
+    }
 
-	/**
-	 * Enum for JAXB ContextPaths used by FedoraResponse implementations.
-	 * 
-	 * @author Edwin Shin
-	 * 
-	 */
-	public enum ContextPath {
-		Access("com.yourmediashelf.fedora.generated.access"), Management(
-				"com.yourmediashelf.fedora.generated.management");
+    protected XPath getXPath() {
+        XPathFactory factory = XPathFactory.newInstance();
+        XPath xpath = factory.newXPath();
+        xpath.setNamespaceContext(nsCtx);
+        return xpath;
+    }
 
-		private final String contextPath;
+    /**
+     * Unmarshall the Fedora ClientResponse using the JAXB schema-generated
+     * classes (see: target/generated-sources/).
+     * 
+     * @param contextPath
+     *            JAXB contextPath
+     * @return the unmarshalled XML
+     * @throws FedoraClientException
+     */
+    public Object unmarshallResponse(ContextPath contextPath)
+            throws FedoraClientException {
+        Object response = null;
+        Schema schema = null;
 
-		/**
-		 * Returns the associated contextPath.
-		 * 
-		 * @return the JAXB ContextPath, e.g.
-		 *         "com.yourmediashelf.fedora.generated.access".
-		 */
-		public String path() {
-			return contextPath;
-		}
+        if (validateSchema()) {
+            try {
+                SchemaFactory schemaFactory =
+                        SchemaFactory
+                                .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+                schema = schemaFactory.newSchema();
+            } catch (SAXException e) {
+                throw new FedoraClientException(e.getMessage(), e);
+            }
+        }
 
-		ContextPath(String contextPath) {
-			this.contextPath = contextPath;
-		}
-	};
+        try {
+            JAXBContext context = JAXBContext.newInstance(contextPath.path());
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            unmarshaller.setSchema(schema);
+            response =
+                    unmarshaller.unmarshal(new BufferedReader(
+                            new InputStreamReader(getEntityInputStream())));
+        } catch (JAXBException e) {
+            throw new FedoraClientException(e.getMessage(), e);
+        }
+        return response;
+    }
+
+    private boolean validateSchema() {
+        if (validateSchema == null) {
+            String validate = System.getProperty("test.validate");
+            validateSchema = Boolean.parseBoolean(validate);
+        }
+        return validateSchema.booleanValue();
+    }
+
+    /**
+     * Enum for JAXB ContextPaths used by FedoraResponse implementations.
+     * 
+     * @author Edwin Shin
+     * 
+     */
+    public enum ContextPath {
+        Access("com.yourmediashelf.fedora.generated.access"), Management(
+                "com.yourmediashelf.fedora.generated.management");
+
+        private final String contextPath;
+
+        /**
+         * Returns the associated contextPath.
+         * 
+         * @return the JAXB ContextPath, e.g.
+         *         "com.yourmediashelf.fedora.generated.access".
+         */
+        public String path() {
+            return contextPath;
+        }
+
+        ContextPath(String contextPath) {
+            this.contextPath = contextPath;
+        }
+    };
 
 }

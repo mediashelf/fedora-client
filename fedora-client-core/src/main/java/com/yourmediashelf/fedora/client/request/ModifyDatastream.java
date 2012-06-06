@@ -41,9 +41,13 @@ import com.yourmediashelf.fedora.client.response.ModifyDatastreamResponse;
  * @author Edwin Shin
  */
 public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
+
     private final String pid;
+
     private final String dsId;
+
     private Object content;
+
     private String mimeType;
 
     public ModifyDatastream(String pid, String dsId) {
@@ -178,7 +182,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         this.mimeType = mimeType;
         return this;
     }
-    
+
     /**
      * Enable versioning of the datastream.
      *
@@ -202,12 +206,13 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
 
     @Override
     public ModifyDatastreamResponse execute() throws FedoraClientException {
-        return (ModifyDatastreamResponse)super.execute();
+        return (ModifyDatastreamResponse) super.execute();
     }
-    
+
     @Override
-    public ModifyDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
+    public ModifyDatastreamResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
         wr = wr.path(path).queryParams(getQueryParams());
 
@@ -218,8 +223,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
             if (mimeType == null) {
                 mimeType = MediaType.TEXT_XML_TYPE.toString();
             }
-            response = wr.type(mimeType).put(ClientResponse.class,
-                                                             content);
+            response = wr.type(mimeType).put(ClientResponse.class, content);
         } else if (content instanceof File) {
             File f = (File) content;
             if (mimeType == null) {

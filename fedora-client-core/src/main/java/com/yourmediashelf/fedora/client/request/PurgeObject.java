@@ -32,6 +32,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @author Edwin Shin
  */
 public class PurgeObject extends FedoraRequest<PurgeObject> {
+
     private final String pid;
 
     /**
@@ -48,10 +49,12 @@ public class PurgeObject extends FedoraRequest<PurgeObject> {
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         String path = String.format("objects/%s", pid);
 
-        WebResource wr = fedora.resource().path(path).queryParams(getQueryParams());
+        WebResource wr =
+                resource(fedora).path(path).queryParams(getQueryParams());
         return new FedoraResponseImpl(wr.delete(ClientResponse.class));
     }
 }

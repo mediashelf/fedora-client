@@ -44,95 +44,104 @@ import com.yourmediashelf.fedora.util.NamespaceContextImpl;
  */
 public class FindObjectsResponse extends FedoraResponseImpl {
 
-	private List<String> pids;
-	private boolean hasNext;
-	private String token;
-	private String cursor;
-	private String expirationDate;
+    private List<String> pids;
 
-	private XPath xpath;
-	private Node root;
+    private boolean hasNext;
 
-	public FindObjectsResponse(ClientResponse cr) throws FedoraClientException {
-		super(cr);
+    private String token;
 
-		pids = new ArrayList<String>();
+    private String cursor;
 
-		xpath = XPathFactory.newInstance().newXPath();
-		xpath.setNamespaceContext(new NamespaceContextImpl("f",
-				"http://www.fedora.info/definitions/1/0/types/"));
-		try {
-			parseClientResponse(cr);
-		} catch (XPathExpressionException e) {
-			throw new FedoraClientException(e.getMessage(), e);
-		}
-	}
+    private String expirationDate;
 
-	public List<String> getPids() {
-		return pids;
-	}
+    private XPath xpath;
 
-	public boolean hasNext() {
-		return hasNext;
-	}
+    private Node root;
 
-	public String getToken() {
-		return token;
-	}
+    public FindObjectsResponse(ClientResponse cr)
+            throws FedoraClientException {
+        super(cr);
 
-	public String getCursor() {
-		return cursor;
-	}
+        pids = new ArrayList<String>();
 
-	public String getExpirationDate() {
-		return expirationDate;
-	}
+        xpath = XPathFactory.newInstance().newXPath();
+        xpath.setNamespaceContext(new NamespaceContextImpl("f",
+                "http://www.fedora.info/definitions/1/0/types/"));
+        try {
+            parseClientResponse(cr);
+        } catch (XPathExpressionException e) {
+            throw new FedoraClientException(e.getMessage(), e);
+        }
+    }
 
-	public List<String> getObjectField(String pid, String fieldName)
-			throws FedoraClientException {
-		List<String> objectField = new ArrayList<String>();
-		String expression = String.format(
-				"/f:result/f:resultList/f:objectFields[f:pid=\"%s\"]/f:%s",
-				pid, fieldName);
-		try {
-			NodeList nodes = (NodeList) xpath.evaluate(expression, root,
-					XPathConstants.NODESET);
-			for (int i = 0; i < nodes.getLength(); i++) {
-				objectField.add(nodes.item(i).getTextContent());
-			}
-		} catch (XPathExpressionException e) {
-			throw new FedoraClientException(e.getMessage(), e);
-		}
+    public List<String> getPids() {
+        return pids;
+    }
 
-		return objectField;
-	}
+    public boolean hasNext() {
+        return hasNext;
+    }
 
-	private void parseClientResponse(ClientResponse cr)
-			throws XPathExpressionException {
-		root = (Node) xpath
-				.evaluate("/", new InputSource(cr.getEntityInputStream()),
-						XPathConstants.NODE);
+    public String getToken() {
+        return token;
+    }
 
-		String expression = "/f:result/f:resultList/f:objectFields/f:pid";
-		NodeList nodes = (NodeList) xpath.evaluate(expression, root,
-				XPathConstants.NODESET);
+    public String getCursor() {
+        return cursor;
+    }
 
-		for (int i = 0; i < nodes.getLength(); i++) {
-			pids.add(nodes.item(i).getTextContent());
-		}
+    public String getExpirationDate() {
+        return expirationDate;
+    }
 
-		expression = "/f:result/f:listSession/f:token";
-		token = xpath.evaluate(expression, root);
+    public List<String> getObjectField(String pid, String fieldName)
+            throws FedoraClientException {
+        List<String> objectField = new ArrayList<String>();
+        String expression =
+                String.format(
+                        "/f:result/f:resultList/f:objectFields[f:pid=\"%s\"]/f:%s",
+                        pid, fieldName);
+        try {
+            NodeList nodes =
+                    (NodeList) xpath.evaluate(expression, root,
+                            XPathConstants.NODESET);
+            for (int i = 0; i < nodes.getLength(); i++) {
+                objectField.add(nodes.item(i).getTextContent());
+            }
+        } catch (XPathExpressionException e) {
+            throw new FedoraClientException(e.getMessage(), e);
+        }
 
-		if (token != null && !token.isEmpty()) {
-			hasNext = true;
-			expression = "/f:result/f:listSession/f:cursor";
-			cursor = xpath.evaluate(expression, root);
+        return objectField;
+    }
 
-			expression = "/f:result/f:listSession/f:expirationDate";
-			expirationDate = xpath.evaluate(expression, root);
-		} else {
-			token = null;
-		}
-	}
+    private void parseClientResponse(ClientResponse cr)
+            throws XPathExpressionException {
+        root =
+                (Node) xpath.evaluate("/", new InputSource(cr
+                        .getEntityInputStream()), XPathConstants.NODE);
+
+        String expression = "/f:result/f:resultList/f:objectFields/f:pid";
+        NodeList nodes =
+                (NodeList) xpath.evaluate(expression, root,
+                        XPathConstants.NODESET);
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            pids.add(nodes.item(i).getTextContent());
+        }
+
+        expression = "/f:result/f:listSession/f:token";
+        token = xpath.evaluate(expression, root);
+
+        if (token != null && !token.isEmpty()) {
+            hasNext = true;
+            expression = "/f:result/f:listSession/f:cursor";
+            cursor = xpath.evaluate(expression, root);
+
+            expression = "/f:result/f:listSession/f:expirationDate";
+            expirationDate = xpath.evaluate(expression, root);
+        } else {
+            token = null;
+        }
+    }
 }

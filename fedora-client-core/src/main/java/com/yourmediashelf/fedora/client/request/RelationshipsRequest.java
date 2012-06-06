@@ -26,14 +26,16 @@ import java.util.regex.Pattern;
  *
  * @author Edwin Shin
  */
-public abstract class RelationshipsRequest extends FedoraRequest<RelationshipsRequest> {
+public abstract class RelationshipsRequest extends
+        FedoraRequest<RelationshipsRequest> {
+
     protected final String pid;
 
     public RelationshipsRequest(String subject) {
         this.pid = SubjectProcessor.getSubjectPID(subject);
         addQueryParam("subject", SubjectProcessor.getSubjectAsUri(subject));
     }
-    
+
     /**
      * Helper class to get pid from subject and to get URI form of subject.
      * Subject can either be a pid or an info:fedora/ uri
@@ -41,7 +43,9 @@ public abstract class RelationshipsRequest extends FedoraRequest<RelationshipsRe
      * Adapted from {@link org.fcrepo.server.management.DefaultManagement.SubjectProcessor}
      */
     private static class SubjectProcessor {
+
         private static String FEDORA_URI_PREFIX = "info:fedora/";
+
         private static Pattern pidRegex =
                 Pattern.compile("^([A-Za-z0-9]|-|\\.)+:(([A-Za-z0-9])|-|\\.|~|_|(%[0-9A-F]{2}))+$");
 
@@ -64,14 +68,16 @@ public abstract class RelationshipsRequest extends FedoraRequest<RelationshipsRe
                 return subject.split("/", 3)[1];
 
             } else {
-                throw new IllegalArgumentException("Subject URI must be in the " + FEDORA_URI_PREFIX + " scheme.");
+                throw new IllegalArgumentException(
+                        "Subject URI must be in the " + FEDORA_URI_PREFIX +
+                                " scheme.");
             }
         }
 
         private static boolean isPid(String subject) {
             return pidRegex.matcher(subject).matches();
         }
-        
+
         private static String toUri(String pidString) {
             return FEDORA_URI_PREFIX + pidString;
         }

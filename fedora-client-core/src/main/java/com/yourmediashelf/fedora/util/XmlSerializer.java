@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.util;
 
 import java.io.BufferedOutputStream;
@@ -66,8 +65,8 @@ import org.xml.sax.SAXException;
  */
 public class XmlSerializer {
 
-    private final static org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(XmlSerializer.class);
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory
+            .getLogger(XmlSerializer.class);
 
     static {
         // initialize xmlsec
@@ -117,54 +116,58 @@ public class XmlSerializer {
      * @param document
      * @param out
      */
-    public static void canonicalizeWithDOM3LS(Document document, OutputStream out) {
+    public static void canonicalizeWithDOM3LS(Document document,
+            OutputStream out) {
         DOMImplementationLS domImpl = getDOMImplementationLS(document);
         LSSerializer lsSerializer = domImpl.createLSSerializer();
         DOMConfiguration domConfiguration = lsSerializer.getDomConfig();
-        if (domConfiguration.canSetParameter("canonical-form",
-                                             Boolean.TRUE)) {
+        if (domConfiguration.canSetParameter("canonical-form", Boolean.TRUE)) {
             lsSerializer.getDomConfig().setParameter("canonical-form",
-                                                     Boolean.TRUE);
+                    Boolean.TRUE);
             LSOutput lsOutput = domImpl.createLSOutput();
             lsOutput.setEncoding("UTF-8");
             lsOutput.setByteStream(out);
             lsSerializer.write(document, lsOutput);
         } else {
-            throw new RuntimeException("DOMConfiguration 'canonical-form' parameter isn't settable.");
+            throw new RuntimeException(
+                    "DOMConfiguration 'canonical-form' parameter isn't settable.");
         }
     }
 
-    public static void prettyPrintWithDOM3LS(Document document, OutputStream out) {
+    public static void
+            prettyPrintWithDOM3LS(Document document, OutputStream out) {
         DOMImplementationLS domImpl = getDOMImplementationLS(document);
         LSSerializer lsSerializer = domImpl.createLSSerializer();
         DOMConfiguration domConfiguration = lsSerializer.getDomConfig();
         if (domConfiguration.canSetParameter("format-pretty-print",
-                                             Boolean.TRUE)) {
+                Boolean.TRUE)) {
             lsSerializer.getDomConfig().setParameter("format-pretty-print",
-                                                     Boolean.TRUE);
+                    Boolean.TRUE);
             LSOutput lsOutput = domImpl.createLSOutput();
             lsOutput.setEncoding("UTF-8");
             lsOutput.setByteStream(out);
             lsSerializer.write(document, lsOutput);
         } else {
-            throw new RuntimeException("DOMConfiguration 'format-pretty-print' parameter isn't settable.");
+            throw new RuntimeException(
+                    "DOMConfiguration 'format-pretty-print' parameter isn't settable.");
         }
     }
 
-    private static DOMImplementationLS getDOMImplementationLS(Document document) {
+    private static DOMImplementationLS
+            getDOMImplementationLS(Document document) {
         DOMImplementation domImplementation = document.getImplementation();
-        if (domImplementation.hasFeature("LS", "3.0")
-                && domImplementation.hasFeature("Core", "2.0")) {
+        if (domImplementation.hasFeature("LS", "3.0") &&
+                domImplementation.hasFeature("Core", "2.0")) {
             DOMImplementationLS domImplementationLS;
             try {
                 domImplementationLS =
-                        (DOMImplementationLS) domImplementation
-                                .getFeature("LS", "3.0");
+                        (DOMImplementationLS) domImplementation.getFeature(
+                                "LS", "3.0");
             } catch (NoSuchMethodError nse) {
-                logger.warn("Caught NoSuchMethodError for "
-                        + domImplementation.getClass().getName()
-                        + "#getFeature. "
-                        + "Trying fallback for DOMImplementationLS.");
+                logger.warn("Caught NoSuchMethodError for " +
+                        domImplementation.getClass().getName() +
+                        "#getFeature. " +
+                        "Trying fallback for DOMImplementationLS.");
                 try {
                     domImplementationLS = getDOMImplementationLS();
                 } catch (Exception e) {
@@ -174,7 +177,8 @@ public class XmlSerializer {
             }
             return domImplementationLS;
         } else {
-            throw new RuntimeException("DOM 3.0 LS and/or DOM 2.0 Core not supported.");
+            throw new RuntimeException(
+                    "DOM 3.0 LS and/or DOM 2.0 Core not supported.");
         }
     }
 
@@ -208,6 +212,7 @@ public class XmlSerializer {
         DocumentBuilder builder = factory.newDocumentBuilder();
         // do not load external dtds
         builder.setEntityResolver(new EntityResolver() {
+
             @Override
             public InputSource resolveEntity(String publicId, String systemId)
                     throws SAXException, IOException {
@@ -242,8 +247,8 @@ public class XmlSerializer {
     }
 
     protected static Document string2document(String s) throws Exception {
-        return DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                .parse(new InputSource(new StringReader(s)));
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new InputSource(new StringReader(s)));
     }
 
 }

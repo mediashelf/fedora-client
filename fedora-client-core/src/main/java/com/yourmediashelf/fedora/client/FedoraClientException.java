@@ -20,6 +20,7 @@
 /**
  *
  */
+
 package com.yourmediashelf.fedora.client;
 
 /**
@@ -27,10 +28,12 @@ package com.yourmediashelf.fedora.client;
  *
  */
 public class FedoraClientException extends Exception {
-	private static final long serialVersionUID = 1L;
-	private int status;
 
-	public FedoraClientException(String message) {
+    private static final long serialVersionUID = 1L;
+
+    private int status;
+
+    public FedoraClientException(String message) {
         super(message, null);
     }
 

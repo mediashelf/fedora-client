@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,8 +30,7 @@ import com.yourmediashelf.fedora.client.response.ListDatastreamsResponse;
  *
  * @author Edwin Shin
  */
-public class ListDatastreams
-        extends FedoraRequest<ListDatastreams> {
+public class ListDatastreams extends FedoraRequest<ListDatastreams> {
 
     private final String pid;
 
@@ -68,20 +66,23 @@ public class ListDatastreams
 
     @Override
     public ListDatastreamsResponse execute() throws FedoraClientException {
-        return (ListDatastreamsResponse)super.execute();
+        return (ListDatastreamsResponse) super.execute();
     }
-    
+
     @Override
-    public ListDatastreamsResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public ListDatastreamsResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = fedora.resource();
+        WebResource wr = resource();
         String path = String.format("objects/%s/datastreams", pid);
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
         return new ListDatastreamsResponse(cr);
     }
 

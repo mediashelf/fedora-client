@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.util;
 
 import java.text.DecimalFormat;
@@ -122,11 +121,8 @@ public class DateUtility {
      * moment of the next day.
      * </p>
      */
-    private final static String endOfDayFrag =
-            String.format("(%s:%s:%s|(24:00:00(\\.0+)?))",
-                          hourFrag,
-                          minuteFrag,
-                          secondFrag);
+    private final static String endOfDayFrag = String.format(
+            "(%s:%s:%s|(24:00:00(\\.0+)?))", hourFrag, minuteFrag, secondFrag);
 
     /**
      * <p>
@@ -147,18 +143,13 @@ public class DateUtility {
      * Concatenation of the {@link yearFrag}, {@link monthFrag}, {@link dayFrag}
      * , {@link endOfDayFrag}, {@link timezoneFrag}, and their separators.
      */
-    private final static String combined =
-            String.format("%s-%s-%sT%s%s",
-                          yearFrag,
-                          monthFrag,
-                          dayFrag,
-                          endOfDayFrag,
-                          timezoneFrag);
+    private final static String combined = String.format("%s-%s-%sT%s%s",
+            yearFrag, monthFrag, dayFrag, endOfDayFrag, timezoneFrag);
 
     private final static Pattern XSD_DATETIME = Pattern.compile(combined);
 
     private final static ConcurrentMap<String, DateTimeFormatter> formatters =
-        new ConcurrentHashMap<String, DateTimeFormatter>();
+            new ConcurrentHashMap<String, DateTimeFormatter>();
 
     /**
      * Parses lexical representations of xsd:dateTimes, e.g.
@@ -176,8 +167,8 @@ public class DateUtility {
     public static DateTime parseXSDDateTime(String input) {
         Matcher m = XSD_DATETIME.matcher(input);
         if (!m.find()) {
-            throw new IllegalArgumentException(input
-                    + " is not a valid XML Schema 1.1 dateTime.");
+            throw new IllegalArgumentException(input +
+                    " is not a valid XML Schema 1.1 dateTime.");
         }
 
         int year = Integer.parseInt(m.group(1));
@@ -216,14 +207,8 @@ public class DateUtility {
             zone = DateTimeZone.forID(tmp);
         }
         DateTime dt =
-                new DateTime(year,
-                             month,
-                             day,
-                             hour,
-                             minute,
-                             second,
-                             millis,
-                             zone);
+                new DateTime(year, month, day, hour, minute, second, millis,
+                        zone);
 
         if (hasEndOfDayFrag) {
             return dt.plusDays(1);
@@ -253,7 +238,8 @@ public class DateUtility {
      * @see "http://www.w3.org/TR/xmlschema11-2/#dateTime"
      */
     public static String getXSDDateTime(DateTime dateTime) {
-        return dateTime.withZone(DateTimeZone.UTC).toString(getXSDFormatter(dateTime));
+        return dateTime.withZone(DateTimeZone.UTC).toString(
+                getXSDFormatter(dateTime));
     }
 
     public static DateTimeFormatter getXSDFormatter(DateTime date) {
@@ -263,7 +249,7 @@ public class DateUtility {
         if (millis > 0) {
             // 0.050 becomes .05 (up to three digits, dropping trailing 0s)
             DecimalFormat df = new DecimalFormat(".###");
-            double d = millis/1000.0;
+            double d = millis / 1000.0;
             len = String.valueOf(df.format(d)).length() - 1;
         }
         return getXSDFormatter(len);
@@ -288,9 +274,8 @@ public class DateUtility {
                             .appendLiteral(':').appendSecondOfMinute(2);
             if (millisLength > 0) {
                 bldr =
-                        bldr.appendLiteral('.')
-                                .appendFractionOfSecond(millisLength,
-                                                        millisLength);
+                        bldr.appendLiteral('.').appendFractionOfSecond(
+                                millisLength, millisLength);
             }
             bldr = bldr.appendTimeZoneOffset("Z", true, 2, 4);
             formatters.putIfAbsent(key, bldr.toFormatter());

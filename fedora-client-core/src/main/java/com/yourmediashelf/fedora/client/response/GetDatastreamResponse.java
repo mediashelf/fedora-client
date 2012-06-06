@@ -28,10 +28,10 @@ import com.yourmediashelf.fedora.client.request.GetDatastream;
  *
  * @author Edwin Shin
  */
-public class GetDatastreamResponse
-        extends DatastreamProfileResponse {
+public class GetDatastreamResponse extends DatastreamProfileResponse {
 
-    public GetDatastreamResponse(ClientResponse cr) throws FedoraClientException {
+    public GetDatastreamResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
 }

@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,8 +30,7 @@ import com.yourmediashelf.fedora.client.response.GetObjectHistoryResponse;
  *
  * @author Edwin Shin
  */
-public class GetObjectHistory
-        extends FedoraRequest<GetObjectHistory> {
+public class GetObjectHistory extends FedoraRequest<GetObjectHistory> {
 
     private final String pid;
 
@@ -63,20 +61,23 @@ public class GetObjectHistory
 
     @Override
     public GetObjectHistoryResponse execute() throws FedoraClientException {
-        return (GetObjectHistoryResponse)super.execute();
+        return (GetObjectHistoryResponse) super.execute();
     }
-    
+
     @Override
-    public GetObjectHistoryResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetObjectHistoryResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = fedora.resource();
+        WebResource wr = resource();
         String path = String.format("objects/%s/versions", pid);
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
         return new GetObjectHistoryResponse(cr);
     }
 

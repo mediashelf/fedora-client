@@ -29,11 +29,12 @@ import com.yourmediashelf.fedora.generated.access.FedoraRepository;
  *
  * @author Edwin Shin
  */
-public class DescribeRepositoryResponse
-        extends FedoraResponseImpl {
+public class DescribeRepositoryResponse extends FedoraResponseImpl {
+
     private FedoraRepository repositoryInfo;
 
-    public DescribeRepositoryResponse(ClientResponse cr) throws FedoraClientException {
+    public DescribeRepositoryResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
 
@@ -50,7 +51,8 @@ public class DescribeRepositoryResponse
      */
     public FedoraRepository getRepositoryInfo() throws FedoraClientException {
         if (repositoryInfo == null) {
-        	repositoryInfo = (FedoraRepository) unmarshallResponse(ContextPath.Access);
+            repositoryInfo =
+                    (FedoraRepository) unmarshallResponse(ContextPath.Access);
         }
         return repositoryInfo;
     }

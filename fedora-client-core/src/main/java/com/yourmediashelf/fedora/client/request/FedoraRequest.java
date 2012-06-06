@@ -17,13 +17,14 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
@@ -35,11 +36,17 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
  * @author Edwin Shin
  */
 public abstract class FedoraRequest<T> {
+
     private static FedoraClient DEFAULT_CLIENT;
 
     private final MultivaluedMap<String, String> queryParams =
             new MultivaluedMapImpl();
-    
+
+    /*
+     * HTTP headers for use with this request
+     */
+    private MultivaluedMap<String, String> headers = new MultivaluedMapImpl();
+
     /**
      * <p>Executes this request against the {@link #DEFAULT_CLIENT}
      * 
@@ -62,16 +69,16 @@ public abstract class FedoraRequest<T> {
     public static void setDefaultClient(FedoraClient client) {
         DEFAULT_CLIENT = client;
     }
-    
+
     /**
      * Return boolean indicating whether {@link #DEFAULT_CLIENT} has been set.
      * 
      * @return boolean
      */
     public static boolean isDefaultClientSet() {
-    	return (DEFAULT_CLIENT != null);
+        return (DEFAULT_CLIENT != null);
     }
-    
+
     /**
      * <p>Execute this request using the supplied FedoraClient instance.</p>
      *
@@ -80,8 +87,8 @@ public abstract class FedoraRequest<T> {
      * @throws FedoraClientException if the HTTP status code of the response is
      * >= 400.
      */
-    abstract public <F extends FedoraResponse> FedoraResponse execute(FedoraClient fedora)
-            throws FedoraClientException;
+    abstract public <F extends FedoraResponse> FedoraResponse execute(
+            FedoraClient fedora) throws FedoraClientException;
 
     /**
      * <p>
@@ -120,5 +127,93 @@ public abstract class FedoraRequest<T> {
 
     protected MultivaluedMap<String, String> getQueryParams() {
         return queryParams;
+    }
+
+    public MultivaluedMap<String, String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(MultivaluedMap<String, String> headers) {
+        this.headers = headers;
+    }
+
+    public void addHeader(String key, String value) {
+        headers.add(key, value);
+    }
+
+    public void removeHeader(String key) {
+        headers.remove(key);
+    }
+
+    /**
+     * <p>Returns a <code>WebResource</code> as supplied by the
+     * {@link #DEFAULT_CLIENT} using <code>FedoraClient.resource()</code>.
+     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * </p>
+     * 
+     * @return WebResource
+     * @throws FedoraClientException if {@link #DEFAULT_CLIENT} is <code>null</code>
+     */
+    public WebResource resource() throws FedoraClientException {
+        if (DEFAULT_CLIENT == null) {
+            throw new FedoraClientException("No default FedoraClient was set.");
+        }
+        return resource(DEFAULT_CLIENT);
+    }
+
+    /**
+     * <p>Returns a <code>WebResource</code> as supplied by the
+     * {@link #DEFAULT_CLIENT} using <code>FedoraClient.resource()</code>.
+     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * </p>
+     * 
+     * @param path the path to use for this resource
+     * @return WebResource
+     * @throws FedoraClientException if {@link #DEFAULT_CLIENT} is <code>null</code>
+     */
+    public WebResource resource(String path) throws FedoraClientException {
+        if (DEFAULT_CLIENT == null) {
+            throw new FedoraClientException("No default FedoraClient was set.");
+        }
+        return resource(DEFAULT_CLIENT, path);
+    }
+
+    /**
+     * <p>Returns a <code>WebResource</code> as supplied by the
+     * <code>FedoraClient</code> fc using <code>FedoraClient.resource()</code>.
+     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * </p>
+     * 
+     * @param fc the FedoraClient from which to get this resource
+     * @return WebResource
+     */
+    public WebResource resource(FedoraClient fc) {
+        WebResource resource = fc.resource();
+        for (Entry<String, List<String>> entry : getHeaders().entrySet()) {
+            for (String value : entry.getValue()) {
+                resource.header(entry.getKey(), value);
+            }
+        }
+        return resource;
+    }
+
+    /**
+     * <p>Returns a <code>WebResource</code> as supplied by the
+     * <code>FedoraClient</code> fc using <code>FedoraClient.resource()</code>.
+     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * </p>
+     * 
+     * @param fc the FedoraClient from which to get this resource
+     * @param path the path to use for this resource
+     * @return WebResource
+     */
+    public WebResource resource(FedoraClient fc, String path) {
+        WebResource resource = fc.resource().path(path);
+        for (Entry<String, List<String>> entry : getHeaders().entrySet()) {
+            for (String value : entry.getValue()) {
+                resource.header(entry.getKey(), value);
+            }
+        }
+        return resource;
     }
 }

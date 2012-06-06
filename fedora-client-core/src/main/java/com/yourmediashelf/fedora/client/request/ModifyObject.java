@@ -38,6 +38,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @author Edwin Shin
  */
 public class ModifyObject extends FedoraRequest<ModifyObject> {
+
     private final String pid;
 
     public ModifyObject(String pid) {
@@ -98,10 +99,13 @@ public class ModifyObject extends FedoraRequest<ModifyObject> {
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource();
         String path = String.format("objects/%s", pid);
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).put(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).put(
+                        ClientResponse.class);
         return new FedoraResponseImpl(cr);
     }
 }

@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.util;
 
 import java.util.ArrayList;
@@ -36,8 +35,7 @@ import javax.xml.namespace.NamespaceContext;
  *
  * @author Edwin Shin
  */
-public class NamespaceContextImpl
-        implements NamespaceContext {
+public class NamespaceContextImpl implements NamespaceContext {
 
     private final Map<String, String> prefix2ns =
             new ConcurrentHashMap<String, String>();
@@ -45,7 +43,7 @@ public class NamespaceContextImpl
     public NamespaceContextImpl() {
         prefix2ns.put(XMLConstants.XML_NS_PREFIX, XMLConstants.XML_NS_URI);
         prefix2ns.put(XMLConstants.XMLNS_ATTRIBUTE,
-                      XMLConstants.XMLNS_ATTRIBUTE_NS_URI);
+                XMLConstants.XMLNS_ATTRIBUTE_NS_URI);
     }
 
     public NamespaceContextImpl(String prefix, String namespaceURI) {
@@ -103,8 +101,8 @@ public class NamespaceContextImpl
     public Iterator<String> getPrefixes(String namespaceURI) {
         List<String> prefixes = new ArrayList<String>();
         for (String prefix : prefix2ns.keySet()) {
-            if (prefix2ns.containsKey(prefix)
-                    && prefix2ns.get(prefix).equals(namespaceURI)) {
+            if (prefix2ns.containsKey(prefix) &&
+                    prefix2ns.get(prefix).equals(namespaceURI)) {
                 prefixes.add(prefix);
             }
         }
@@ -125,11 +123,11 @@ public class NamespaceContextImpl
             throw new IllegalArgumentException("null arguments not allowed.");
         }
         if (namespaceURI.equals(XMLConstants.XML_NS_URI)) {
-            throw new IllegalArgumentException("Adding a new namespace for "
-                    + XMLConstants.XML_NS_URI + "not allowed.");
+            throw new IllegalArgumentException("Adding a new namespace for " +
+                    XMLConstants.XML_NS_URI + "not allowed.");
         } else if (namespaceURI.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI)) {
-            throw new IllegalArgumentException("Adding a new namespace for "
-                    + XMLConstants.XMLNS_ATTRIBUTE_NS_URI + "not allowed.");
+            throw new IllegalArgumentException("Adding a new namespace for " +
+                    XMLConstants.XMLNS_ATTRIBUTE_NS_URI + "not allowed.");
         }
         prefix2ns.put(prefix, namespaceURI);
     }

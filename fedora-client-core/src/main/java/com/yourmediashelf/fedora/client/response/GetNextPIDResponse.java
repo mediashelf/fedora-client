@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.response;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -30,8 +29,7 @@ import com.yourmediashelf.fedora.generated.management.PidList;
  *
  * @author Edwin Shin
  */
-public class GetNextPIDResponse
-        extends FedoraResponseImpl {
+public class GetNextPIDResponse extends FedoraResponseImpl {
 
     private PidList pids;
 
@@ -50,7 +48,7 @@ public class GetNextPIDResponse
      */
     public PidList getPids() throws FedoraClientException {
         if (pids == null) {
-        	pids = (PidList) unmarshallResponse(ContextPath.Management);
+            pids = (PidList) unmarshallResponse(ContextPath.Management);
         }
         return pids;
     }

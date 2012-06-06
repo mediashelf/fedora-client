@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,10 +30,10 @@ import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
  *
  * @author Edwin Shin
  */
-public class GetDatastream
-        extends FedoraRequest<GetDatastream> {
+public class GetDatastream extends FedoraRequest<GetDatastream> {
 
     private final String pid;
+
     private final String dsId;
 
     /**
@@ -72,23 +71,25 @@ public class GetDatastream
         addQueryParam("validateChecksum", Boolean.toString(validateChecksum));
         return this;
     }
-    
+
     @Override
     public GetDatastreamResponse execute() throws FedoraClientException {
         return (GetDatastreamResponse) super.execute();
     }
 
     @Override
-    public GetDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetDatastreamResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = fedora.resource();
+        WebResource wr = resource();
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
 
-        return new GetDatastreamResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new GetDatastreamResponse(wr.path(path).queryParams(
+                getQueryParams()).get(ClientResponse.class));
     }
 
 }

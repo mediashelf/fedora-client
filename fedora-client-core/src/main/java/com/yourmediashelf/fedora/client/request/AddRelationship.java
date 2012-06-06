@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -29,21 +28,22 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 /**
  * Builder for the AddRelationship method.
- *
+ * 
  * @author Edwin Shin
  */
-public class AddRelationship
-        extends RelationshipsRequest {
+public class AddRelationship extends RelationshipsRequest {
 
     public AddRelationship(String subject) {
         super(subject);
     }
 
     /**
-     * The subject of the relationship. If <code>null</code>, defaults to the 
-     * URI form of the constructor-provided pid, e.g. <code>info:fedora/demo:1</code>.
+     * The subject of the relationship. If <code>null</code>, defaults to the
+     * URI form of the constructor-provided pid, e.g.
+     * <code>info:fedora/demo:1</code>.
      * 
-     * @param subject the subject of the relationship
+     * @param subject
+     *            the subject of the relationship
      * @return this builder
      * @deprecated use constructor
      */
@@ -60,23 +60,27 @@ public class AddRelationship
     /**
      * Add the object of the relationship.
      * 
-     * <p>Unless otherwise indicated with the now-deprecated 
-     * {@link #isLiteral(boolean)} method, the object will be added as a 
+     * <p>
+     * Unless otherwise indicated with the now-deprecated
+     * {@link #isLiteral(boolean)} method, the object will be added as a
      * resource (i.e. a URI, not as a literal).
      * 
-     * @param object the object of the relationship
+     * @param object
+     *            the object of the relationship
      * @return this builder
      */
     public AddRelationship object(String object) {
         addQueryParam("object", object);
         return this;
     }
-    
+
     /**
      * Add the object of the relationship as a plain literal.
      * 
-     * @param object the object of the relationship
-     * @param isLiteral whether or not the object is a literal.
+     * @param object
+     *            the object of the relationship
+     * @param isLiteral
+     *            whether or not the object is a literal.
      * @return this builder
      */
     public AddRelationship object(String object, boolean isLiteral) {
@@ -84,13 +88,15 @@ public class AddRelationship
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
         return this;
     }
-    
+
     /**
-     * Add the object of the relationship as a datatyped literal. 
+     * Add the object of the relationship as a datatyped literal.
      * 
-     * @param object the object of the relationship
-     * @param datatype The URI of the XML Schema Datatype of the object literal, 
-     * e.g. "http://www.w3.org/2001/XMLSchema#dateTime".
+     * @param object
+     *            the object of the relationship
+     * @param datatype
+     *            The URI of the XML Schema Datatype of the object literal, e.g.
+     *            "http://www.w3.org/2001/XMLSchema#dateTime".
      * @return this builder
      */
     public AddRelationship object(String object, String datatype) {
@@ -102,8 +108,9 @@ public class AddRelationship
 
     /**
      * Indicate whether the object is a literal. If omitted, defaults to false.
-     *
-     * @param isLiteral indicate whether the object is a literal.
+     * 
+     * @param isLiteral
+     *            indicate whether the object is a literal.
      * @return this builder
      * @deprecated use {@link #object(String, boolean)}
      */
@@ -115,8 +122,9 @@ public class AddRelationship
     /**
      * The URI of the XML Schema Datatype of the object literal, e.g.
      * "http://www.w3.org/2001/XMLSchema#dateTime".
-     *
-     * @param datatype the datatype of the literal
+     * 
+     * @param datatype
+     *            the datatype of the literal
      * @return this builder
      * @deprecated use {@link #object(String, String)}
      */
@@ -126,12 +134,13 @@ public class AddRelationship
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
-        String path = String.format("objects/%s/relationships/new", pid);
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr =
+                resource(String.format("objects/%s/relationships/new", pid))
+                        .queryParams(getQueryParams());
 
-        return new FedoraResponseImpl(wr.path(path)
-                .queryParams(getQueryParams()).post(ClientResponse.class));
+        return new FedoraResponseImpl(wr.post(ClientResponse.class));
     }
 
 }

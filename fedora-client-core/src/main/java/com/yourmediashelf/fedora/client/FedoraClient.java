@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client;
 
 import java.io.File;
@@ -73,8 +72,8 @@ import eu.medsea.mimeutil.MimeUtil2;
  */
 public class FedoraClient {
 
-    private final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(this.getClass());
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+            .getLogger(this.getClass());
 
     private final FedoraCredentials fc;
 
@@ -122,16 +121,16 @@ public class FedoraClient {
             ClientConfig config = new DefaultClientConfig();
             // FIXME Consider using not-yet-commons-ssl hostnameverifier
             // config by property: strict, none, etc.
-            config.getProperties()
-                    .put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                         new HTTPSProperties(null, ctx));
+            config.getProperties().put(
+                    HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
+                    new HTTPSProperties(null, ctx));
             client = Client.create(config);
         } else {
             client = Client.create();
         }
         client.setFollowRedirects(true);
         client.addFilter(new HTTPBasicAuthFilter(fc.getUsername(), fc
-                                                 .getPassword()));
+                .getPassword()));
     }
 
     /**
@@ -208,8 +207,10 @@ public class FedoraClient {
      * @return the lastModifiedDate of the requested datastream
      * @throws FedoraClientException
      */
-    public Date getLastModifiedDate(String pid, String dsId) throws FedoraClientException {
-        GetDatastreamResponse response = getDatastream(pid, dsId).format("xml").execute(this);
+    public Date getLastModifiedDate(String pid, String dsId)
+            throws FedoraClientException {
+        GetDatastreamResponse response =
+                getDatastream(pid, dsId).format("xml").execute(this);
         return response.getLastModifiedDate();
     }
 
@@ -232,17 +233,18 @@ public class FedoraClient {
      */
     public String getServerVersion() throws FedoraClientException {
         if (serverVersion == null) {
-            serverVersion = describeRepository().execute(this).getRepositoryVersion();
+            serverVersion =
+                    describeRepository().execute(this).getRepositoryVersion();
         }
         return serverVersion;
     }
 
-//    private XPath getXPath() {
-//        XPathFactory factory = XPathFactory.newInstance();
-//        XPath xpath = factory.newXPath();
-//        xpath.setNamespaceContext(nsCtx);
-//        return xpath;
-//    }
+    //    private XPath getXPath() {
+    //        XPathFactory factory = XPathFactory.newInstance();
+    //        XPath xpath = factory.newXPath();
+    //        xpath.setNamespaceContext(nsCtx);
+    //        return xpath;
+    //    }
 
     ////////////////////////////////////////////
     //        static convenience methods      //
@@ -301,19 +303,18 @@ public class FedoraClient {
         return new GetDatastream(pid, dsId);
     }
 
-    public static GetDatastreamDissemination getDatastreamDissemination(String pid,
-                                                                        String dsId) {
+    public static GetDatastreamDissemination getDatastreamDissemination(
+            String pid, String dsId) {
         return new GetDatastreamDissemination(pid, dsId);
     }
 
     public static GetDatastreamHistory getDatastreamHistory(String pid,
-                                                            String dsId) {
+            String dsId) {
         return new GetDatastreamHistory(pid, dsId);
     }
 
-    public static GetDissemination getDissemination(String pid,
-                                                    String sdefPid,
-                                                    String method) {
+    public static GetDissemination getDissemination(String pid, String sdefPid,
+            String method) {
         return new GetDissemination(pid, sdefPid, method);
     }
 
@@ -386,7 +387,7 @@ public class FedoraClient {
     public static PurgeRelationship purgeRelationship(String subject) {
         return new PurgeRelationship(subject);
     }
-    
+
     public static RiSearch riSearch(String query) {
         return new RiSearch(query);
     }
@@ -394,7 +395,7 @@ public class FedoraClient {
     public static Upload upload(File file) {
         return new Upload(file);
     }
-    
+
     public static Validate validate(String pid) {
         return new Validate(pid);
     }

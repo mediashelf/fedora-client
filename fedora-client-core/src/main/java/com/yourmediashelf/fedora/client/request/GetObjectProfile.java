@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,8 +30,7 @@ import com.yourmediashelf.fedora.client.response.GetObjectProfileResponse;
  *
  * @author Edwin Shin
  */
-public class GetObjectProfile
-        extends FedoraRequest<GetObjectProfile> {
+public class GetObjectProfile extends FedoraRequest<GetObjectProfile> {
 
     private final String pid;
 
@@ -73,20 +71,23 @@ public class GetObjectProfile
 
     @Override
     public GetObjectProfileResponse execute() throws FedoraClientException {
-        return (GetObjectProfileResponse)super.execute();
+        return (GetObjectProfileResponse) super.execute();
     }
-    
+
     @Override
-    public GetObjectProfileResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetObjectProfileResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = fedora.resource();
+        WebResource wr = resource();
         String path = String.format("objects/%s", pid);
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
         return new GetObjectProfileResponse(cr);
     }
 

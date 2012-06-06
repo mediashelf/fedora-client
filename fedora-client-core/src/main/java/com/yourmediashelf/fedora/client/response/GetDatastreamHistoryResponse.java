@@ -30,11 +30,12 @@ import com.yourmediashelf.fedora.generated.management.DatastreamHistory;
  * @author Edwin Shin
  * @since 0.1.1
  */
-public class GetDatastreamHistoryResponse
-        extends FedoraResponseImpl {
+public class GetDatastreamHistoryResponse extends FedoraResponseImpl {
+
     private DatastreamHistory datastreamHistory;
 
-    public GetDatastreamHistoryResponse(ClientResponse cr) throws FedoraClientException {
+    public GetDatastreamHistoryResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
 
@@ -45,13 +46,15 @@ public class GetDatastreamHistoryResponse
      * @return the DatastreamHistory
      * @throws FedoraClientException
      */
-    public DatastreamHistory getDatastreamProfile() throws FedoraClientException {
+    public DatastreamHistory getDatastreamProfile()
+            throws FedoraClientException {
         if (datastreamHistory == null) {
-        	datastreamHistory = (DatastreamHistory) unmarshallResponse(ContextPath.Management);
+            datastreamHistory =
+                    (DatastreamHistory) unmarshallResponse(ContextPath.Management);
         }
         return datastreamHistory;
     }
-    
+
     /**
      * Convenience method that returns the pid of the datastream.
      *
@@ -59,6 +62,6 @@ public class GetDatastreamHistoryResponse
      * @throws FedoraClientException
      */
     public String getPid() throws FedoraClientException {
-    	return getDatastreamProfile().getPid();
+        return getDatastreamProfile().getPid();
     }
 }

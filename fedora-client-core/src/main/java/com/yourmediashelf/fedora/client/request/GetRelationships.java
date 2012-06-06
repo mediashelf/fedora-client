@@ -32,6 +32,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @author Edwin Shin
  */
 public class GetRelationships extends RelationshipsRequest {
+
     public GetRelationships(String subject) {
         super(subject);
     }
@@ -66,11 +67,14 @@ public class GetRelationships extends RelationshipsRequest {
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource();
         String path = String.format("objects/%s/relationships", pid);
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
         return new FedoraResponseImpl(cr);
     }
 }

@@ -34,7 +34,9 @@ import com.yourmediashelf.fedora.util.DateUtility;
  * @author Edwin Shin
  */
 public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
+
     private final String pid;
+
     private final String dsId;
 
     public PurgeDatastream(String pid, String dsId) {
@@ -80,17 +82,18 @@ public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
         addQueryParam("endDT", DateUtility.getXSDDateTime(endDT));
         return this;
     }
-    
+
     @Override
     public PurgeDatastreamResponse execute() throws FedoraClientException {
-        return (PurgeDatastreamResponse)super.execute();
+        return (PurgeDatastreamResponse) super.execute();
     }
 
     @Override
-    public PurgeDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public PurgeDatastreamResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
 
-        WebResource wr = fedora.resource().path(path).queryParams(getQueryParams());
+        WebResource wr = resource().path(path).queryParams(getQueryParams());
         ClientResponse cr = wr.delete(ClientResponse.class);
         return new PurgeDatastreamResponse(cr);
     }

@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -32,10 +31,10 @@ import com.yourmediashelf.fedora.client.response.GetDatastreamHistoryResponse;
  * @author Edwin Shin
  * @since 0.0.3
  */
-public class GetDatastreamHistory
-        extends FedoraRequest<GetDatastreamHistory> {
+public class GetDatastreamHistory extends FedoraRequest<GetDatastreamHistory> {
 
     private final String pid;
+
     private final String dsId;
 
     /**
@@ -69,18 +68,21 @@ public class GetDatastreamHistory
     public GetDatastreamHistoryResponse execute() throws FedoraClientException {
         return (GetDatastreamHistoryResponse) super.execute();
     }
-    
+
     @Override
-    public GetDatastreamHistoryResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetDatastreamHistoryResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
-        WebResource wr = fedora.resource();
+        WebResource wr = resource();
         // prior to Fedora 3.4, /history was /versions
         // see https://jira.duraspace.org/browse/FCREPO-675
-        String path = String.format("objects/%s/datastreams/%s/history", pid, dsId);
+        String path =
+                String.format("objects/%s/datastreams/%s/history", pid, dsId);
 
-        return new GetDatastreamHistoryResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new GetDatastreamHistoryResponse(wr.path(path).queryParams(
+                getQueryParams()).get(ClientResponse.class));
     }
 }

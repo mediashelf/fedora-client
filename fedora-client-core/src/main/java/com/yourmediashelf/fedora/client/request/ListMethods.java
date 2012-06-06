@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,10 +30,10 @@ import com.yourmediashelf.fedora.client.response.ListMethodsResponse;
  *
  * @author Edwin Shin
  */
-public class ListMethods
-        extends FedoraRequest<ListMethods> {
+public class ListMethods extends FedoraRequest<ListMethods> {
 
     private final String pid;
+
     private final String sdefPid;
 
     /**
@@ -42,10 +41,10 @@ public class ListMethods
     * @param pid persistent identifier of the digital object
     * @param sdefPid persistent identifier of the SDef defining the methods
     */
-   public ListMethods(String pid, String sdefPid) {
-       this.pid = pid;
-       this.sdefPid = sdefPid;
-   }
+    public ListMethods(String pid, String sdefPid) {
+        this.pid = pid;
+        this.sdefPid = sdefPid;
+    }
 
     /**
      * @param pid
@@ -79,16 +78,17 @@ public class ListMethods
 
     @Override
     public ListMethodsResponse execute() throws FedoraClientException {
-        return (ListMethodsResponse)super.execute();
+        return (ListMethodsResponse) super.execute();
     }
-    
+
     @Override
-    public ListMethodsResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public ListMethodsResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
-        WebResource wr = fedora.resource();
+        WebResource wr = resource();
         String path;
         if (sdefPid == null) {
             path = String.format("objects/%s/methods", pid);
@@ -96,7 +96,9 @@ public class ListMethods
             path = String.format("objects/%s/methods%s", pid, sdefPid);
         }
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
         return new ListMethodsResponse(cr);
     }
 

@@ -35,10 +35,13 @@ import com.yourmediashelf.fedora.client.request.PurgeDatastream;
  * @author Edwin Shin
  */
 public class PurgeDatastreamResponse extends FedoraResponseImpl {
+
     private List<String> purgedDates;
+
     private final ObjectMapper mapper;
 
-    public PurgeDatastreamResponse(ClientResponse cr) throws FedoraClientException {
+    public PurgeDatastreamResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
         mapper = new ObjectMapper();
     }
@@ -51,8 +54,9 @@ public class PurgeDatastreamResponse extends FedoraResponseImpl {
     public List<String> getPurgedDates() throws FedoraClientException {
         if (purgedDates == null) {
             try {
-                purgedDates = mapper.readValue(getEntity(String.class),
-                			  new TypeReference<Collection<String>>() { });
+                purgedDates =
+                        mapper.readValue(getEntity(String.class),
+                                new TypeReference<Collection<String>>() {});
             } catch (Exception e) {
                 throw new FedoraClientException(e.getMessage(), e);
             }

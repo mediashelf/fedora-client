@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import java.io.File;
@@ -33,12 +32,11 @@ import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 
 /**
  * Builder for the AddDatastream method.
- *
+ * 
  * @author Edwin Shin
- *
+ * 
  */
-public class AddDatastream
-        extends FedoraRequest<AddDatastream> {
+public class AddDatastream extends FedoraRequest<AddDatastream> {
 
     private final String pid;
 
@@ -48,9 +46,9 @@ public class AddDatastream
 
     /**
      * @param pid
-     *        persistent identifier of the digital object
+     *            persistent identifier of the digital object
      * @param dsId
-     *        datastream identifier
+     *            datastream identifier
      */
     public AddDatastream(String pid, String dsId) {
         this.pid = pid;
@@ -59,6 +57,7 @@ public class AddDatastream
 
     /**
      * Alternate identifiers for the datastream.
+     * 
      * @param altIDs
      * @return this builder
      */
@@ -71,7 +70,7 @@ public class AddDatastream
 
     /**
      * The value of the checksum represented as a hexadecimal string.
-     *
+     * 
      * @param checksum
      * @return this builder
      */
@@ -82,7 +81,7 @@ public class AddDatastream
 
     /**
      * The algorithm used to compute the checksum.
-     *
+     * 
      * @param checksumType
      * @return this builder
      */
@@ -93,8 +92,8 @@ public class AddDatastream
 
     /**
      * @param controlGroup
-     *        one of "X", "M", "R", or "E" (Inline *X*ML, *M*anaged Content,
-     *        *R*edirect, or *E*xternal Referenced)
+     *            one of "X", "M", "R", or "E" (Inline *X*ML, *M*anaged Content,
+     *            *R*edirect, or *E*xternal Referenced)
      * @return this builder
      */
     public AddDatastream controlGroup(String controlGroup) {
@@ -104,7 +103,7 @@ public class AddDatastream
 
     /**
      * The label for the datastream.
-     *
+     * 
      * @param dsLabel
      * @return this builder
      */
@@ -115,7 +114,7 @@ public class AddDatastream
 
     /**
      * @param dsLocation
-     *        location of managed or external datastream content
+     *            location of managed or external datastream content
      * @return this builder
      */
     public AddDatastream dsLocation(String dsLocation) {
@@ -125,7 +124,7 @@ public class AddDatastream
 
     /**
      * @param dsState
-     *        one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
+     *            one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
      * @return this builder
      */
     public AddDatastream dsState(String dsState) {
@@ -154,7 +153,8 @@ public class AddDatastream
     }
 
     /**
-     * @param content the datastream content (XML)
+     * @param content
+     *            the datastream content (XML)
      * @return this builder
      */
     public AddDatastream content(String content) {
@@ -163,7 +163,8 @@ public class AddDatastream
     }
 
     /**
-     * @param content the datastream content (File)
+     * @param content
+     *            the datastream content (File)
      * @return this builder
      */
     public AddDatastream content(File content) {
@@ -175,9 +176,10 @@ public class AddDatastream
     public AddDatastreamResponse execute() throws FedoraClientException {
         return (AddDatastreamResponse) super.execute();
     }
-    
+
     @Override
-    public AddDatastreamResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public AddDatastreamResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // special handling for RELS-EXT and RELS-INT
         if (dsId.equals("RELS-EXT") || dsId.equals("RELS-INT")) {
             String mimeType = getFirstQueryParam("mimeType");
@@ -188,17 +190,19 @@ public class AddDatastream
             String formatURI = getFirstQueryParam("formatURI");
             if (formatURI == null) {
                 if (dsId.equals("RELS-EXT")) {
-                    addQueryParam("formatURI", "info:fedora/fedora-system:FedoraRELSExt-1.0");
+                    addQueryParam("formatURI",
+                            "info:fedora/fedora-system:FedoraRELSExt-1.0");
                 } else if (dsId.equals("RELS-INT")) {
-                    addQueryParam("formatURI", "info:fedora/fedora-system:FedoraRELSInt-1.0");
+                    addQueryParam("formatURI",
+                            "info:fedora/fedora-system:FedoraRELSInt-1.0");
                 }
             }
         }
 
-        WebResource wr = fedora.resource();
-        String path = String.format("objects/%s/datastreams/%s", pid, dsId);
-
-        wr = wr.path(path).queryParams(getQueryParams());
+        WebResource wr =
+                resource(fedora).path(
+                        String.format("objects/%s/datastreams/%s", pid, dsId))
+                        .queryParams(getQueryParams());
 
         ClientResponse response = null;
         String mimeType = getFirstQueryParam("mimeType");

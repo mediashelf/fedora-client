@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import com.yourmediashelf.fedora.client.request.FedoraRequest;
 
-
 /**
  * <p>A wrapper for the HTTP response to a {@link FedoraRequest}.</p>
  *

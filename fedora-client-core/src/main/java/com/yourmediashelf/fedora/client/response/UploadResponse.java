@@ -29,9 +29,11 @@ import com.yourmediashelf.fedora.client.request.Upload;
  * @author Edwin Shin
  */
 public class UploadResponse extends FedoraResponseImpl {
+
     private String uploadLocation;
 
-    public UploadResponse(ClientResponse cr) throws FedoraClientException {
+    public UploadResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
 

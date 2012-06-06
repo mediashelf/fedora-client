@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import java.io.File;
@@ -42,11 +41,10 @@ import com.yourmediashelf.fedora.client.response.UploadResponse;
  * @author Edwin Shin
  * @see "http://www.fedora-commons.org/jira/browse/FCREPO-687"
  */
-public class Upload
-        extends FedoraRequest<Upload> {
+public class Upload extends FedoraRequest<Upload> {
 
-    private final org.slf4j.Logger logger =
-        org.slf4j.LoggerFactory.getLogger(this.getClass());
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+            .getLogger(this.getClass());
 
     private final File file;
 
@@ -57,20 +55,23 @@ public class Upload
     public Upload(File file) {
         this.file = file;
     }
-    
+
     @Override
     public UploadResponse execute() throws FedoraClientException {
         return (UploadResponse) super.execute();
     }
 
     @Override
-    public UploadResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public UploadResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         ClientResponse response = null;
         String path = String.format("upload");
-        WebResource wr = fedora.resource().path(path);
+        WebResource wr = resource().path(path);
 
         MediaType mediaType = MediaType.valueOf(fedora.getMimeType(file));
-        MultiPart multiPart = new FormDataMultiPart().bodyPart(new FileDataBodyPart("file", file, mediaType));
+        MultiPart multiPart =
+                new FormDataMultiPart().bodyPart(new FileDataBodyPart("file",
+                        file, mediaType));
 
         // Check for a 302 (expected if baseUrl is http but Fedora is configured
         // to require SSL
@@ -78,10 +79,13 @@ public class Upload
         if (response.getStatus() == 302) {
             URI newLocation = response.getLocation();
             logger.warn("302 status for upload request: " + newLocation);
-            wr = fedora.resource(newLocation.toString());
+            wr = resource(newLocation.toString());
         }
 
-        response = wr.queryParams(getQueryParams()).type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, multiPart);
+        response =
+                wr.queryParams(getQueryParams()).type(
+                        MediaType.MULTIPART_FORM_DATA_TYPE).post(
+                        ClientResponse.class, multiPart);
         return new UploadResponse(response);
     }
 }

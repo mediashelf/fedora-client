@@ -35,7 +35,9 @@ import com.yourmediashelf.fedora.client.response.IngestResponse;
  * @author Edwin Shin
  */
 public class Ingest extends FedoraRequest<Ingest> {
+
     private final String pid;
+
     private Object content;
 
     /**
@@ -173,11 +175,12 @@ public class Ingest extends FedoraRequest<Ingest> {
 
     @Override
     public IngestResponse execute() throws FedoraClientException {
-        return (IngestResponse)super.execute();
+        return (IngestResponse) super.execute();
     }
-    
+
     @Override
-    public IngestResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public IngestResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         ClientResponse response = null;
         String path;
         if (pid == null || pid.isEmpty()) {
@@ -186,14 +189,15 @@ public class Ingest extends FedoraRequest<Ingest> {
             path = String.format("objects/%s", pid);
         }
 
-        WebResource wr = fedora.resource().path(path).queryParams(getQueryParams());
+        WebResource wr =
+                resource(fedora).path(path).queryParams(getQueryParams());
 
         if (content == null) {
             response = wr.post(ClientResponse.class);
         } else if (content instanceof String) {
             response =
                     wr.type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class,
-                                                          content);
+                            content);
         } else if (content instanceof File) {
             File f = (File) content;
             MediaType mimeType = MediaType.TEXT_XML_TYPE;

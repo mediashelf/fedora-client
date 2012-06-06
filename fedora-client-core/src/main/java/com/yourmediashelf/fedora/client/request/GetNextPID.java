@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,8 +30,7 @@ import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
  *
  * @author Edwin Shin
  */
-public class GetNextPID
-        extends FedoraRequest<GetNextPID> {
+public class GetNextPID extends FedoraRequest<GetNextPID> {
 
     /**
      * <p>The format of the response. Defaults to "xml".</p>
@@ -78,18 +76,21 @@ public class GetNextPID
     public GetNextPIDResponse execute() throws FedoraClientException {
         return (GetNextPIDResponse) super.execute();
     }
-    
+
     @Override
-    public GetNextPIDResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public GetNextPIDResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = fedora.resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/nextPID");
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).post(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).post(
+                        ClientResponse.class);
         return new GetNextPIDResponse(cr);
     }
 

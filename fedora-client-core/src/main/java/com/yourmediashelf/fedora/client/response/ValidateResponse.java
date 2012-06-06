@@ -29,23 +29,23 @@ import com.yourmediashelf.fedora.generated.management.Validation;
  *
  * @author Edwin Shin
  */
-public class ValidateResponse
-        extends FedoraResponseImpl {
-	
-	private Validation validation;
+public class ValidateResponse extends FedoraResponseImpl {
 
-    public ValidateResponse(ClientResponse cr) throws FedoraClientException {
+    private Validation validation;
+
+    public ValidateResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
-    
+
     public Validation getValidation() throws FedoraClientException {
         if (validation == null) {
-        	validation =
-                (Validation) unmarshallResponse(ContextPath.Management);
+            validation =
+                    (Validation) unmarshallResponse(ContextPath.Management);
         }
         return validation;
     }
-    
+
     /**
      * Convenience method that returns the pid of the object.
      *
@@ -53,9 +53,9 @@ public class ValidateResponse
      * @throws FedoraClientException
      */
     public String getPid() throws FedoraClientException {
-    	return getValidation().getPid();
+        return getValidation().getPid();
     }
-    
+
     /**
      * Convenience method that returns the request's dateTime.
      *
@@ -63,9 +63,9 @@ public class ValidateResponse
      * @throws FedoraClientException
      */
     public String getAsOfDateTime() throws FedoraClientException {
-    	return getValidation().getAsOfDateTime().toXMLFormat();
+        return getValidation().getAsOfDateTime().toXMLFormat();
     }
-    
+
     /**
      * Convenience method that returns true if the object is valid with 
      * respect to its content model(s).
@@ -74,6 +74,6 @@ public class ValidateResponse
      * @throws FedoraClientException
      */
     public boolean isValid() throws FedoraClientException {
-    	return getValidation().isValid();
+        return getValidation().isValid();
     }
 }

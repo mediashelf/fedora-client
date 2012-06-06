@@ -28,10 +28,10 @@ import com.yourmediashelf.fedora.client.request.RiSearch;
  *
  * @author Edwin Shin
  */
-public class RiSearchResponse
-        extends FedoraResponseImpl {
+public class RiSearchResponse extends FedoraResponseImpl {
 
-    public RiSearchResponse(ClientResponse cr) throws FedoraClientException {
+    public RiSearchResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
     }
 }

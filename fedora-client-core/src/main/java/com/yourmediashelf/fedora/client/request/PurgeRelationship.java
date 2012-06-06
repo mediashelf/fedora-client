@@ -32,6 +32,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @author Edwin Shin
  */
 public class PurgeRelationship extends RelationshipsRequest {
+
     public PurgeRelationship(String subject) {
         super(subject);
     }
@@ -60,7 +61,7 @@ public class PurgeRelationship extends RelationshipsRequest {
         addQueryParam("object", object);
         return this;
     }
-    
+
     /**
      * The object of the relationship as a plain literal.
      * 
@@ -73,7 +74,7 @@ public class PurgeRelationship extends RelationshipsRequest {
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
         return this;
     }
-    
+
     /**
      * The object of the relationship as a datatyped literal. 
      * 
@@ -112,11 +113,14 @@ public class PurgeRelationship extends RelationshipsRequest {
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource();
         String path = String.format("objects/%s/relationships", pid);
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).delete(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).delete(
+                        ClientResponse.class);
         return new FedoraResponseImpl(cr);
     }
 

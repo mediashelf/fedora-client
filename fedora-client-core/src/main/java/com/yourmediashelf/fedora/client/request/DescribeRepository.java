@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -28,19 +27,22 @@ import com.yourmediashelf.fedora.client.response.DescribeRepositoryResponse;
 
 /**
  * Builder for the DescribeRepository method.
- *
- * <p>As there is currently no REST-API implementation of DescribeRepository,
- * this request will be executed using the API-A-Lite interface.
- *
+ * 
+ * <p>
+ * As there is currently no REST-API implementation of DescribeRepository, this
+ * request will be executed using the API-A-Lite interface.
+ * 
  * @author Edwin Shin
  */
-public class DescribeRepository
-        extends FedoraRequest<DescribeRepository> {
+public class DescribeRepository extends FedoraRequest<DescribeRepository> {
 
     /**
-     * <p>Format the response as XML. Defaults to "true".</p>
-     *
-     * @param xml Defaults to true.
+     * <p>
+     * Format the response as XML. Defaults to "true".
+     * </p>
+     * 
+     * @param xml
+     *            Defaults to true.
      * @return this builder
      */
     public DescribeRepository xml(boolean xml) {
@@ -52,18 +54,17 @@ public class DescribeRepository
     public DescribeRepositoryResponse execute() throws FedoraClientException {
         return (DescribeRepositoryResponse) super.execute();
     }
-    
+
     @Override
-    public DescribeRepositoryResponse execute(FedoraClient fedora) throws FedoraClientException {
+    public DescribeRepositoryResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("xml") == null) {
             addQueryParam("xml", "true");
         }
 
-        WebResource wr = fedora.resource();
-        String path = "describe";
-
-        return new DescribeRepositoryResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        WebResource wr = resource("describe").queryParams(getQueryParams());
+        return new DescribeRepositoryResponse(wr.get(ClientResponse.class));
     }
 
 }

@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.response;
 
 import java.util.List;
@@ -32,8 +31,7 @@ import com.yourmediashelf.fedora.generated.access.FedoraObjectHistory;
  *
  * @author Edwin Shin
  */
-public class GetObjectHistoryResponse
-        extends FedoraResponseImpl {
+public class GetObjectHistoryResponse extends FedoraResponseImpl {
 
     private FedoraObjectHistory objectHistory;
 
@@ -44,12 +42,12 @@ public class GetObjectHistoryResponse
 
     public FedoraObjectHistory getObjectHistory() throws FedoraClientException {
         if (objectHistory == null) {
-        	objectHistory =
-                (FedoraObjectHistory) unmarshallResponse(ContextPath.Access);
+            objectHistory =
+                    (FedoraObjectHistory) unmarshallResponse(ContextPath.Access);
         }
         return objectHistory;
     }
-    
+
     /**
      * Accessor for the pid of the ObjectHistory response.
      *
@@ -57,9 +55,9 @@ public class GetObjectHistoryResponse
      * @throws FedoraClientException
      */
     public String getPid() throws FedoraClientException {
-    	return getObjectHistory().getPid();
+        return getObjectHistory().getPid();
     }
-    
+
     /**
      * Accessor for the objectChangeDate property of the ObjectHistory response.
      * 
@@ -69,6 +67,6 @@ public class GetObjectHistoryResponse
      * @throws FedoraClientException
      */
     public List<String> getObjectChangeDate() throws FedoraClientException {
-    	return getObjectHistory().getObjectChangeDate();
+        return getObjectHistory().getObjectChangeDate();
     }
 }

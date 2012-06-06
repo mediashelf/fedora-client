@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.response;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -30,8 +29,7 @@ import com.yourmediashelf.fedora.generated.access.ObjectMethods;
  *
  * @author Edwin Shin
  */
-public class ListMethodsResponse
-        extends FedoraResponseImpl {
+public class ListMethodsResponse extends FedoraResponseImpl {
 
     private ObjectMethods objectMethods;
 
@@ -42,7 +40,8 @@ public class ListMethodsResponse
 
     public ObjectMethods getObjectMethods() throws FedoraClientException {
         if (objectMethods == null) {
-        	objectMethods = (ObjectMethods) unmarshallResponse(ContextPath.Access);
+            objectMethods =
+                    (ObjectMethods) unmarshallResponse(ContextPath.Access);
         }
         return objectMethods;
     }

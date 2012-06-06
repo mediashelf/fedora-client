@@ -30,11 +30,12 @@ import com.yourmediashelf.fedora.client.request.AddDatastream;
  *
  * @author Edwin Shin
  */
-public class AddDatastreamResponse
-        extends DatastreamProfileResponse {
+public class AddDatastreamResponse extends DatastreamProfileResponse {
+
     private final URI location;
 
-    public AddDatastreamResponse(ClientResponse cr) throws FedoraClientException {
+    public AddDatastreamResponse(ClientResponse cr)
+            throws FedoraClientException {
         super(cr);
         location = cr.getLocation();
     }

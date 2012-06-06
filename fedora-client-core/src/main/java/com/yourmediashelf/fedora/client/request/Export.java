@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -29,27 +28,27 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
 
 /**
  * Builder for the Export method.
- *
+ * 
  * @author Edwin Shin
- *
+ * 
  */
-public class Export
-        extends FedoraRequest<Export> {
+public class Export extends FedoraRequest<Export> {
 
     private final String pid;
 
     /**
      * @param pid
-     *        persistent identifier of the digital object
+     *            persistent identifier of the digital object
      */
     public Export(String pid) {
         this.pid = pid;
     }
 
     /**
-     *
-     * @param format The XML format to export. Defaults to
-     *               "info:fedora/fedora-system:FOXML-1.1".
+     * 
+     * @param format
+     *            The XML format to export. Defaults to
+     *            "info:fedora/fedora-system:FOXML-1.1".
      * @return this builder
      */
     public Export format(String format) {
@@ -58,10 +57,11 @@ public class Export
     }
 
     /**
-     *
-     * @param context The export context, which determines how datastream URLs
-     *        and content are represented. One of "public", "migrate", "archive".
-     *        Defaults to "public".
+     * 
+     * @param context
+     *            The export context, which determines how datastream URLs and
+     *            content are represented. One of "public", "migrate",
+     *            "archive". Defaults to "public".
      * @return this builder
      */
     public Export context(String context) {
@@ -70,9 +70,10 @@ public class Export
     }
 
     /**
-     *
-     * @param encoding The preferred encoding of the exported XML. Defaults to
-     *                 "UTF-8".
+     * 
+     * @param encoding
+     *            The preferred encoding of the exported XML. Defaults to
+     *            "UTF-8".
      * @return this builder
      */
     public Export encoding(String encoding) {
@@ -81,11 +82,13 @@ public class Export
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
-        String path = String.format("objects/%s/export", pid);
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr =
+                resource(String.format("objects/%s/export", pid)).queryParams(
+                        getQueryParams());
 
-        return new FedoraResponseImpl(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new FedoraResponseImpl(wr.get(ClientResponse.class));
     }
 
 }

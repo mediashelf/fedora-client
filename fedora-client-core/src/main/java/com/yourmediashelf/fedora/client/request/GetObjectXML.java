@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -33,8 +32,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponseImpl;
  * @author Edwin Shin
  * @since 0.0.3
  */
-public class GetObjectXML
-        extends FedoraRequest<GetObjectXML> {
+public class GetObjectXML extends FedoraRequest<GetObjectXML> {
 
     private final String pid;
 
@@ -47,11 +45,14 @@ public class GetObjectXML
     }
 
     @Override
-    public FedoraResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
+    public FedoraResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource();
         String path = String.format("objects/%s/objectXML", pid);
 
-        ClientResponse cr = wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class);
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
         return new FedoraResponseImpl(cr);
     }
 }

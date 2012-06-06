@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import java.net.URI;
@@ -35,13 +34,12 @@ import com.yourmediashelf.fedora.client.response.RiSearchResponse;
  *
  * @author Edwin Shin
  */
-public class RiSearch
-        extends FedoraRequest<RiSearch> {
-	
-	private final org.slf4j.Logger logger =
-        org.slf4j.LoggerFactory.getLogger(this.getClass());
+public class RiSearch extends FedoraRequest<RiSearch> {
 
-	private String type;
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+            .getLogger(this.getClass());
+
+    private String type;
 
     /**
      * 
@@ -50,10 +48,10 @@ public class RiSearch
      * 
      */
     public RiSearch(String query) {
-		validateQuery(query);
+        validateQuery(query);
         addQueryParam("query", query);
     }
-    
+
     /**
      * A tuple query is one that returns a list of named values. A triple query 
      * is one that returns a list of RDF statements (aka triples).
@@ -64,12 +62,12 @@ public class RiSearch
      * @return this builder
      */
     public RiSearch type(String type) {
-    	validateType(type);
-    	this.type = type;
+        validateType(type);
+        this.type = type;
         addQueryParam("type", type);
         return this;
     }
-    
+
     /**
      * The query language to use.
      * 
@@ -80,11 +78,11 @@ public class RiSearch
      */
     public RiSearch lang(String lang) {
         //FIXME set type=triples automatically if spo
-    	validateLang(lang);
+        validateLang(lang);
         addQueryParam("lang", lang);
         return this;
     }
-    
+
     /**
      * The desired response format.
      * 
@@ -95,7 +93,7 @@ public class RiSearch
      * @return this builder
      */
     public RiSearch format(String format) {
-    	validateFormat(format);
+        validateFormat(format);
         addQueryParam("format", format);
         return this;
     }
@@ -123,7 +121,7 @@ public class RiSearch
         addQueryParam("flush", Boolean.toString(flush));
         return this;
     }
-    
+
     /**
      * The maximum number of results to return. It is useful to set this low 
      * when testing queries.
@@ -137,7 +135,7 @@ public class RiSearch
         addQueryParam("limit", Integer.toString(limit));
         return this;
     }
-    
+
     /**
      * Whether to force duplicate results to be dropped. Note: iTQL never 
      * returns duplicates.
@@ -151,7 +149,7 @@ public class RiSearch
         addQueryParam("distinct", distinct ? "on" : "off");
         return this;
     }
-    
+
     /**
      * Whether to stream the results right away (faster), or to save them to a 
      * temporary file before sending them to the client. 
@@ -169,7 +167,7 @@ public class RiSearch
         addQueryParam("stream", stream ? "on" : "off");
         return this;
     }
-    
+
     /**
      * Templates are used to convert tuple query results to triples. A template 
      * consists of one or more triple binding patterns that reference the 
@@ -182,100 +180,110 @@ public class RiSearch
         addQueryParam("template", template);
         return this;
     }
-    
+
     @Override
     public RiSearchResponse execute() throws FedoraClientException {
-        return (RiSearchResponse)super.execute();
+        return (RiSearchResponse) super.execute();
     }
 
     @Override
-    public RiSearchResponse execute(FedoraClient fedora) throws FedoraClientException {
-    	// set defaults
-    	if (getFirstQueryParam("type") == null) {
-    		type = "tuples";
+    public RiSearchResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        // set defaults
+        if (getFirstQueryParam("type") == null) {
+            type = "tuples";
             addQueryParam("type", "tuples");
         }
-    	if (getFirstQueryParam("lang") == null) {
+        if (getFirstQueryParam("lang") == null) {
             addQueryParam("lang", "sparql");
         }
-    	if (getFirstQueryParam("format") == null) {
-    		if (type.equalsIgnoreCase("tuples")) {
-    			addQueryParam("format", "sparql");
-    		} else if (type.equalsIgnoreCase("triples")) {
-    			addQueryParam("format", "n-triples");
-    		}
+        if (getFirstQueryParam("format") == null) {
+            if (type.equalsIgnoreCase("tuples")) {
+                addQueryParam("format", "sparql");
+            } else if (type.equalsIgnoreCase("triples")) {
+                addQueryParam("format", "n-triples");
+            }
         }
-    	
-    	ClientResponse response = null;
-    	String path = String.format("risearch");
-        WebResource wr = fedora.resource().path(path);
-        
+
+        ClientResponse response = null;
+        String path = String.format("risearch");
+        WebResource wr = resource().path(path);
+
         // Check for a 302 (expected if baseUrl is http but Fedora is configured
         // to require SSL
         response = wr.head();
         if (response.getStatus() == 302) {
             URI newLocation = response.getLocation();
             logger.warn("302 status for upload request: " + newLocation);
-            wr = fedora.resource(newLocation.toString());
+            wr = resource(newLocation.toString());
         }
-        
-        return new RiSearchResponse(wr.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
-        		post(ClientResponse.class, getQueryParams()));
+
+        return new RiSearchResponse(wr.type(
+                MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(
+                ClientResponse.class, getQueryParams()));
     }
-    
+
     private void validateType(String type) {
-    	if (type == null || type.isEmpty() || 
-    			!(type.equalsIgnoreCase("tuples") || type.equalsIgnoreCase("triples"))) {
-    		throw new IllegalArgumentException("type must be one of tuples or triples");
+        if (type == null ||
+                type.isEmpty() ||
+                !(type.equalsIgnoreCase("tuples") || type
+                        .equalsIgnoreCase("triples"))) {
+            throw new IllegalArgumentException(
+                    "type must be one of tuples or triples");
         }
     }
-    
+
     private void validateLang(String lang) {
-    	if (lang == null || lang.isEmpty()) {
-    		throw new IllegalArgumentException("lang cannot be null or empty");
-    	} else if (type != null && type.equalsIgnoreCase("tuples")) {
-    		if (!(lang.equalsIgnoreCase("sparql") || lang.equalsIgnoreCase("itql"))) {
-    			throw new IllegalArgumentException("lang must be one of sparql " +
-    					"or itql if type is tuples");
-    		}
-		} else if (type != null && type.equalsIgnoreCase("triples")) {
-			if (!(lang.equalsIgnoreCase("sparql") || 
-					lang.equalsIgnoreCase("itql") || 
-					lang.equalsIgnoreCase("spo"))) {
-    			throw new IllegalArgumentException("lang must be one of sparql, " +
-    					"itql, or spo if type is triples");
-    		}
-		}
+        if (lang == null || lang.isEmpty()) {
+            throw new IllegalArgumentException("lang cannot be null or empty");
+        } else if (type != null && type.equalsIgnoreCase("tuples")) {
+            if (!(lang.equalsIgnoreCase("sparql") || lang
+                    .equalsIgnoreCase("itql"))) {
+                throw new IllegalArgumentException(
+                        "lang must be one of sparql "
+                                + "or itql if type is tuples");
+            }
+        } else if (type != null && type.equalsIgnoreCase("triples")) {
+            if (!(lang.equalsIgnoreCase("sparql") ||
+                    lang.equalsIgnoreCase("itql") || lang
+                        .equalsIgnoreCase("spo"))) {
+                throw new IllegalArgumentException(
+                        "lang must be one of sparql, "
+                                + "itql, or spo if type is triples");
+            }
+        }
     }
-    
+
     private void validateFormat(String format) {
-    	if (format == null || format.isEmpty()) {
-    		throw new IllegalArgumentException("format cannot be null or empty");
-    	} else if (type != null && type.equalsIgnoreCase("tuples")) {
-    		if (!(format.equalsIgnoreCase("csv") || 
-    				format.equalsIgnoreCase("simple") || 
-    				format.equalsIgnoreCase("sparql") || 
-    				format.equalsIgnoreCase("tsv") || 
-    				format.equalsIgnoreCase("count"))) {
-    			throw new IllegalArgumentException("format must be one of " +
-    					"csv, simple, sparql, tsv, or count if type is tuples");
-    		}
-		} else if (type != null && type.equalsIgnoreCase("triples")) {
-			if (!(format.equalsIgnoreCase("n-triples") || 
-					format.equalsIgnoreCase("Notation 3") || 
-					format.equalsIgnoreCase("RDF/XML") || 
-					format.equalsIgnoreCase("Turtle") || 
-    				format.equalsIgnoreCase("count"))) {
-    			throw new IllegalArgumentException("format must be one of " +
-    					"n-triples, notation 3, rdf/xml, turtle, or count if " +
-    					"type is triples");
-    		}
-		}
+        if (format == null || format.isEmpty()) {
+            throw new IllegalArgumentException("format cannot be null or empty");
+        } else if (type != null && type.equalsIgnoreCase("tuples")) {
+            if (!(format.equalsIgnoreCase("csv") ||
+                    format.equalsIgnoreCase("simple") ||
+                    format.equalsIgnoreCase("sparql") ||
+                    format.equalsIgnoreCase("tsv") || format
+                        .equalsIgnoreCase("count"))) {
+                throw new IllegalArgumentException(
+                        "format must be one of "
+                                + "csv, simple, sparql, tsv, or count if type is tuples");
+            }
+        } else if (type != null && type.equalsIgnoreCase("triples")) {
+            if (!(format.equalsIgnoreCase("n-triples") ||
+                    format.equalsIgnoreCase("Notation 3") ||
+                    format.equalsIgnoreCase("RDF/XML") ||
+                    format.equalsIgnoreCase("Turtle") || format
+                        .equalsIgnoreCase("count"))) {
+                throw new IllegalArgumentException(
+                        "format must be one of "
+                                + "n-triples, notation 3, rdf/xml, turtle, or count if "
+                                + "type is triples");
+            }
+        }
     }
-    
+
     private void validateQuery(String query) {
-    	if (query == null || query.isEmpty()) {
-    		throw new IllegalArgumentException("query cannot be null or empty");
-    	}
+        if (query == null || query.isEmpty()) {
+            throw new IllegalArgumentException("query cannot be null or empty");
+        }
     }
 }

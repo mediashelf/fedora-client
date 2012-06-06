@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,8 +30,7 @@ import com.yourmediashelf.fedora.client.response.ValidateResponse;
  *
  * @author Edwin Shin
  */
-public class Validate
-        extends FedoraRequest<Validate> {
+public class Validate extends FedoraRequest<Validate> {
 
     private final String pid;
 
@@ -49,22 +47,24 @@ public class Validate
     * @param asOfDateTime yyyy-MM-dd or yyyy-MM-ddTHH:mm:ssZ
     * @return this builder
     */
-   public Validate asOfDateTime(String asOfDateTime) {
-       addQueryParam("asOfDateTime", asOfDateTime);
-       return this;
-   }
+    public Validate asOfDateTime(String asOfDateTime) {
+        addQueryParam("asOfDateTime", asOfDateTime);
+        return this;
+    }
 
-   @Override
-   public ValidateResponse execute() throws FedoraClientException {
-       return (ValidateResponse)super.execute();
-   }
-   
     @Override
-    public ValidateResponse execute(FedoraClient fedora) throws FedoraClientException {
-        WebResource wr = fedora.resource();
+    public ValidateResponse execute() throws FedoraClientException {
+        return (ValidateResponse) super.execute();
+    }
+
+    @Override
+    public ValidateResponse execute(FedoraClient fedora)
+            throws FedoraClientException {
+        WebResource wr = resource();
         String path = String.format("objects/%s/validate", pid);
 
-        return new ValidateResponse(wr.path(path).queryParams(getQueryParams()).get(ClientResponse.class));
+        return new ValidateResponse(wr.path(path).queryParams(getQueryParams())
+                .get(ClientResponse.class));
     }
 
 }
