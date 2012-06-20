@@ -26,7 +26,7 @@
     <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
     replacements of "fedora-client" in child modules -->
     <project_name>fedora-client</project_name>
-    <slf4j.version>1.6.4</slf4j.version>
+    <slf4j.version>1.6.6</slf4j.version>
   </properties>
 
   <dependencyManagement>

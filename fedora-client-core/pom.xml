@@ -15,7 +15,7 @@
   <url>http://mediashelf.github.com/${project.artifactId}</url>
 
   <properties>
-    <jersey.version>1.11</jersey.version>
+    <jersey.version>1.12</jersey.version>
   </properties>
 
   <dependencyManagement>
@@ -48,7 +48,7 @@
       <dependency>
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
-        <version>2.0</version>
+        <version>2.1</version>
       </dependency>
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
@@ -79,7 +79,7 @@
       <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-mapper-lgpl</artifactId>
-        <version>1.9.4</version>
+        <version>1.9.7</version>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>
