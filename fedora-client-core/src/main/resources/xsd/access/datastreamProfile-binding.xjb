@@ -1,0 +1,10 @@
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  version="2.1">
+
+  <bindings schemaLocation="../management/datastreamProfile.xsd"
+    node="/xsd:schema/xsd:complexType[@name='datastreamProfileType']">
+    <class name="DatastreamProfile"
+      ref="com.yourmediashelf.fedora.generated.management.DatastreamProfile" />
+  </bindings>
+
+</bindings>

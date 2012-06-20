@@ -21,6 +21,8 @@ package com.yourmediashelf.fedora.client.response;
 
 import java.util.Date;
 
+import javax.xml.bind.JAXBElement;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
@@ -72,8 +74,18 @@ public class DatastreamProfileResponse extends FedoraResponseImpl {
     public DatastreamProfile getDatastreamProfile()
             throws FedoraClientException {
         if (datastreamProfile == null) {
-            datastreamProfile =
-                    (DatastreamProfile) unmarshallResponse(ContextPath.Management);
+
+            // FIXME: after the changes to listDatastreams.xsd to support GetDatastreams,
+            // this now throws: 
+            // javax.xml.bind.JAXBElement cannot be cast to com.yourmediashelf.fedora.generated.management.DatastreamProfile
+            //
+            //datastreamProfile =
+            //        (DatastreamProfile) unmarshallResponse(ContextPath.Management);
+
+            JAXBElement<DatastreamProfile> root =
+                    (JAXBElement<DatastreamProfile>) unmarshallResponse(ContextPath.Management);
+            datastreamProfile = root.getValue();
+
         }
         return datastreamProfile;
     }

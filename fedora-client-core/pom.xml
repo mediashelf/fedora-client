@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
+
   <parent>
     <groupId>com.yourmediashelf.fedora.client</groupId>
     <artifactId>fedora-client</artifactId>
     <version>0.5-SNAPSHOT</version>
   </parent>
-  
+
   <artifactId>fedora-client-core</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
@@ -168,21 +169,11 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
         <executions>
-          <execution>
-            <id>generate-access</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <schemaDirectory>src/main/resources/xsd/access</schemaDirectory>
-              <generatePackage>com.yourmediashelf.fedora.generated.access</generatePackage>
-              <generateDirectory>${project.build.directory}/generated-sources/access</generateDirectory>
-            </configuration>
-          </execution>
           <execution>
             <id>generate-management</id>
             <goals>
@@ -192,13 +183,39 @@
               <schemaDirectory>src/main/resources/xsd/management</schemaDirectory>
               <generatePackage>com.yourmediashelf.fedora.generated.management</generatePackage>
               <generateDirectory>${project.build.directory}/generated-sources/management</generateDirectory>
-              <!-- added to prevent Eclipse warning: "The resource is a 
-              duplicate of target/generated-sources/access/META-INF/sun-jaxb.episode 
-              and was not copied to the output folder"
-              -->
+              <episode>true</episode>
+              <extension>true</extension>
+              <plugins>
+                <plugin>
+                  <groupId>org.jvnet.jaxb2_commons</groupId>
+                  <artifactId>jaxb2-basics</artifactId>
+                  <version>0.6.2</version>
+                </plugin>
+                <plugin>
+                  <groupId>org.jvnet.jaxb2_commons</groupId>
+                  <artifactId>jaxb2-basics-annotate</artifactId>
+                  <version>0.6.2</version>
+                </plugin>
+              </plugins>
+              <args>
+                <arg>-Xannotate</arg>
+              </args>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>generate-access</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <schemaDirectory>src/main/resources/xsd/access</schemaDirectory>
+              <generatePackage>com.yourmediashelf.fedora.generated.access</generatePackage>
+              <generateDirectory>${project.build.directory}/generated-sources/access</generateDirectory>
               <episode>false</episode>
             </configuration>
           </execution>
+
           <execution>
             <id>generate-foxml</id>
             <goals>
@@ -208,15 +225,12 @@
               <schemaDirectory>src/main/resources/xsd/foxml</schemaDirectory>
               <generatePackage>com.yourmediashelf.fedora.generated.foxml</generatePackage>
               <generateDirectory>${project.build.directory}/generated-sources/foxml</generateDirectory>
-              <!-- added to prevent Eclipse warning: "The resource is a 
-              duplicate of target/generated-sources/access/META-INF/sun-jaxb.episode 
-              and was not copied to the output folder"
-              -->
               <episode>false</episode>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
       </plugin>

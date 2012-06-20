@@ -42,6 +42,7 @@ import com.yourmediashelf.fedora.client.request.FindObjects;
 import com.yourmediashelf.fedora.client.request.GetDatastream;
 import com.yourmediashelf.fedora.client.request.GetDatastreamDissemination;
 import com.yourmediashelf.fedora.client.request.GetDatastreamHistory;
+import com.yourmediashelf.fedora.client.request.GetDatastreams;
 import com.yourmediashelf.fedora.client.request.GetDissemination;
 import com.yourmediashelf.fedora.client.request.GetNextPID;
 import com.yourmediashelf.fedora.client.request.GetObjectHistory;
@@ -301,6 +302,10 @@ public class FedoraClient {
 
     public static GetDatastream getDatastream(String pid, String dsId) {
         return new GetDatastream(pid, dsId);
+    }
+
+    public static GetDatastreams getDatastreams(String pid) {
+        return new GetDatastreams(pid);
     }
 
     public static GetDatastreamDissemination getDatastreamDissemination(

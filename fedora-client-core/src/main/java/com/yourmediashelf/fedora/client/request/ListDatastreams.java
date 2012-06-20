@@ -42,8 +42,25 @@ public class ListDatastreams extends FedoraRequest<ListDatastreams> {
         this.pid = pid;
     }
 
+    /**
+     * Indicates that the result should be relative to the digital object as it 
+     * existed on the given date.
+     * 
+     * @param asOfDateTime datetime string as yyyy-MM-dd or yyyy-MM-ddTHH:mm:ssZ
+     * @return this builder
+     */
     public ListDatastreams asOfDateTime(String asOfDateTime) {
         addQueryParam("asOfDateTime", asOfDateTime);
+        return this;
+    }
+
+    /**
+     * @param dsState
+     *            one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
+     * @return this builder
+     */
+    public ListDatastreams dsState(String dsState) {
+        addQueryParam("dsState", dsState);
         return this;
     }
 
@@ -61,6 +78,19 @@ public class ListDatastreams extends FedoraRequest<ListDatastreams> {
      */
     public ListDatastreams format(String format) {
         addQueryParam("format", format);
+        return this;
+    }
+
+    /**
+     * Verifies that the Datastream content has not changed since the checksum 
+     * was initially computed. If {@link #asOfDateTime(String) asOfDateTime} is 
+     * null, Fedora will use the most recent version.
+     * 
+     * @param validateChecksum
+     * @return this builder
+     */
+    public ListDatastreams validateChecksum(boolean validateChecksum) {
+        addQueryParam("validateChecksum", Boolean.toString(validateChecksum));
         return this;
     }
 

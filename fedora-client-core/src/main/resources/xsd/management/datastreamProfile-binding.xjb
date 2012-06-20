@@ -1,0 +1,13 @@
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:annox="http://annox.dev.java.net" version="2.1">
+
+  <bindings schemaLocation="datastreamProfile.xsd"
+    node="/xsd:schema/xsd:complexType[@name='datastreamProfileType']">
+    <class name="DatastreamProfile" />
+    <annox:annotate>
+      <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"
+        name="datastreamProfile" />
+    </annox:annotate>
+    
+  </bindings>
+</bindings>

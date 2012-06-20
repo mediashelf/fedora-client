@@ -23,26 +23,23 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
+import com.yourmediashelf.fedora.client.response.GetDatastreamsResponse;
 
 /**
- * Builder for the GetDatastream method.
+ * Builder for the GetDatastreams method.
  *
  * @author Edwin Shin
  */
-public class GetDatastream extends FedoraRequest<GetDatastream> {
+public class GetDatastreams extends FedoraRequest<GetDatastreams> {
 
     private final String pid;
-
-    private final String dsId;
 
     /**
      * @param pid
      *        persistent identifier of the digital object
      */
-    public GetDatastream(String pid, String dsId) {
+    public GetDatastreams(String pid) {
         this.pid = pid;
-        this.dsId = dsId;
     }
 
     /**
@@ -52,8 +49,18 @@ public class GetDatastream extends FedoraRequest<GetDatastream> {
      * @param asOfDateTime datetime string as yyyy-MM-dd or yyyy-MM-ddTHH:mm:ssZ
      * @return this builder
      */
-    public GetDatastream asOfDateTime(String asOfDateTime) {
+    public GetDatastreams asOfDateTime(String asOfDateTime) {
         addQueryParam("asOfDateTime", asOfDateTime);
+        return this;
+    }
+
+    /**
+     * @param dsState
+     *            one of "A", "I", "D" (*A*ctive, *I*nactive, *D*eleted)
+     * @return this builder
+     */
+    public GetDatastreams dsState(String dsState) {
+        addQueryParam("dsState", dsState);
         return this;
     }
 
@@ -66,10 +73,10 @@ public class GetDatastream extends FedoraRequest<GetDatastream> {
      * the raw HTTP response as most of the FedoraResponse convenience methods
      * rely on an XML response.</p>
      *
-     * @param format "html" or "xml". Defaults to "xml".
+     * @param format The response format, either "xml" or "html"
      * @return this builder
      */
-    public GetDatastream format(String format) {
+    public GetDatastreams format(String format) {
         addQueryParam("format", format);
         return this;
     }
@@ -82,29 +89,33 @@ public class GetDatastream extends FedoraRequest<GetDatastream> {
      * @param validateChecksum
      * @return this builder
      */
-    public GetDatastream validateChecksum(boolean validateChecksum) {
+    public GetDatastreams validateChecksum(boolean validateChecksum) {
         addQueryParam("validateChecksum", Boolean.toString(validateChecksum));
         return this;
     }
 
     @Override
-    public GetDatastreamResponse execute() throws FedoraClientException {
-        return (GetDatastreamResponse) super.execute();
+    public GetDatastreamsResponse execute() throws FedoraClientException {
+        return (GetDatastreamsResponse) super.execute();
     }
 
     @Override
-    public GetDatastreamResponse execute(FedoraClient fedora)
+    public GetDatastreamsResponse execute(FedoraClient fedora)
             throws FedoraClientException {
         // default to xml for the format, so we can parse the results
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = resource(fedora);
-        String path = String.format("objects/%s/datastreams/%s", pid, dsId);
+        addQueryParam("profiles", "true");
 
-        return new GetDatastreamResponse(wr.path(path).queryParams(
-                getQueryParams()).get(ClientResponse.class));
+        WebResource wr = resource(fedora);
+        String path = String.format("objects/%s/datastreams", pid);
+
+        ClientResponse cr =
+                wr.path(path).queryParams(getQueryParams()).get(
+                        ClientResponse.class);
+        return new GetDatastreamsResponse(cr);
     }
 
 }

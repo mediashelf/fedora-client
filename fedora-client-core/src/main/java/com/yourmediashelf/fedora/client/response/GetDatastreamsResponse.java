@@ -23,32 +23,33 @@ import java.util.List;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.yourmediashelf.fedora.client.FedoraClientException;
-import com.yourmediashelf.fedora.client.request.ListDatastreams;
-import com.yourmediashelf.fedora.generated.access.DatastreamType;
+import com.yourmediashelf.fedora.client.request.GetDatastreams;
+import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 
 /**
- * A {@link FedoraResponse} for the {@link ListDatastreams} request.
+ * A {@link FedoraResponse} for the {@link GetDatastreams} request.
  *
  * @author Edwin Shin
  */
-public class ListDatastreamsResponse extends ObjectDatastreamsResponse {
+public class GetDatastreamsResponse extends ObjectDatastreamsResponse {
 
-    public ListDatastreamsResponse(ClientResponse cr)
+    public GetDatastreamsResponse(ClientResponse cr)
             throws FedoraClientException {
         super(cr);
     }
 
     /**
-     * The List of requested datastreams.
+     * The List of requested datastream profiles.
      * <p>
      * If the ListDatastreams request explicitly set format=html, this method
      * call will fail.
      * </p>
      *
-     * @return the List of datastreams
+     * @return the List of datastream profiles
      * @throws FedoraClientException
      */
-    public List<DatastreamType> getDatastreams() throws FedoraClientException {
-        return getObjectDatastreams().getDatastream();
+    public List<DatastreamProfile> getDatastreamProfiles()
+            throws FedoraClientException {
+        return getObjectDatastreams().getDatastreamProfile();
     }
 }
