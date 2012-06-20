@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
@@ -27,32 +26,41 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamHistoryResponse;
 
 public class GetDatastreamHistoryIT extends BaseFedoraRequestIT {
 
     @Test
-    public void testGetDatastreamHistory() throws Exception {        
+    public void testGetDatastreamHistory() throws Exception {
         String dsId = "testGetDatastreamHistory";
         // first, add an inline datastream
         String content = "<foo>bar</foo>";
         FedoraResponse response;
         response =
                 addDatastream(testPid, dsId).content(content).versionable(true)
-                .execute();
+                        .execute();
         assertEquals(201, response.getStatus());
-        
+
         GetDatastreamHistoryResponse gdhResponse = null;
-        
+
         gdhResponse = getDatastreamHistory(testPid, dsId).execute();
-        assertEquals(1, gdhResponse.getDatastreamProfile().getDatastreamProfile().size());
-        
+        assertEquals(1, gdhResponse.getDatastreamProfile()
+                .getDatastreamProfile().size());
+
         for (int i = 0; i < 3; i++) {
-            modifyDatastream(testPid, dsId).dsLabel("modification: " + i).execute();
+            modifyDatastream(testPid, dsId).dsLabel("modification: " + i)
+                    .execute();
         }
-        
+
         gdhResponse = getDatastreamHistory(testPid, dsId).execute();
-        assertEquals(4, gdhResponse.getDatastreamProfile().getDatastreamProfile().size());
+        assertEquals(4, gdhResponse.getDatastreamProfile()
+                .getDatastreamProfile().size());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getDatastreamHistory(testPid, "DC"), 200);
     }
 }

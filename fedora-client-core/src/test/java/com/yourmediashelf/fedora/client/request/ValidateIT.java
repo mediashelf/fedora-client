@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.validate;
@@ -26,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.ValidateResponse;
 
 public class ValidateIT extends BaseFedoraRequestIT {
@@ -41,12 +41,17 @@ public class ValidateIT extends BaseFedoraRequestIT {
 
     @Test
     public void testValidateWithDateTime() throws Exception {
-    	ValidateResponse response = null;
-    	String dateTime = "9999-01-01T00:00:01.001Z";
+        ValidateResponse response = null;
+        String dateTime = "9999-01-01T00:00:01.001Z";
         response = validate(testPid).asOfDateTime(dateTime).execute();
         assertEquals(200, response.getStatus());
 
         assertEquals(testPid, response.getPid());
         assertEquals(dateTime, response.getAsOfDateTime());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(validate(testPid), 200);
     }
 }

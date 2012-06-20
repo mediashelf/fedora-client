@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getNextPID;
@@ -34,6 +33,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.GetNextPIDResponse;
 
 public class GetNextPIDIT extends BaseFedoraRequestIT {
+
     @Test
     public void testGetOnePid() throws Exception {
         GetNextPIDResponse response = getNextPID().execute();
@@ -44,7 +44,8 @@ public class GetNextPIDIT extends BaseFedoraRequestIT {
     @Test
     public void testGetOneNamespacedPid() throws Exception {
         String namespace = "foo";
-        GetNextPIDResponse response = getNextPID().namespace(namespace).execute();
+        GetNextPIDResponse response =
+                getNextPID().namespace(namespace).execute();
         assertEquals(200, response.getStatus());
         assertTrue(response.getPid().startsWith(namespace));
     }
@@ -52,7 +53,7 @@ public class GetNextPIDIT extends BaseFedoraRequestIT {
     @Test
     public void testGetTwoPids() throws Exception {
         GetNextPIDResponse response = null;
-        response = getNextPID().numPIDs(2).execute() ;
+        response = getNextPID().numPIDs(2).execute();
         assertEquals(200, response.getStatus());
         assertEquals(2, response.getPids().getPid().size());
     }
@@ -64,8 +65,13 @@ public class GetNextPIDIT extends BaseFedoraRequestIT {
         try {
             response.getPid();
             fail("Should have failed with format=html");
-        } catch(FedoraClientException e) {
+        } catch (FedoraClientException e) {
             assertTrue(e.getCause() instanceof UnmarshalException);
         }
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getNextPID(), 200);
     }
 }

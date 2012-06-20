@@ -85,8 +85,8 @@ public class Export extends FedoraRequest<Export> {
     public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException {
         WebResource wr =
-                resource(String.format("objects/%s/export", pid)).queryParams(
-                        getQueryParams());
+                resource(fedora, String.format("objects/%s/export", pid))
+                        .queryParams(getQueryParams());
 
         return new FedoraResponseImpl(wr.get(ClientResponse.class));
     }

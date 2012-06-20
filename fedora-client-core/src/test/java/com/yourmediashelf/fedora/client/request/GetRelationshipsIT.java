@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addRelationship;
@@ -32,10 +31,10 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-public class GetRelationshipsIT
-        extends BaseFedoraRequestIT {
+public class GetRelationshipsIT extends BaseFedoraRequestIT {
 
     @Test
     public void testGetAllRelationships() throws Exception {
@@ -54,7 +53,8 @@ public class GetRelationshipsIT
 
         // first add a relationship
         response =
-                addRelationship(testPid).predicate(predicate).object(object, true).execute();
+                addRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
 
         // now get it
@@ -82,8 +82,8 @@ public class GetRelationshipsIT
         String datatype = "http://www.w3.org/2001/XMLSchema#dateTime";
 
         response =
-                addRelationship(testPid).predicate(predicate)
-                        .object(object, datatype).execute();
+                addRelationship(testPid).predicate(predicate).object(object,
+                        datatype).execute();
         assertEquals(200, response.getStatus());
 
         // now get it
@@ -102,7 +102,7 @@ public class GetRelationshipsIT
             assertEquals(datatype, s.getLiteral().getDatatypeURI());
         }
     }
-    
+
     @Test
     public void testGetRelsIntRelationship() throws Exception {
         String subject = String.format("info:fedora/%s/RELS-INT", testPid);
@@ -127,5 +127,10 @@ public class GetRelationshipsIT
             }
         }
         assertTrue(found);
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getRelationships(testPid), 200);
     }
 }

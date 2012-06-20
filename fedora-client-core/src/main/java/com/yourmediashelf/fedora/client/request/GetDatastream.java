@@ -85,7 +85,7 @@ public class GetDatastream extends FedoraRequest<GetDatastream> {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
 
         return new GetDatastreamResponse(wr.path(path).queryParams(

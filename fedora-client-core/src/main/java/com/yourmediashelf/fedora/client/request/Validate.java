@@ -60,7 +60,7 @@ public class Validate extends FedoraRequest<Validate> {
     @Override
     public ValidateResponse execute(FedoraClient fedora)
             throws FedoraClientException {
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/validate", pid);
 
         return new ValidateResponse(wr.path(path).queryParams(getQueryParams())

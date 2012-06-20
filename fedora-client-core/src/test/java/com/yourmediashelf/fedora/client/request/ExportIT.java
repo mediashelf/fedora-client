@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.export;
@@ -25,10 +24,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.generated.foxml.DigitalObject;
 
 public class ExportIT extends BaseFedoraRequestIT {
+
     @Test
     public void testExport() throws Exception {
         String format = "info:fedora/fedora-system:FOXML-1.1";
@@ -36,5 +37,11 @@ public class ExportIT extends BaseFedoraRequestIT {
         assertEquals(200, response.getStatus());
         DigitalObject foxml = response.getEntity(DigitalObject.class);
         assertEquals(testPid, foxml.getPID());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(export(testPid).format(
+                "info:fedora/fedora-system:FOXML-1.1"), 200);
     }
 }

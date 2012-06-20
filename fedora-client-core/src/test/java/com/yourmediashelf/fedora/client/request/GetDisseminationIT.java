@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getDissemination;
@@ -25,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class GetDisseminationIT extends BaseFedoraRequestIT {
@@ -38,5 +38,12 @@ public class GetDisseminationIT extends BaseFedoraRequestIT {
         String method = "viewDublinCore";
         response = getDissemination(objectPid, sdefPid, method).execute();
         assertEquals(200, response.getStatus());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getDissemination(
+                "fedora-system:FedoraObject-3.0", "fedora-system:3",
+                "viewDublinCore"), 200);
     }
 }

@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getDatastream;
@@ -30,6 +29,7 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.GetDatastreamResponse;
 import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
@@ -51,8 +51,7 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
         String result = response.getEntity(String.class);
 
         assertXpathEvaluatesTo("Datastream Profile HTML Presentation",
-                               "/html/head/title",
-                               buildTestDocument(result));
+                "/html/head/title", buildTestDocument(result));
     }
 
     @Test
@@ -66,12 +65,14 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
         assertEquals(testPid, profile.getPid());
         assertEquals("DC", profile.getDsID());
     }
-    
+
     @Test
     public void testGetDatastreamAsOfDateTimeAsXML() throws Exception {
         GetDatastreamResponse response = null;
 
-        response = getDatastream(testPid, "DC").format("xml").asOfDateTime("9999-01-01T00:01:04.567Z").execute();
+        response =
+                getDatastream(testPid, "DC").format("xml").asOfDateTime(
+                        "9999-01-01T00:01:04.567Z").execute();
         DatastreamProfile profile = response.getDatastreamProfile();
         assertEquals(testPid, profile.getPid());
         assertEquals("DC", profile.getDsID());
@@ -107,5 +108,10 @@ public class GetDatastreamIT extends BaseFedoraRequestIT {
         HTMLDocumentBuilder htmlDocumentBuilder =
                 new HTMLDocumentBuilder(tolerantSaxDocumentBuilder);
         return htmlDocumentBuilder.parse(html);
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getDatastream(testPid, "DC"), 200);
     }
 }

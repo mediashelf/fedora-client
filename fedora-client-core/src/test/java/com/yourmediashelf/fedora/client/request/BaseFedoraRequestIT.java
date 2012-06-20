@@ -17,11 +17,11 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.ingest;
 import static com.yourmediashelf.fedora.client.FedoraClient.purgeObject;
+import static org.junit.Assert.assertEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,10 +35,12 @@ import org.custommonkey.xmlunit.XpathEngine;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import com.yourmediashelf.fedora.client.FedoraClient;
 import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.FedoraCredentials;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 /**
  * Base class for FedoraRequest integration tests.
@@ -46,30 +48,33 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
  * @author Edwin Shin
  */
 public abstract class BaseFedoraRequestIT {
-	private static FedoraCredentials credentials;
+
+    private static FedoraCredentials credentials;
 
     protected static FedoraClient fedora;
 
     public final String testPid = "test-rest:1";
-    
+
     @BeforeClass
     public static void setDefaultFedoraClient() throws Exception {
         fedora = new FedoraClient(getCredentials());
         fedora.debug(Boolean.parseBoolean(System.getProperty("test.debug")));
-        FedoraRequest.setDefaultClient(fedora);
     }
 
     @Before
     public void setUp() throws Exception {
+        FedoraRequest.setDefaultClient(fedora);
         ingestTestObject();
     }
 
     @After
     public void tearDown() throws Exception {
+        FedoraRequest.setDefaultClient(fedora);
         purgeTestObject();
     }
 
-    public static FedoraCredentials getCredentials() throws MalformedURLException {
+    public static FedoraCredentials getCredentials()
+            throws MalformedURLException {
         if (credentials == null) {
             String baseUrl = System.getProperty("fedora.test.baseUrl");
             String username = System.getProperty("fedora.test.username");
@@ -80,16 +85,29 @@ public abstract class BaseFedoraRequestIT {
         return credentials;
     }
 
+    protected void testNoDefaultClientRequest(FedoraRequest<?> request,
+            int successStatusCode) throws FedoraClientException {
+        FedoraRequest.setDefaultClient(null);
+        FedoraResponse response = request.execute(fedora);
+        assertEquals(successStatusCode, response.getStatus());
+    }
+
+    @Test
+    abstract public void testNoDefaultClientRequest()
+            throws FedoraClientException;
+
     public String getTestPid() {
         return testPid;
     }
 
     public void ingestTestObject() throws FedoraClientException {
-        ingest(testPid).logMessage("ingestTestObject for " + getClass()).execute();
+        ingest(testPid).logMessage("ingestTestObject for " + getClass())
+                .execute();
     }
 
     public void purgeTestObject() throws FedoraClientException {
-        purgeObject(testPid).logMessage("purgeTestObject for " + getClass()).execute();
+        purgeObject(testPid).logMessage("purgeTestObject for " + getClass())
+                .execute();
     }
 
     public XpathEngine getXpathEngine(Map<String, String> nsMap) {

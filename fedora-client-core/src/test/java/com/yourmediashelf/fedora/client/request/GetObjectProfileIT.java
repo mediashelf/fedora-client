@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getObjectProfile;
@@ -25,14 +24,21 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.GetObjectProfileResponse;
 
 public class GetObjectProfileIT extends BaseFedoraRequestIT {
+
     @Test
     public void testGetObjectXML() throws Exception {
-    	GetObjectProfileResponse response = getObjectProfile(testPid).execute();
+        GetObjectProfileResponse response = getObjectProfile(testPid).execute();
         assertEquals(200, response.getStatus());
         assertEquals(testPid, response.getPid());
         assertEquals("A", response.getState());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getObjectProfile(testPid), 200);
     }
 }

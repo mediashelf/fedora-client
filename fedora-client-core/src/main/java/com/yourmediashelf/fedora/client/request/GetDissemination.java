@@ -67,7 +67,7 @@ public class GetDissemination extends FedoraRequest<GetDissemination> {
     public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException {
         WebResource wr =
-                resource(String.format("objects/%s/methods/%s/%s", pid,
+                resource(fedora, String.format("objects/%s/methods/%s/%s", pid,
                         sdefPid, method));
         ClientResponse cr =
                 wr.queryParams(getQueryParams()).get(ClientResponse.class);

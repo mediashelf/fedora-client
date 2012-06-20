@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addRelationship;
@@ -33,6 +32,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class PurgeRelationshipIT extends BaseFedoraRequestIT {
@@ -47,7 +47,9 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         String object = "你好";
 
         // first add a relationship
-        response = addRelationship(testPid).predicate(predicate).object(object, true).execute();
+        response =
+                addRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
 
         // verify it was added
@@ -64,7 +66,9 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         }
 
         // now delete it
-        response = purgeRelationship(testPid).predicate(predicate).object(object, true).execute();
+        response =
+                purgeRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
         assertEquals("true", response.getEntity(String.class));
 
@@ -98,7 +102,9 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         String object = "你好";
 
         // first add a relationship
-        response = addRelationship(testPid).predicate(predicate).object(object, true).execute();
+        response =
+                addRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
 
         // verify it was added
@@ -115,7 +121,9 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
         }
 
         // now delete it
-        response = purgeRelationship(testPid).predicate(predicate).object(object, true).execute();
+        response =
+                purgeRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
         assertEquals("true", response.getEntity(String.class));
 
@@ -131,8 +139,22 @@ public class PurgeRelationshipIT extends BaseFedoraRequestIT {
             assertFalse(object.equals(s.getObject().toString()));
         }
 
-        response = purgeRelationship(testPid).predicate(predicate).object(object, true).execute();
+        response =
+                purgeRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
         assertEquals("false", response.getEntity(String.class));
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        String predicate = "urn:foo/p";
+        String object = "urn:foo/o";
+
+        // first add a relationship
+        addRelationship(testPid).predicate(predicate).object(object).execute();
+
+        testNoDefaultClientRequest(purgeRelationship(testPid).predicate(
+                predicate).object(object), 200);
     }
 }

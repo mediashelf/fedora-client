@@ -207,7 +207,7 @@ public class RiSearch extends FedoraRequest<RiSearch> {
 
         ClientResponse response = null;
         String path = String.format("risearch");
-        WebResource wr = resource().path(path);
+        WebResource wr = resource(fedora).path(path);
 
         // Check for a 302 (expected if baseUrl is http but Fedora is configured
         // to require SSL

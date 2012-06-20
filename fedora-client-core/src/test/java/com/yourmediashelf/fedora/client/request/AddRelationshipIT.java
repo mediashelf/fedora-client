@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addRelationship;
@@ -31,6 +30,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
 public class AddRelationshipIT extends BaseFedoraRequestIT {
@@ -42,9 +42,11 @@ public class AddRelationshipIT extends BaseFedoraRequestIT {
         String predicate = "urn:foo/testAddRelationship";
         String object = "urn:foo/한";
 
-        response = addRelationship(testPid).predicate(predicate).object(object).execute();
+        response =
+                addRelationship(testPid).predicate(predicate).object(object)
+                        .execute();
         assertEquals(200, response.getStatus());
-        
+
         response = getRelationships(testPid).predicate(predicate).execute();
         Model model = ModelFactory.createDefaultModel();
         model.read(response.getEntityInputStream(), null, FileUtils.langXML);
@@ -64,7 +66,9 @@ public class AddRelationshipIT extends BaseFedoraRequestIT {
         String predicate = "urn:foo/testAddLiteral";
         String object = "你好";
 
-        response = addRelationship(testPid).predicate(predicate).object(object, true).execute();
+        response =
+                addRelationship(testPid).predicate(predicate).object(object,
+                        true).execute();
         assertEquals(200, response.getStatus());
     }
 
@@ -75,7 +79,16 @@ public class AddRelationshipIT extends BaseFedoraRequestIT {
         String object = "1970-01-01T00:00:00Z";
         String datatype = "http://www.w3.org/2001/XMLSchema#dateTime";
 
-        response = addRelationship(testPid).predicate(predicate).object(object, datatype).execute();
+        response =
+                addRelationship(testPid).predicate(predicate).object(object,
+                        datatype).execute();
         assertEquals(200, response.getStatus());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        AddRelationship request =
+                addRelationship(testPid).predicate("urn:foo").object("urn:bar");
+        testNoDefaultClientRequest(request, 200);
     }
 }

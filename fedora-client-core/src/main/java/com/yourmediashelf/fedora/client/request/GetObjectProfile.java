@@ -82,7 +82,7 @@ public class GetObjectProfile extends FedoraRequest<GetObjectProfile> {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s", pid);
 
         ClientResponse cr =

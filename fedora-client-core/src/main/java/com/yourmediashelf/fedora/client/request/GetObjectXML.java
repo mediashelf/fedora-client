@@ -47,7 +47,7 @@ public class GetObjectXML extends FedoraRequest<GetObjectXML> {
     @Override
     public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException {
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/objectXML", pid);
 
         ClientResponse cr =

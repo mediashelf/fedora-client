@@ -27,10 +27,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.IngestResponse;
-
-
 
 public class PurgeObjectIT extends BaseFedoraRequestIT {
 
@@ -59,5 +58,15 @@ public class PurgeObjectIT extends BaseFedoraRequestIT {
         // now delete it
         FedoraResponse purge = purgeObject(pid).execute();
         assertEquals(200, purge.getStatus());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        // first, ingest object
+        IngestResponse response = ingest(null).execute();
+        assertEquals(201, response.getStatus());
+        String pid = response.getPid();
+
+        testNoDefaultClientRequest(purgeObject(pid), 200);
     }
 }

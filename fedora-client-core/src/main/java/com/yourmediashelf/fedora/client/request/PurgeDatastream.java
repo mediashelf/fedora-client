@@ -93,7 +93,8 @@ public class PurgeDatastream extends FedoraRequest<PurgeDatastream> {
             throws FedoraClientException {
         String path = String.format("objects/%s/datastreams/%s", pid, dsId);
 
-        WebResource wr = resource().path(path).queryParams(getQueryParams());
+        WebResource wr =
+                resource(fedora).path(path).queryParams(getQueryParams());
         ClientResponse cr = wr.delete(ClientResponse.class);
         return new PurgeDatastreamResponse(cr);
     }

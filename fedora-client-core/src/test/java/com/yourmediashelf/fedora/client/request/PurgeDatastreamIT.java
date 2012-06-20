@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
@@ -41,8 +40,7 @@ import com.yourmediashelf.fedora.client.response.ModifyDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.PurgeDatastreamResponse;
 import com.yourmediashelf.fedora.util.DateUtility;
 
-public class PurgeDatastreamIT
-        extends BaseFedoraRequestIT {
+public class PurgeDatastreamIT extends BaseFedoraRequestIT {
 
     @Test
     public void testPurgeDatastream() throws Exception {
@@ -63,17 +61,16 @@ public class PurgeDatastreamIT
         String dsid = "testPurgeVersion";
         String content = "<foo>bar</foo>";
         AddDatastreamResponse addResponse =
-                addDatastream(testPid, dsid).content(content).logMessage("").execute();
+                addDatastream(testPid, dsid).content(content).logMessage("")
+                        .execute();
         assertEquals(201, addResponse.getStatus());
         Date originalDate = addResponse.getLastModifiedDate();
 
         ModifyDatastreamResponse modifyResponse;
-        modifyResponse =
-                modifyDatastream(testPid, dsid).dsLabel("1").execute();
+        modifyResponse = modifyDatastream(testPid, dsid).dsLabel("1").execute();
         Date modify1 = modifyResponse.getLastModifiedDate();
 
-        modifyResponse =
-                modifyDatastream(testPid, dsid).dsLabel("2").execute();
+        modifyResponse = modifyDatastream(testPid, dsid).dsLabel("2").execute();
         Date modify2 = modifyResponse.getLastModifiedDate();
 
         // purge only the first modified version
@@ -85,13 +82,16 @@ public class PurgeDatastreamIT
         assertEquals(1, purgedDates.size());
 
         // purge everything
-        purge = purgeDatastream(testPid, dsid).logMessage("purge everything").execute();
+        purge =
+                purgeDatastream(testPid, dsid).logMessage("purge everything")
+                        .execute();
         purgedDates = purge.getPurgedDates();
         assertEquals(2, purgedDates.size());
         Collections.sort(purgedDates);
-        assertEquals("purgedDates: " + purgedDates, DateUtility.getXSDDateTime(originalDate), purgedDates
-                .get(0));
-        assertEquals("purgedDates: " + purgedDates, DateUtility.getXSDDateTime(modify2), purgedDates.get(1));
+        assertEquals("purgedDates: " + purgedDates, DateUtility
+                .getXSDDateTime(originalDate), purgedDates.get(0));
+        assertEquals("purgedDates: " + purgedDates, DateUtility
+                .getXSDDateTime(modify2), purgedDates.get(1));
 
         try {
             getDatastream(testPid, dsid).execute();
@@ -111,18 +111,16 @@ public class PurgeDatastreamIT
         Date originalDate = addResponse.getLastModifiedDate();
 
         Date future = new DateTime(originalDate).plusHours(1).toDate();
-        PurgeDatastreamResponse purge = purgeDatastream(testPid, dsid)
-                                          .startDT(future)
-                                          .endDT(future).execute();
+        PurgeDatastreamResponse purge =
+                purgeDatastream(testPid, dsid).startDT(future).endDT(future)
+                        .execute();
         assertEquals(0, purge.getPurgedDates().size());
 
-        purge = purgeDatastream(testPid, dsid)
-                  .startDT(future).execute();
+        purge = purgeDatastream(testPid, dsid).startDT(future).execute();
         assertEquals(0, purge.getPurgedDates().size());
 
         Date past = new DateTime(originalDate).minusHours(1).toDate();
-        purge = purgeDatastream(testPid, dsid)
-                  .endDT(past).execute();
+        purge = purgeDatastream(testPid, dsid).endDT(past).execute();
         assertEquals(0, purge.getPurgedDates().size());
     }
 
@@ -135,11 +133,19 @@ public class PurgeDatastreamIT
         assertEquals(201, addResponse.getStatus());
 
         try {
-            purgeDatastream(testPid, dsid).startDT("1999")
-                .logMessage("test bad purgeDatastream request").execute();
+            purgeDatastream(testPid, dsid).startDT("1999").logMessage(
+                    "test bad purgeDatastream request").execute();
             fail("purge with invalid date should have failed.");
-        } catch(FedoraClientException expected) {
+        } catch (FedoraClientException expected) {
             assertEquals(400, expected.getStatus());
         }
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        String dsid = "testNoDefaultClientRequest";
+        String content = "<foo>bar</foo>";
+        addDatastream(testPid, dsid).content(content).dsLabel(null).execute();
+        testNoDefaultClientRequest(purgeDatastream(testPid, dsid), 200);
     }
 }

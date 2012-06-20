@@ -101,7 +101,7 @@ public class ModifyObject extends FedoraRequest<ModifyObject> {
     @Override
     public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException {
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s", pid);
         ClientResponse cr =
                 wr.path(path).queryParams(getQueryParams()).put(

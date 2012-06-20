@@ -72,7 +72,7 @@ public class GetObjectHistory extends FedoraRequest<GetObjectHistory> {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/versions", pid);
 
         ClientResponse cr =

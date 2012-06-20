@@ -268,7 +268,7 @@ public class FindObjects extends FedoraRequest<FindObjects> {
             addQueryParam("resultFormat", "xml");
         }
 
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects");
 
         return new FindObjectsResponse(wr.path(path).queryParams(

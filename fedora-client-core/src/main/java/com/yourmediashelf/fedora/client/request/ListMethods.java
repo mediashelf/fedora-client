@@ -88,7 +88,7 @@ public class ListMethods extends FedoraRequest<ListMethods> {
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path;
         if (sdefPid == null) {
             path = String.format("objects/%s/methods", pid);

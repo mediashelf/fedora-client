@@ -29,10 +29,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.ListDatastreamsResponse;
 import com.yourmediashelf.fedora.generated.access.DatastreamType;
-
-
 
 public class ListDatastreamsIT extends BaseFedoraRequestIT {
 
@@ -60,5 +59,10 @@ public class ListDatastreamsIT extends BaseFedoraRequestIT {
             }
         }
         assertTrue("Expected to find dsId among the list of datastreams", found);
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(listDatastreams(testPid), 200);
     }
 }

@@ -31,9 +31,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.IngestResponse;
-
-
 
 public class IngestIT extends BaseFedoraRequestIT {
 
@@ -72,7 +71,9 @@ public class IngestIT extends BaseFedoraRequestIT {
         URI location = null;
 
         // empty object, with namespace, but no pid
-        response = ingest().namespace("foospace").logMessage("testIngestWithNamespace").execute();
+        response =
+                ingest().namespace("foospace").logMessage(
+                        "testIngestWithNamespace").execute();
         assertEquals(201, response.getStatus());
         location = response.getLocation();
         assertTrue(location.toString().contains("/objects/foospace"));
@@ -101,5 +102,11 @@ public class IngestIT extends BaseFedoraRequestIT {
         assertEquals(201, response.getStatus());
         pid = response.getPid();
         assertEquals(testPid, pid);
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(ingest().logMessage(
+                "testNoDefaultClientRequest"), 201);
     }
 }

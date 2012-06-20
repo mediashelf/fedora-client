@@ -77,7 +77,7 @@ public class ListDatastreams extends FedoraRequest<ListDatastreams> {
             addQueryParam("format", "xml");
         }
 
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/datastreams", pid);
 
         ClientResponse cr =

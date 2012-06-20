@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.upload;
@@ -28,18 +27,23 @@ import java.io.File;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.UploadResponse;
 
-public class UploadIT
-        extends BaseFedoraRequestIT {
+public class UploadIT extends BaseFedoraRequestIT {
 
     @Test
     public void testUpload() throws Exception {
         File f = new File("src/test/resources/21.edit.essay.zip");
         assertTrue(f.exists());
-        UploadResponse response =
-                upload(f).execute();
+        UploadResponse response = upload(f).execute();
         assertEquals(202, response.getStatus());
         assertTrue(response.getUploadLocation().startsWith("uploaded://"));
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        File f = new File("src/test/resources/21.edit.essay.zip");
+        testNoDefaultClientRequest(upload(f), 202);
     }
 }

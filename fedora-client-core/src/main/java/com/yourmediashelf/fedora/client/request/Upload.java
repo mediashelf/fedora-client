@@ -66,7 +66,7 @@ public class Upload extends FedoraRequest<Upload> {
             throws FedoraClientException {
         ClientResponse response = null;
         String path = String.format("upload");
-        WebResource wr = resource().path(path);
+        WebResource wr = resource(fedora).path(path);
 
         MediaType mediaType = MediaType.valueOf(fedora.getMimeType(file));
         MultiPart multiPart =

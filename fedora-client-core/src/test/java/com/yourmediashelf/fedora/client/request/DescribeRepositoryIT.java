@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.describeRepository;
@@ -25,15 +24,20 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.DescribeRepositoryResponse;
 
-public class DescribeRepositoryIT
-        extends BaseFedoraRequestIT {
+public class DescribeRepositoryIT extends BaseFedoraRequestIT {
 
     @Test
     public void testDescribe() throws Exception {
         DescribeRepositoryResponse response = describeRepository().execute();
         assertEquals(200, response.getStatus());
         System.out.println(response.getRepositoryVersion());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(describeRepository(), 200);
     }
 }

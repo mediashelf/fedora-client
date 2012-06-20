@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.listMethods;
@@ -25,15 +24,22 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.ListMethodsResponse;
 import com.yourmediashelf.fedora.generated.access.ObjectMethods;
 
 public class ListMethodsIT extends BaseFedoraRequestIT {
+
     @Test
     public void testListMethods() throws Exception {
         ListMethodsResponse response = listMethods(testPid).execute();
         ObjectMethods methods = response.getObjectMethods();
         assertEquals(testPid, methods.getPid());
         //System.out.println(response.getEntity(String.class));
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(listMethods(testPid), 200);
     }
 }

@@ -115,7 +115,7 @@ public class PurgeRelationship extends RelationshipsRequest {
     @Override
     public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException {
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         String path = String.format("objects/%s/relationships", pid);
 
         ClientResponse cr =

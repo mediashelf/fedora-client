@@ -137,7 +137,8 @@ public class AddRelationship extends RelationshipsRequest {
     public FedoraResponse execute(FedoraClient fedora)
             throws FedoraClientException {
         WebResource wr =
-                resource(String.format("objects/%s/relationships/new", pid))
+                resource(fedora,
+                        String.format("objects/%s/relationships/new", pid))
                         .queryParams(getQueryParams());
 
         return new FedoraResponseImpl(wr.post(ClientResponse.class));

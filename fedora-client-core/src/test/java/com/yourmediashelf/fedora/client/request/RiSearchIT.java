@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.riSearch;
@@ -26,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.RiSearchResponse;
 
 /**
@@ -40,9 +40,10 @@ public class RiSearchIT extends BaseFedoraRequestIT {
 
     //@Test
     public void testItqlQuery() throws Exception {
-    	String pidUri = "info:fedora/" + getTestPid();
-    	String query = String.format("select $subject from <#ri> " +
-    			"where $subject <mulgara:is> <%s>", pidUri);
+        String pidUri = "info:fedora/" + getTestPid();
+        String query =
+                String.format("select $subject from <#ri> "
+                        + "where $subject <mulgara:is> <%s>", pidUri);
 
         RiSearchResponse response = null;
 
@@ -52,13 +53,14 @@ public class RiSearchIT extends BaseFedoraRequestIT {
         assertTrue(result.contains("\"subject\""));
         assertTrue(result.contains(getTestPid()));
     }
-    
+
     //@Test
     public void testSparqlQuery() throws Exception {
-    	String pidUri = "info:fedora/" + getTestPid();
-    	String query = String.format("select ?s from <#ri> " +
-    			"where {?s <fedora-model:hasModel> ?o . " +
-    			"FILTER(STR(?s) = \"%s\")}", pidUri);
+        String pidUri = "info:fedora/" + getTestPid();
+        String query =
+                String.format("select ?s from <#ri> "
+                        + "where {?s <fedora-model:hasModel> ?o . "
+                        + "FILTER(STR(?s) = \"%s\")}", pidUri);
 
         RiSearchResponse response = null;
         response = riSearch(query).flush(true).execute();
@@ -66,7 +68,7 @@ public class RiSearchIT extends BaseFedoraRequestIT {
         String result = response.getEntity(String.class);
         assertTrue(result.contains(getTestPid()));
     }
-    
+
     @Test
     public void testSPO() throws Exception {
         String pidUri = "info:fedora/" + getTestPid();
@@ -74,9 +76,17 @@ public class RiSearchIT extends BaseFedoraRequestIT {
 
         RiSearchResponse response = null;
 
-        response = riSearch(query).lang("spo").type("triples").flush(true).execute();
+        response =
+                riSearch(query).lang("spo").type("triples").flush(true)
+                        .execute();
         assertEquals(200, response.getStatus());
         String result = response.getEntity(String.class);
         assertTrue(result.contains(getTestPid()));
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(riSearch("* * *").lang("spo")
+                .type("triples"), 200);
     }
 }

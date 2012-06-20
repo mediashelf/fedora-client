@@ -63,7 +63,8 @@ public class DescribeRepository extends FedoraRequest<DescribeRepository> {
             addQueryParam("xml", "true");
         }
 
-        WebResource wr = resource("describe").queryParams(getQueryParams());
+        WebResource wr =
+                resource(fedora, "describe").queryParams(getQueryParams());
         return new DescribeRepositoryResponse(wr.get(ClientResponse.class));
     }
 

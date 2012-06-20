@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.getObjectHistory;
@@ -26,13 +25,20 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.GetObjectHistoryResponse;
 
 public class GetObjectHistoryIT extends BaseFedoraRequestIT {
+
     @Test
     public void testGetObjectHistory() throws Exception {
         GetObjectHistoryResponse response = getObjectHistory(testPid).execute();
         assertEquals(testPid, response.getPid());
         assertTrue(response.getObjectChangeDate().size() == 1);
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        testNoDefaultClientRequest(getObjectHistory(testPid), 200);
     }
 }

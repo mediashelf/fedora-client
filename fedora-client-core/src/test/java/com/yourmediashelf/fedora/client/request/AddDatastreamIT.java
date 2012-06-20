@@ -17,7 +17,6 @@
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.yourmediashelf.fedora.client.request;
 
 import static com.yourmediashelf.fedora.client.FedoraClient.addDatastream;
@@ -45,15 +44,14 @@ import com.yourmediashelf.fedora.generated.management.DatastreamProfile;
 import com.yourmediashelf.fedora.util.ChecksumUtility;
 import com.yourmediashelf.fedora.util.XmlSerializer;
 
-public class AddDatastreamIT
-        extends BaseFedoraRequestIT {
-    
+public class AddDatastreamIT extends BaseFedoraRequestIT {
+
     @Test
     public void testNewAddDatastream() throws Exception {
         String dsid = "testNewAddDatastream";
         AddDatastreamResponse response =
-                new AddDatastream(testPid, dsid).dsLabel("bar")
-                        .content("<foo>?</foo>").execute();
+                new AddDatastream(testPid, dsid).dsLabel("bar").content(
+                        "<foo>?</foo>").execute();
         assertEquals(201, response.getStatus());
         String expectedLocation =
                 String.format("%s/objects/%s/datastreams/%s", getCredentials()
@@ -87,8 +85,7 @@ public class AddDatastreamIT
         String dsid = "testAddByLocation";
         String dsLocation =
                 String.format("%s/objects/%s/datastreams/DC/content",
-                              getCredentials().getBaseUrl().toString(),
-                              testPid);
+                        getCredentials().getBaseUrl().toString(), testPid);
         AddDatastreamResponse response =
                 addDatastream(testPid, dsid).dsLocation(dsLocation)
                         .controlGroup("R").execute();
@@ -100,8 +97,8 @@ public class AddDatastreamIT
         String dsid = "testDefaultValues";
         String content = "<foo>bar</foo>";
         AddDatastreamResponse response =
-                addDatastream(testPid, dsid).content(content)
-                        .logMessage("testDefaultValues").execute();
+                addDatastream(testPid, dsid).content(content).logMessage(
+                        "testDefaultValues").execute();
         assertEquals(201, response.getStatus());
     }
 
@@ -114,8 +111,8 @@ public class AddDatastreamIT
                 addDatastream(testPid, dsid).altIDs(altIds).content(content)
                         .execute();
         assertEquals(201, response.getStatus());
-        assertTrue(response.getDatastreamProfile().getDsAltID()
-                .containsAll(altIds));
+        assertTrue(response.getDatastreamProfile().getDsAltID().containsAll(
+                altIds));
     }
 
     @Test
@@ -123,8 +120,8 @@ public class AddDatastreamIT
         String dsid = "testDsLabel";
         String content = "<foo>bar</foo>";
         AddDatastreamResponse response =
-                addDatastream(testPid, dsid).content(content)
-                        .dsLabel("testDsLabel").execute();
+                addDatastream(testPid, dsid).content(content).dsLabel(
+                        "testDsLabel").execute();
         assertEquals(201, response.getStatus());
     }
 
@@ -135,10 +132,9 @@ public class AddDatastreamIT
         AddDatastreamResponse response = null;
         for (String state : states) {
             response =
-                    addDatastream(testPid, state).content(content)
-                            .dsState(state)
-                            .logMessage("testDsState with state: " + state)
-                            .execute();
+                    addDatastream(testPid, state).content(content).dsState(
+                            state).logMessage(
+                            "testDsState with state: " + state).execute();
             assertEquals(201, response.getStatus());
         }
     }
@@ -164,9 +160,9 @@ public class AddDatastreamIT
             dsid = dsid + type;
             value = ChecksumUtility.checksum(type, content);
             response =
-                    addDatastream(testPid, dsid).content(content)
-                            .checksumType(type).checksum(value).logMessage(type
-                                    + ": " + value).execute();
+                    addDatastream(testPid, dsid).content(content).checksumType(
+                            type).checksum(value).logMessage(
+                            type + ": " + value).execute();
             assertEquals(201, response.getStatus());
         }
     }
@@ -184,10 +180,13 @@ public class AddDatastreamIT
         for (String type : types) {
             dsid = dsid + type;
             checksum = ChecksumUtility.checksum(type, new FileInputStream(f));
-            response = addDatastream(testPid, dsid).controlGroup("M").content(f)
-                    .checksumType(type).checksum(checksum).execute();
+            response =
+                    addDatastream(testPid, dsid).controlGroup("M").content(f)
+                            .checksumType(type).checksum(checksum).execute();
             assertEquals(201, response.getStatus());
-            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute();
+            GetDatastreamResponse r =
+                    getDatastream(testPid, dsid).validateChecksum(true)
+                            .execute();
             assertTrue(r.isChecksumValid());
         }
     }
@@ -201,7 +200,7 @@ public class AddDatastreamIT
 
         String dsLocation = upload(f).execute().getUploadLocation();
         assertTrue("unexpected value for dsLocation: \"" + dsLocation + "\"",
-                   dsLocation.startsWith("uploaded://"));
+                dsLocation.startsWith("uploaded://"));
 
         String[] types = {"MD5", "SHA-1"};
         String checksum;
@@ -209,10 +208,14 @@ public class AddDatastreamIT
         for (String type : types) {
             dsid = dsid + type;
             checksum = ChecksumUtility.checksum(type, new FileInputStream(f));
-            response = addDatastream(testPid, dsid).controlGroup("M").dsLocation(dsLocation)
-                    .checksumType(type).checksum(checksum).execute();
+            response =
+                    addDatastream(testPid, dsid).controlGroup("M").dsLocation(
+                            dsLocation).checksumType(type).checksum(checksum)
+                            .execute();
             assertEquals(201, response.getStatus());
-            GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute();
+            GetDatastreamResponse r =
+                    getDatastream(testPid, dsid).validateChecksum(true)
+                            .execute();
             assertTrue(r.isChecksumValid());
         }
     }
@@ -224,15 +227,25 @@ public class AddDatastreamIT
         String dsid = "testManagedChecksumByHttpLocation";
 
         URL baseUrl = getCredentials().getBaseUrl();
-        String dsLocation = String.format("%s://%s:%s/tomcat.gif",
-                                          baseUrl.getProtocol(),
-                                          baseUrl.getHost(),
-                                          baseUrl.getPort());
+        String dsLocation =
+                String.format("%s://%s:%s/tomcat.gif", baseUrl.getProtocol(),
+                        baseUrl.getHost(), baseUrl.getPort());
 
-        response = addDatastream(testPid, dsid).controlGroup("M").dsLocation(dsLocation)
-                .checksumType("MD5").checksum("b8ebd781db53b856efa8e873fa4d2f6e").execute();
+        response =
+                addDatastream(testPid, dsid).controlGroup("M").dsLocation(
+                        dsLocation).checksumType("MD5").checksum(
+                        "b8ebd781db53b856efa8e873fa4d2f6e").execute();
         assertEquals(201, response.getStatus());
-        GetDatastreamResponse r = getDatastream(testPid, dsid).validateChecksum(true).execute();
+        GetDatastreamResponse r =
+                getDatastream(testPid, dsid).validateChecksum(true).execute();
         assertTrue(r.isChecksumValid());
+    }
+
+    @Override
+    public void testNoDefaultClientRequest() throws FedoraClientException {
+        AddDatastream request =
+                new AddDatastream(testPid, "foo").dsLabel("bar").content(
+                        "<foo>?</foo>");
+        testNoDefaultClientRequest(request, 201);
     }
 }

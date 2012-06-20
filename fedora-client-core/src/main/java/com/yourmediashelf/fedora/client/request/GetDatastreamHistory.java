@@ -76,7 +76,7 @@ public class GetDatastreamHistory extends FedoraRequest<GetDatastreamHistory> {
         if (getFirstQueryParam("format") == null) {
             addQueryParam("format", "xml");
         }
-        WebResource wr = resource();
+        WebResource wr = resource(fedora);
         // prior to Fedora 3.4, /history was /versions
         // see https://jira.duraspace.org/browse/FCREPO-675
         String path =
