@@ -65,4 +65,10 @@ public interface FedoraResponse {
      */
     public <T> T getEntity(Class<T> c);
 
+    /**
+     * <p>Close the response.
+     * <p>The entity input stream is closed;
+     */
+    public void close();
+
 }

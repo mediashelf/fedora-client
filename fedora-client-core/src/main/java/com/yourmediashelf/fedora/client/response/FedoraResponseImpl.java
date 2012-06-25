@@ -167,6 +167,11 @@ public class FedoraResponseImpl implements FedoraResponse {
         ContextPath(String contextPath) {
             this.contextPath = contextPath;
         }
-    };
+    }
+
+    @Override
+    public void close() {
+        cr.close();
+    }
 
 }
