@@ -56,7 +56,7 @@ public abstract class BaseFedoraRequestIT {
     public final String testPid = "test-rest:1";
 
     @BeforeClass
-    public static void setDefaultFedoraClient() throws Exception {
+    public static void createFedoraClient() throws Exception {
         fedora = new FedoraClient(getCredentials());
         fedora.debug(Boolean.parseBoolean(System.getProperty("test.debug")));
     }
