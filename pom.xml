@@ -77,7 +77,7 @@
     <license>
       <name>GNU Lesser General Public License, Version 3.0</name>
       <url>http://www.gnu.org/licenses/lgpl-3.0-standalone.html</url>
-      <comments>Copyright (c) 2010 MediaShelf</comments>
+      <comments>Copyright (c) 2010-2012 MediaShelf</comments>
     </license>
   </licenses>
 
@@ -92,6 +92,17 @@
         <role>developer</role>
       </roles>
       <timezone>+8</timezone>
+    </developer>
+    <developer>
+      <id>ajs6f</id>
+      <name>Adam Soroka</name>
+      <email>ajs6f @ (domain of organization url)</email>
+      <organization>University of Virginia</organization>
+      <organizationUrl>http://www.virginia.edu/</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-5</timezone>
     </developer>
     <developer>
       <id>cwilper</id>
@@ -120,7 +131,7 @@
   </scm>
   
   <prerequisites>
-    <maven>2.2.0</maven>
+    <maven>3.0.0</maven>
   </prerequisites>
 
   <issueManagement>

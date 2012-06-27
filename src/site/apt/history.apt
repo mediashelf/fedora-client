@@ -6,6 +6,21 @@
 
 History
 
+    * 0.5 (XX June 2012)
+        
+        * Support for getDatastreams 
+        {{{https://jira.duraspace.org/browse/FCREPO-951}FCREPO-951}}.
+        
+        * Support for HTTP header control (thanks to Adam Soroka).
+        
+        * isDefaultClientSet() check (thanks to David Chandek-Stark).
+        
+        * Experimental support for batch API methods (see 
+        {{{http://mediashelf.github.com/fedora-batch/}fedora-batch}} project).
+        
+        * Various third-party library updates (jersey, joda-time, 
+        jackson-mapper, slf4j, activemq).
+        
     * 0.4 (21 February 2012)
     
         * Workaround for memory-leak in mime-util (FCREPO-964).
