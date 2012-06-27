@@ -125,22 +125,46 @@ public abstract class FedoraRequest<T> {
         return queryParams.getFirst(key);
     }
 
+
     protected MultivaluedMap<String, String> getQueryParams() {
         return queryParams;
     }
 
+    /**
+     * Retrieves the current HTTP headers set on this request.
+     * 
+     * @return A {@link MultivaluedMap<String, String>} of HTTP headers.
+     */
     public MultivaluedMap<String, String> getHeaders() {
         return headers;
     }
 
+    /**
+     * Sets the current HTTP headers on this request. This overwrites
+     * any headers already set.
+     * 
+     * @param headers A {@link MultivaluedMap<String, String>} of HTTP headers.
+     */
     public void setHeaders(MultivaluedMap<String, String> headers) {
         this.headers = headers;
     }
 
+    /**
+     * Adds an HTTP header to this request. This does not overwrite
+     * any headers of the same name already set: it adds to them.
+     * 
+     * @param key The name of the HTTP header to set.
+     * @param value The value of the HTTP header to set.
+     */
     public void addHeader(String key, String value) {
         headers.add(key, value);
     }
 
+    /**
+     * Removes all HTTP headers of a specified name to this request.
+     * 
+     * @param key The name of the HTTP header to remove.
+     */
     public void removeHeader(String key) {
         headers.remove(key);
     }
