@@ -110,26 +110,7 @@ public abstract class FedoraRequest<T> {
         addQueryParam(key, value);
         return (T) this;
     }
-
-    protected void addQueryParam(String key, String value) {
-        if (value != null) {
-            queryParams.add(key, value);
-        }
-    }
-
-    protected List<String> getQueryParam(String key) {
-        return queryParams.get(key);
-    }
-
-    protected String getFirstQueryParam(String key) {
-        return queryParams.getFirst(key);
-    }
-
-
-    protected MultivaluedMap<String, String> getQueryParams() {
-        return queryParams;
-    }
-
+    
     /**
      * Retrieves the current HTTP headers set on this request.
      * 
@@ -169,6 +150,25 @@ public abstract class FedoraRequest<T> {
         headers.remove(key);
     }
 
+    protected void addQueryParam(String key, String value) {
+        if (value != null) {
+            queryParams.add(key, value);
+        }
+    }
+
+    protected List<String> getQueryParam(String key) {
+        return queryParams.get(key);
+    }
+
+    protected String getFirstQueryParam(String key) {
+        return queryParams.getFirst(key);
+    }
+
+
+    protected MultivaluedMap<String, String> getQueryParams() {
+        return queryParams;
+    }
+
     /**
      * <p>Returns a <code>WebResource</code> as supplied by the
      * {@link #DEFAULT_CLIENT} using <code>FedoraClient.resource()</code>.
@@ -178,7 +178,7 @@ public abstract class FedoraRequest<T> {
      * @return WebResource
      * @throws FedoraClientException if {@link #DEFAULT_CLIENT} is <code>null</code>
      */
-    public WebResource resource() throws FedoraClientException {
+    protected WebResource resource() throws FedoraClientException {
         if (DEFAULT_CLIENT == null) {
             throw new FedoraClientException("No default FedoraClient was set.");
         }
@@ -195,7 +195,7 @@ public abstract class FedoraRequest<T> {
      * @return WebResource
      * @throws FedoraClientException if {@link #DEFAULT_CLIENT} is <code>null</code>
      */
-    public WebResource resource(String path) throws FedoraClientException {
+    protected WebResource resource(String path) throws FedoraClientException {
         if (DEFAULT_CLIENT == null) {
             throw new FedoraClientException("No default FedoraClient was set.");
         }
@@ -211,7 +211,7 @@ public abstract class FedoraRequest<T> {
      * @param fc the FedoraClient from which to get this resource
      * @return WebResource
      */
-    public WebResource resource(FedoraClient fc) {
+    protected WebResource resource(FedoraClient fc) {
         WebResource resource = fc.resource();
         for (Entry<String, List<String>> entry : getHeaders().entrySet()) {
             for (String value : entry.getValue()) {
@@ -231,7 +231,7 @@ public abstract class FedoraRequest<T> {
      * @param path the path to use for this resource
      * @return WebResource
      */
-    public WebResource resource(FedoraClient fc, String path) {
+    protected WebResource resource(FedoraClient fc, String path) {
         WebResource resource = fc.resource().path(path);
         for (Entry<String, List<String>> entry : getHeaders().entrySet()) {
             for (String value : entry.getValue()) {
