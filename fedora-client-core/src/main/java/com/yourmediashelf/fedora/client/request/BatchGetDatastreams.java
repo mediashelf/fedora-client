@@ -37,6 +37,9 @@ package com.yourmediashelf.fedora.client.request;
  */
 
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.yourmediashelf.fedora.client.FedoraClient;
@@ -65,7 +68,7 @@ public class BatchGetDatastreams extends FedoraRequest<BatchGetDatastreams> {
      * @param pids The pids to fetch datastreams from
      * @return this builder
      */
-    public BatchGetDatastreams pids(String... pids) {
+    public BatchGetDatastreams pids(Collection<String> pids) {
         for (String pid : pids) {
             addQueryParam("pid", pid);
         }
@@ -73,15 +76,35 @@ public class BatchGetDatastreams extends FedoraRequest<BatchGetDatastreams> {
     }
     
     /**
+     * <p>Convenience method for {@link #pids(Collection)}.
+     * 
+     * @param pids The pids to fetch datastreams from
+     * @return this builder
+     */
+    public BatchGetDatastreams pids(String... pids) {
+        return pids(Arrays.asList(pids));
+    }
+    
+    /**
+     * 
+     * @param dsids The datastream ids that will be requested of each object
+     * @return this builder
+     */
+    public BatchGetDatastreams dsids(Collection<String> dsids) {
+        for (String dsid : dsids) {
+            addQueryParam("dsid", dsid);
+        }
+        return this;
+    }
+    
+    /**
+     * <p>Convenience method for {@link #dsids(Collection)}.
      * 
      * @param dsids The datastream ids that will be requested of each object
      * @return this builder
      */
     public BatchGetDatastreams dsids(String... dsids) {
-        for (String dsid : dsids) {
-            addQueryParam("dsid", dsid);
-        }
-        return this;
+        return dsids(Arrays.asList(dsids));
     }
 
     public BatchGetDatastreams asOfDateTime(String asOfDateTime) {
