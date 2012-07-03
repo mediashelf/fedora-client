@@ -20,6 +20,7 @@
 package com.yourmediashelf.fedora.client.request;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -172,6 +173,16 @@ public class AddDatastream extends FedoraRequest<AddDatastream> {
         return this;
     }
 
+    /**
+     * @param content
+     *            the datastream content (InputStream)
+     * @return this builder
+     */
+    public AddDatastream content(InputStream content) {
+        this.content = content;
+        return this;
+    }
+
     @Override
     public AddDatastreamResponse execute() throws FedoraClientException {
         return (AddDatastreamResponse) super.execute();
@@ -216,6 +227,11 @@ public class AddDatastream extends FedoraRequest<AddDatastream> {
                 mediaType = MediaType.valueOf(mimeType);
             }
             response = wr.type(mediaType).post(ClientResponse.class, content);
+        } else if (content instanceof InputStream) {
+            mediaType = MediaType.valueOf(mimeType);
+            response =
+                    wr.type(mediaType).post(ClientResponse.class,
+                            (InputStream) content);
         } else if (content instanceof File) {
             File f = (File) content;
             if (mimeType == null) {
