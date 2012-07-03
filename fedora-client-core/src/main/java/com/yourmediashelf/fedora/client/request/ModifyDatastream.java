@@ -22,6 +22,7 @@ package com.yourmediashelf.fedora.client.request;
 import static com.yourmediashelf.fedora.util.DateUtility.getXSDDateTime;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -199,6 +200,11 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
         return this;
     }
 
+    public ModifyDatastream content(InputStream content) {
+        this.content = content;
+        return this;
+    }
+
     public ModifyDatastream content(String content) {
         this.content = content;
         return this;
@@ -224,6 +230,10 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
                 mimeType = MediaType.TEXT_XML_TYPE.toString();
             }
             response = wr.type(mimeType).put(ClientResponse.class, content);
+        } else if (content instanceof InputStream) {
+            response =
+                    wr.type(mimeType).put(ClientResponse.class,
+                            (InputStream) content);
         } else if (content instanceof File) {
             File f = (File) content;
             if (mimeType == null) {
