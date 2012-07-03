@@ -20,6 +20,7 @@
 package com.yourmediashelf.fedora.client.request;
 
 import java.io.File;
+import java.io.InputStream;
 
 import javax.ws.rs.core.MediaType;
 
@@ -152,6 +153,17 @@ public class Ingest extends FedoraRequest<Ingest> {
     }
 
     /**
+     * The InputStream to be ingested as a new object.
+     *
+     * @param content
+     * @return this builder
+     */
+    public Ingest content(InputStream content) {
+        this.content = content;
+        return this;
+    }
+
+    /**
      * The file to be ingested as a new object.
      *
      * @param content
@@ -198,6 +210,10 @@ public class Ingest extends FedoraRequest<Ingest> {
             response =
                     wr.type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class,
                             content);
+        } else if (content instanceof InputStream) {
+            response =
+                    wr.type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class,
+                            (InputStream) content);
         } else if (content instanceof File) {
             File f = (File) content;
             MediaType mimeType = MediaType.TEXT_XML_TYPE;
