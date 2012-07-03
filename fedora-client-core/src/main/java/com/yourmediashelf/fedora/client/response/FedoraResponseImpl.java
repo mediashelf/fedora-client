@@ -89,6 +89,11 @@ public class FedoraResponseImpl implements FedoraResponse {
         return cr.getEntity(c);
     }
 
+    @Override
+    public String getType() {
+        return cr.getType().toString();
+    }
+
     protected XPath getXPath() {
         XPathFactory factory = XPathFactory.newInstance();
         XPath xpath = factory.newXPath();

@@ -66,6 +66,12 @@ public interface FedoraResponse {
     public <T> T getEntity(Class<T> c);
 
     /**
+     * <p>Get the media type of the response;
+     * @return the media type.
+     */
+    public String getType();
+
+    /**
      * <p>Close the response.
      * <p>The entity input stream is closed;
      */
