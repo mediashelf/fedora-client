@@ -69,6 +69,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.BatchResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
+@SuppressWarnings("deprecation")
 @AxisRange(min = 0, max = 1)
 @BenchmarkMethodChart(filePrefix = "benchmark-lists")
 @BenchmarkOptions(benchmarkRounds = 20, warmupRounds = 5)

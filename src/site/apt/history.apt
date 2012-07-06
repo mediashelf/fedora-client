@@ -6,7 +6,7 @@
 
 History
 
-    * 0.5 (XX June 2012)
+    * 0.5 (6 July 2012)
         
         * Support for getDatastreams 
         {{{https://jira.duraspace.org/browse/FCREPO-951}FCREPO-951}}.
@@ -17,6 +17,9 @@ History
         
         * Experimental support for batch API methods (see 
         {{{http://mediashelf.github.com/fedora-batch/}fedora-batch}} project).
+        
+        * Ingest/(Add|Modify)Datastream now also support InputStreams as a 
+        content parameter.
         
         * Various third-party library updates (jersey, joda-time, 
         jackson-mapper, slf4j, activemq).

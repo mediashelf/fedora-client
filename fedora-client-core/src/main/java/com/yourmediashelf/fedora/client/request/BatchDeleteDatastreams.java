@@ -31,7 +31,11 @@ import com.yourmediashelf.fedora.client.response.BatchResponse;
 import com.yourmediashelf.fedora.util.DateUtility;
 
 /**
- * Builder for the PurgeDatastream method.
+ * <p>Builder for the BatchDeleteDatastreams method.
+ * 
+ * <p>This provides support for the fedora-batch project, a set of batch API
+ * operations on Fedora. BatchDeleteDatastreams should be considered highly 
+ * experimental: the API is very likely to change. You have been warned.
  *
  * @author Edwin Shin
  */

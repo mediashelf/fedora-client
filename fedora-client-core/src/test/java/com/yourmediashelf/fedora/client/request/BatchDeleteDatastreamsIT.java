@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sun.jersey.multipart.BodyPart;
@@ -31,6 +32,7 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.BatchResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
+@Ignore("Batch API is not included by default in Fedora")
 public class BatchDeleteDatastreamsIT extends BaseFedoraRequestIT {
 
     @Test
