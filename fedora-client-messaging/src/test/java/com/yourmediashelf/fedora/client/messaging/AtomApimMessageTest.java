@@ -19,6 +19,7 @@
 /**
  * 
  */
+
 package com.yourmediashelf.fedora.client.messaging;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +32,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.yourmediashelf.fedora.util.DateUtility;
-
 
 /**
  * <p>Test parsing of Fedora API-M messages.
@@ -133,6 +133,15 @@ public class AtomApimMessageTest {
     @Test
     public void testGetReturnVal() {
         assertEquals("test-rest:1", ingest.getReturnVal());
+    }
+
+    /**
+     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getMethodParamVal()}.
+     */
+    @Test
+    public void testGetMethodParamVal() {
+        assertEquals("testPurgeVersion", modifyDatastreamByValue
+                .getMethodParamVal("dsID"));
     }
 
     /**

@@ -34,7 +34,6 @@ import org.apache.abdera.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Representation of an API-M method call as an Atom entry.
  * <ul>
@@ -71,16 +70,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Edwin Shin
  */
-public class AtomApimMessage {
+public class AtomApimMessage implements ApimMessage {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(AtomApimMessage.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(AtomApimMessage.class);
 
     private final Abdera abdera = Abdera.getInstance();
 
-    private final static String versionPredicate = "info:fedora/fedora-system:def/view#version";
+    private final static String versionPredicate =
+            "info:fedora/fedora-system:def/view#version";
 
-    private final static String formatPredicate = "http://www.fedora.info/definitions/1/0/types/formatURI";
+    private final static String formatPredicate =
+            "http://www.fedora.info/definitions/1/0/types/formatURI";
+
+    private final static String parameterScheme = "fedora-types:%s";
 
     private final String fedoraBaseUrl;
 
@@ -131,18 +134,22 @@ public class AtomApimMessage {
         return sWriter.toString();
     }
 
+    @Override
     public String getBaseUrl() {
         return fedoraBaseUrl;
     }
 
+    @Override
     public Date getDate() {
         return date;
     }
 
+    @Override
     public String getMethodName() {
         return methodName;
     }
 
+    @Override
     public String getPID() {
         return pid;
     }
@@ -151,14 +158,17 @@ public class AtomApimMessage {
         return author;
     }
 
+    @Override
     public String getFormat() {
         return format;
     }
 
+    @Override
     public String getServerVersion() {
         return serverVersion;
     }
 
+    @Override
     public String getReturnVal() {
         return returnVal;
     }
@@ -176,5 +186,10 @@ public class AtomApimMessage {
         } else {
             return categories.get(0).getTerm();
         }
+    }
+
+    @Override
+    public String getMethodParamVal(String paramName) {
+        return getCategoryTerm(String.format(parameterScheme, paramName));
     }
 }
