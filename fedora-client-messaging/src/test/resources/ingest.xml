@@ -1,0 +1,20 @@
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:f51224d0-db32-4b67-b515-36e11c3ec5ac</id>
+  <updated>2012-08-30T09:19:39.010Z</updated>
+  <author>
+    <name>fedoraAdmin</name>
+    <uri>http://localhost:8080/fedora</uri>
+  </author>
+  <title type="text">ingest</title>
+  <category
+    term="ingestTestObject for class com.yourmediashelf.fedora.client.request.PurgeDatastreamIT"
+    scheme="fedora-types:logMessage" label="xsd:string"></category>
+  <category term="info:fedora/fedora-system:FOXML-1.1" scheme="fedora-types:format"
+    label="xsd:string"></category>
+  <summary type="text">test-rest:1</summary>
+  <content type="text">test-rest:1</content>
+  <category term="3.6.1-SNAPSHOT" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0"
+    scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry>

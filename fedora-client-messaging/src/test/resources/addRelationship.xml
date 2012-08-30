@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:2244b1f2-4ce3-4d6f-9992-da2b62c7853c</id>
+  <updated>2012-08-30T11:09:15.089Z</updated>
+  <author>
+    <name>fedoraAdmin</name>
+    <uri>http://localhost:8080/fedora</uri>
+  </author>
+  <title type="text">addRelationship</title>
+  <category term="urn:foo/testAddRelationship" scheme="fedora-types:relationship"
+    label="xsd:string"></category>
+  <category term="urn:foo/한" scheme="fedora-types:object" label="xsd:string"></category>
+  <category term="false" scheme="fedora-types:isLiteral" label="xsd:boolean"></category>
+  <category term="null" scheme="fedora-types:datatype" label="xsd:string"></category>
+  <summary type="text">test-rest:1</summary>
+  <content type="text">true</content>
+  <category term="3.6.1-SNAPSHOT" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0"
+    scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry>
