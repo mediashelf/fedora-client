@@ -71,7 +71,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Edwin Shin
  */
-public class AtomApimMessage {
+public class AtomApimMessage implements APIMMessage {
 
     private static final Logger logger =
             LoggerFactory.getLogger(AtomApimMessage.class);
@@ -81,6 +81,8 @@ public class AtomApimMessage {
     private final static String versionPredicate = "info:fedora/fedora-system:def/view#version";
 
     private final static String formatPredicate = "http://www.fedora.info/definitions/1/0/types/formatURI";
+    
+    private final static String parameterScheme = "fedora-types:%s";
 
     private final String fedoraBaseUrl;
 
@@ -177,4 +179,9 @@ public class AtomApimMessage {
             return categories.get(0).getTerm();
         }
     }
+
+	@Override
+	public String getMethodParamVal(String paramName) {
+		return getCategoryTerm(String.format(parameterScheme, paramName));
+	}
 }

@@ -134,6 +134,14 @@ public class AtomApimMessageTest {
     public void testGetReturnVal() {
         assertEquals("test-rest:1", ingest.getReturnVal());
     }
+    
+    /**
+     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getMethodParamVal()}.
+     */
+    @Test
+    public void testGetMethodParamVal() {
+    	assertEquals("testPurgeVersion", modifyDatastreamByValue.getMethodParamVal("dsID"));
+    }
 
     /**
      * Convenience method that returns an {@link AtomApimMessage} from a File.
