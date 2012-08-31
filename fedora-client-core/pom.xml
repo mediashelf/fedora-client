@@ -11,7 +11,7 @@
   <description>Java client library for Fedora</description>
   <url>http://mediashelf.github.com/${project.artifactId}</url>
   <properties>
-    <jersey.version>1.12</jersey.version>
+    <jersey.version>1.13</jersey.version>
   </properties>
   <dependencyManagement>
     <dependencies>
