@@ -33,7 +33,7 @@ For complete documentation see: http://mediashelf.github.com/fedora-client/
 Requirements
 ------------
 
-* Fedora 3.5 (earlier 3.x versions should work as well, minus some features)
+* Fedora 3.5 or later (earlier 3.x versions should work as well, minus some features)
 * Java 6
 
 Installation
