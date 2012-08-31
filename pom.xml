@@ -9,7 +9,7 @@
   
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
-  <version>0.6-SNAPSHOT</version>
+  <version>0.6</version>
   <packaging>pom</packaging>
   <name>MediaShelf ${project.artifactId}</name>
   <description>Java client library for Fedora</description>
@@ -135,6 +135,7 @@
     <developerConnection>scm:git:git@github.com:mediashelf/${project_name}.git
     </developerConnection>
     <url>http://github.com/mediashelf/${project_name}</url>
+    <tag>fedora-client-0.6</tag>
   </scm>
   
   <prerequisites>
