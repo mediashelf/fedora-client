@@ -40,7 +40,8 @@ public interface FedoraMessage {
 
     /**
      * An identifier for the serialization format of the message.
-     * @return
+     * @return the identifier for the message format serialization 
+     * (e.g. info:fedora/fedora-system:ATOM-APIM-1.0)
      */
     public String getFormat();
 }

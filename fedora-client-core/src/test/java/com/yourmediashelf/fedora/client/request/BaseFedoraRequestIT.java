@@ -136,7 +136,8 @@ public abstract class BaseFedoraRequestIT {
      * 2.2.
      * 
      * @param version The version to compare against (e.g. 3.5 or 3.6-SNAPSHOT)
-     * @return
+     * @return true if the server-provided version is greater than or equal to 
+     * the supplied version
      * @throws FedoraClientException
      */
     public static boolean isVersionGreaterThanOrEqualTo(String version) throws FedoraClientException {

@@ -114,7 +114,7 @@ public abstract class FedoraRequest<T> {
     /**
      * Retrieves the current HTTP headers set on this request.
      * 
-     * @return A {@link MultivaluedMap<String, String>} of HTTP headers.
+     * @return A {@link MultivaluedMap} of HTTP headers.
      */
     public MultivaluedMap<String, String> getHeaders() {
         return headers;
@@ -124,7 +124,7 @@ public abstract class FedoraRequest<T> {
      * Sets the current HTTP headers on this request. This overwrites
      * any headers already set.
      * 
-     * @param headers A {@link MultivaluedMap<String, String>} of HTTP headers.
+     * @param headers A {@link MultivaluedMap} of HTTP headers.
      */
     public void setHeaders(MultivaluedMap<String, String> headers) {
         this.headers = headers;
@@ -172,7 +172,7 @@ public abstract class FedoraRequest<T> {
     /**
      * <p>Returns a <code>WebResource</code> as supplied by the
      * {@link #DEFAULT_CLIENT} using <code>FedoraClient.resource()</code>.
-     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * Also adds any headers as found via {@link #getHeaders()} to the resource.
      * </p>
      * 
      * @return WebResource
@@ -188,7 +188,7 @@ public abstract class FedoraRequest<T> {
     /**
      * <p>Returns a <code>WebResource</code> as supplied by the
      * {@link #DEFAULT_CLIENT} using <code>FedoraClient.resource()</code>.
-     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * Also adds any headers as found via {@link #getHeaders()} to the resource.
      * </p>
      * 
      * @param path the path to use for this resource
@@ -205,7 +205,7 @@ public abstract class FedoraRequest<T> {
     /**
      * <p>Returns a <code>WebResource</code> as supplied by the
      * <code>FedoraClient</code> fc using <code>FedoraClient.resource()</code>.
-     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * Also adds any headers as found via {@link #getHeaders()} to the resource.
      * </p>
      * 
      * @param fc the FedoraClient from which to get this resource
@@ -224,7 +224,7 @@ public abstract class FedoraRequest<T> {
     /**
      * <p>Returns a <code>WebResource</code> as supplied by the
      * <code>FedoraClient</code> fc using <code>FedoraClient.resource()</code>.
-     * Also adds any headers as found via {@link getHeaders()} to the resource.
+     * Also adds any headers as found via {@link #getHeaders()} to the resource.
      * </p>
      * 
      * @param fc the FedoraClient from which to get this resource

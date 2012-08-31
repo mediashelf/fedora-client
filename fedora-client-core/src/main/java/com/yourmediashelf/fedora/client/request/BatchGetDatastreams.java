@@ -57,7 +57,7 @@ import com.yourmediashelf.fedora.client.response.BatchResponse;
  * requested datastreams of each of the requested pids and returns the 
  * combined result as a multipart/mixed response.
  * 
- * @see https://github.com/mediashelf/fedora-batch
+ * @see <a href="https://github.com/mediashelf/fedora-batch">https://github.com/mediashelf/fedora-batch</a>
  *
  * @author Edwin Shin
  */

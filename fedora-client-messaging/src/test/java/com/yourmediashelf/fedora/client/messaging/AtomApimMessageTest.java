@@ -65,7 +65,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getBaseUrl()}.
+     * Test method for {@link AtomApimMessage#getBaseUrl()}.
      */
     @Test
     public void testGetBaseUrl() {
@@ -78,7 +78,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getDate()}.
+     * Test method for {@link AtomApimMessage#getDate()}.
      */
     @Test
     public void testGetDate() {
@@ -87,7 +87,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getMethodName()}.
+     * Test method for {@link AtomApimMessage#getMethodName()}.
      */
     @Test
     public void testGetMethodName() {
@@ -95,7 +95,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getPID()}.
+     * Test method for {@link AtomApimMessage#getPID()}.
      */
     @Test
     public void testGetPID() {
@@ -103,7 +103,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getAuthor()}.
+     * Test method for {@link AtomApimMessage#getAuthor()}.
      */
     @Test
     public void testGetAuthor() {
@@ -111,7 +111,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getFormat()}.
+     * Test method for {@link AtomApimMessage#getFormat()}.
      */
     @Test
     public void testGetFormat() {
@@ -120,7 +120,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getServerVersion()}.
+     * Test method for {@link AtomApimMessage#getServerVersion()}.
      */
     @Test
     public void testGetServerVersion() {
@@ -128,7 +128,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getReturnVal()}.
+     * Test method for {@link AtomApimMessage#getReturnVal()}.
      */
     @Test
     public void testGetReturnVal() {
@@ -136,7 +136,7 @@ public class AtomApimMessageTest {
     }
 
     /**
-     * Test method for {@link com.yourmediashelf.fedora.client.messaging.AtomApimMessage#getMethodParamVal()}.
+     * Test method for {@link AtomApimMessage#getMethodParamVal(String)}.
      */
     @Test
     public void testGetMethodParamVal() {
