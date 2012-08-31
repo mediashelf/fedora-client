@@ -26,6 +26,7 @@
     <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
     replacements of "fedora-client" in child modules -->
     <project_name>fedora-client</project_name>
+    <github.global.server>github</github.global.server>
     <slf4j.version>1.6.6</slf4j.version>
   </properties>
 
@@ -116,7 +117,11 @@
       <timezone>-5</timezone>
     </developer>
   </developers>
-
+  <contributors>
+    <contributor>
+      <name>David Chandek-Stark</name>
+    </contributor>
+  </contributors>
   <organization>
     <name>MediaShelf</name>
     <url>http://www.yourmediashelf.com/</url>
@@ -162,12 +167,31 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>downloads-maven-plugin</artifactId>
+          <version>0.6</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>upload</goal>
+              </goals>
+              <phase>deploy</phase>
+            </execution>
+          </executions>
+          <configuration>
+            <description>${project.version} release of ${project.name}</description>
+            <override>true</override>
+            <includeAttached>true</includeAttached>
+            <dryRun>true</dryRun>
+          </configuration>
+        </plugin>
+        <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>2.4.1</version>
+          <version>2.5</version>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
+          <version>2.5.1</version>
           <configuration>
             <debug>false</debug>
             <source>1.6</source>
@@ -181,7 +205,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>1.0.1</version>
+          <version>1.1.1</version>
           <executions>
             <execution>
               <goals>
@@ -209,7 +233,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.12</version>
+          <version>2.12.3</version>
           <executions>
             <execution>
               <id>integration-test</id>
@@ -234,8 +258,20 @@
           <version>2.4</version>
         </plugin>
         <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.8.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jxr-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.5.1</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.2.2</version>
+          <version>2.3.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
@@ -243,7 +279,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>1.5</version>
+          <version>1.7.1</version>
           <executions>
             <execution>
               <phase>package</phase>
@@ -269,11 +305,15 @@
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.0</version>
+          <version>3.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.12</version>
+          <version>2.12.3</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>2.12.3</version>
         </plugin>
         <plugin>
           <groupId>com.mycila.maven-license-plugin</groupId>
@@ -283,7 +323,7 @@
         <plugin>
           <groupId>org.jvnet.jaxb2.maven2</groupId>
           <artifactId>maven-jaxb2-plugin</artifactId>
-          <version>0.8.1</version>
+          <version>0.8.2</version>
         </plugin>
         <!--This plugin's configuration is used to store Eclipse 
                 m2e settings only. It has no influence on the Maven build itself. -->
@@ -380,7 +420,7 @@
           <dependency>
             <groupId>org.apache.maven.scm</groupId>
             <artifactId>maven-scm-provider-gitexe</artifactId>
-            <version>1.4</version>
+            <version>1.7</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -397,11 +437,9 @@
             </plugin>
             <plugin>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <version>2.8.1</version>
             </plugin>
             <plugin>
               <artifactId>maven-jxr-plugin</artifactId>
-              <version>2.3</version>
             </plugin>
             <plugin>
               <artifactId>maven-surefire-report-plugin</artifactId>
@@ -423,7 +461,6 @@
             </plugin>
             <plugin>
               <artifactId>maven-project-info-reports-plugin</artifactId>
-              <version>2.4</version>
             </plugin>
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
@@ -469,12 +506,12 @@
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-manager-plexus</artifactId>
-        <version>1.6</version>
+        <version>1.7</version>
       </extension>
       <extension>
-        <groupId>org.kathrynhuxtable.maven.wagon</groupId>
+        <groupId>com.github.stephenc.wagon</groupId>
         <artifactId>wagon-gitsite</artifactId>
-        <version>0.3.1a</version>
+        <version>0.4.1</version>
       </extension>
     </extensions>
   </build>
@@ -509,32 +546,4 @@
       </build>
     </profile>
   </profiles>
-  <repositories>
-    <!-- only needed for wagon-gitsite-0.3.1a, and only needed in this section for Maven 2 -->
-    <repository>
-      <id>duraspace-thirdparty</id>
-      <name>Duraspace Thirdparty Maven Repository</name>
-      <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <!-- only needed for wagon-gitsite-0.3.1a -->
-    <pluginRepository>
-      <id>duraspace-thirdparty</id>
-      <name>Duraspace Thirdparty Maven Repository</name>
-      <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
 </project>
