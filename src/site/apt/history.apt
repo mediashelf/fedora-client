@@ -6,7 +6,8 @@
 
 History
 
-    * 0.6 (dd MM yyyy)
+    * 0.6 (31 August 2012)
+    
         * Support for ApimMessage#getMethodParamVal 
         {{{https://jira.duraspace.org/browse/FCREPO-1151}FCREPO-1151}} 
         (thanks to David Chandek-Stark).

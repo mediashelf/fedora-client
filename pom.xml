@@ -26,6 +26,8 @@
     <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
     replacements of "fedora-client" in child modules -->
     <project_name>fedora-client</project_name>
+    <!-- site plugin filtering does not support properties with dots (e.g. project.version) -->
+    <projectVersion>${project.version}</projectVersion>
     <github.global.server>github</github.global.server>
     <slf4j.version>1.6.6</slf4j.version>
   </properties>
@@ -355,6 +357,10 @@
     </pluginManagement>
     
     <plugins>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>downloads-maven-plugin</artifactId>
+      </plugin>
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
         <artifactId>maven-license-plugin</artifactId>

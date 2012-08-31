@@ -114,12 +114,12 @@ version of fedora-client):
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client-core</artifactId>
-        <version>0.5</version>
+        <version>${projectVersion}</version>
     </dependency>
     <dependency>
         <groupId>com.yourmediashelf.fedora.client</groupId>
         <artifactId>fedora-client-messaging</artifactId>
-        <version>0.5</version>
+        <version>${projectVersion}</version>
     </dependency>
 </dependencies>
 +--
@@ -129,3 +129,9 @@ version of fedora-client):
     As of version 0.1.5, fedora-client also distributes <-with-dependencies> 
 jars that bundle all dependencies (except for log4j) for use with 
 non-Maven-based projects.
+
+    These artifacts are available via 
+{{{http://search.maven.org/#search|ga|1|fedora-client}Maven Central}} and its 
+mirrors or on the 
+{{{https://github.com/mediashelf/fedora-client/downloads}fedora-client Github Downloads}} 
+page.
