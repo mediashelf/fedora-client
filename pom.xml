@@ -185,7 +185,6 @@
             <description>${project.version} release of ${project.name}</description>
             <override>true</override>
             <includeAttached>true</includeAttached>
-            <dryRun>true</dryRun>
           </configuration>
         </plugin>
         <plugin>
