@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
+
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>7</version>
   </parent>
-  
+
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
   <version>0.7-SNAPSHOT</version>
@@ -14,7 +15,7 @@
   <name>MediaShelf ${project.artifactId}</name>
   <description>Java client library for Fedora</description>
   <url>http://mediashelf.github.com/${project.artifactId}</url>
-  
+
   <modules>
     <module>fedora-client-core</module>
     <module>fedora-client-messaging</module>
@@ -23,13 +24,15 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
-    replacements of "fedora-client" in child modules -->
-    <project_name>fedora-client</project_name>
-    <!-- site plugin filtering does not support properties with dots (e.g. project.version) -->
-    <projectVersion>${project.version}</projectVersion>
     <github.global.server>github</github.global.server>
     <slf4j.version>1.6.6</slf4j.version>
+
+    <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
+      replacements of "fedora-client" in child modules -->
+    <project_name>fedora-client</project_name>
+
+    <!-- site plugin filtering does not support properties with dots (e.g. project.version) -->
+    <projectVersion>${project.version}</projectVersion>
   </properties>
 
   <dependencyManagement>
@@ -137,7 +140,7 @@
     <url>http://github.com/mediashelf/${project_name}</url>
     <tag>HEAD</tag>
   </scm>
-  
+
   <prerequisites>
     <maven>3.0.0</maven>
   </prerequisites>
@@ -299,7 +302,8 @@
                 <shadedArtifactAttached>true</shadedArtifactAttached>
                 <shadedClassifierName>with-dependencies</shadedClassifierName>
                 <transformers>
-                  <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                  <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                 </transformers>
               </configuration>
             </execution>
@@ -327,8 +331,8 @@
           <artifactId>maven-jaxb2-plugin</artifactId>
           <version>0.8.2</version>
         </plugin>
-        <!--This plugin's configuration is used to store Eclipse 
-                m2e settings only. It has no influence on the Maven build itself. -->
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. 
+          It has no influence on the Maven build itself. -->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
@@ -355,7 +359,7 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    
+
     <plugins>
       <plugin>
         <groupId>com.github.github</groupId>
@@ -449,14 +453,14 @@
             </plugin>
             <plugin>
               <artifactId>maven-surefire-report-plugin</artifactId>
-                <configuration>
-                  <outputName>surefire-report</outputName>
-                  <aggregate>true</aggregate>
-                  <reportsDirectories>
-                    <reportsDirectory>${project.build.directory}/surefire-reports/</reportsDirectory>
-                    <reportsDirectory>${project.build.directory}/failsafe-reports/</reportsDirectory>
-                  </reportsDirectories>
-                </configuration>
+              <configuration>
+                <outputName>surefire-report</outputName>
+                <aggregate>true</aggregate>
+                <reportsDirectories>
+                  <reportsDirectory>${project.build.directory}/surefire-reports/</reportsDirectory>
+                  <reportsDirectory>${project.build.directory}/failsafe-reports/</reportsDirectory>
+                </reportsDirectories>
+              </configuration>
             </plugin>
             <plugin>
               <artifactId>maven-changelog-plugin</artifactId>
@@ -502,7 +506,7 @@
         </configuration>
       </plugin>
     </plugins>
-    
+
     <extensions>
       <extension>
         <groupId>org.apache.maven.scm</groupId>
