@@ -24,6 +24,8 @@ import java.net.URI;
 
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.io.IOUtils;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.multipart.FormDataMultiPart;
@@ -69,23 +71,29 @@ public class Upload extends FedoraRequest<Upload> {
         WebResource wr = resource(fedora).path(path);
 
         MediaType mediaType = MediaType.valueOf(fedora.getMimeType(file));
-        MultiPart multiPart =
-                new FormDataMultiPart().bodyPart(new FileDataBodyPart("file",
-                        file, mediaType));
+        FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+        try {
+            MultiPart multiPart =
+                    formDataMultiPart.bodyPart(new FileDataBodyPart("file",
+                            file, mediaType));
 
-        // Check for a 302 (expected if baseUrl is http but Fedora is configured
-        // to require SSL
-        response = wr.head();
-        if (response.getStatus() == 302) {
-            URI newLocation = response.getLocation();
-            logger.warn("302 status for upload request: " + newLocation);
-            wr = resource(newLocation.toString());
+            // Check for a 302 (expected if baseUrl is http but Fedora is configured
+            // to require SSL
+            response = wr.head();
+            if (response.getStatus() == 302) {
+                URI newLocation = response.getLocation();
+                logger.warn("302 status for upload request: " + newLocation);
+                wr = resource(newLocation.toString());
+            }
+
+            response =
+                    wr.queryParams(getQueryParams()).type(
+                            MediaType.MULTIPART_FORM_DATA_TYPE).post(
+                            ClientResponse.class, multiPart);
+
+            return new UploadResponse(response);
+        } finally {
+            IOUtils.closeQuietly(formDataMultiPart);
         }
-
-        response =
-                wr.queryParams(getQueryParams()).type(
-                        MediaType.MULTIPART_FORM_DATA_TYPE).post(
-                        ClientResponse.class, multiPart);
-        return new UploadResponse(response);
     }
 }

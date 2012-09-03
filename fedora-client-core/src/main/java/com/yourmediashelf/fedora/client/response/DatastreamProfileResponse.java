@@ -82,6 +82,7 @@ public class DatastreamProfileResponse extends FedoraResponseImpl {
             //datastreamProfile =
             //        (DatastreamProfile) unmarshallResponse(ContextPath.Management);
 
+            @SuppressWarnings("unchecked")
             JAXBElement<DatastreamProfile> root =
                     (JAXBElement<DatastreamProfile>) unmarshallResponse(ContextPath.Management);
             datastreamProfile = root.getValue();

@@ -66,6 +66,11 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.4</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.santuario</groupId>
         <artifactId>xmlsec</artifactId>
         <version>1.4.6</version>
@@ -111,12 +116,6 @@
         <scope>test</scope>
       </dependency>
       <!-- Test dependencies for running Fedora w/ Cargo -->
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>2.4</version>
-        <scope>test</scope>
-      </dependency>
       <dependency>
         <groupId>org.fcrepo</groupId>
         <artifactId>fcrepo-installer</artifactId>

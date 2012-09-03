@@ -21,13 +21,12 @@ package com.yourmediashelf.fedora.util;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -119,17 +118,9 @@ public class XmlSerializerTest {
         InputStream in = new FileInputStream(new File(testDir, input));
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         XmlSerializer.canonicalize(in, bout);
-        String control = readFileAsString(new File(testDir, canonical));
+        String control =
+                FileUtils.readFileToString(new File(testDir, canonical));
         assertEquals(input + " did not match " + canonical, control, bout
                 .toString("UTF-8"));
     }
-
-    private static String readFileAsString(File file) throws IOException {
-        byte[] buffer = new byte[(int) file.length()];
-        BufferedInputStream f =
-                new BufferedInputStream(new FileInputStream(file));
-        f.read(buffer);
-        return new String(buffer, "UTF-8");
-    }
-
 }
