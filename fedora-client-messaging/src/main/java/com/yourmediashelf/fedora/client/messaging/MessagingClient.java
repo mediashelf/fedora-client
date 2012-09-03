@@ -35,28 +35,34 @@ import org.slf4j.LoggerFactory;
 import com.yourmediashelf.fedora.client.messaging.JMSManager.DestinationType;
 
 public class MessagingClient implements MessageListener {
+
     private static final int MAX_RETRIES = 5;
+
     private static final int RETRY_INTERVAL = 20000;
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(MessagingClient.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(MessagingClient.class);
 
     private final String m_clientId;
+
     private final MessagingListener m_listener;
+
     private final Properties m_connectionProperties;
+
     private final String m_messageSelector;
+
     private final boolean m_durable;
 
     private JMSManager m_jmsManager = null;
+
     private boolean m_connected = false;
 
     /**
      * Creates a messaging client
      * @see MessagingClient#MessagingClient(String, MessagingListener, Properties, String, boolean)
      */
-    public MessagingClient(String clientId,
-                              MessagingListener listener,
-                              Properties connectionProperties)
+    public MessagingClient(String clientId, MessagingListener listener,
+            Properties connectionProperties)
             throws MessagingException {
         this(clientId, listener, connectionProperties, "", false);
     }
@@ -65,10 +71,8 @@ public class MessagingClient implements MessageListener {
      * Creates a messaging client
      * @see MessagingClient#MessagingClient(String, MessagingListener, Properties, String, boolean)
      */
-    public MessagingClient(String clientId,
-                              MessagingListener listener,
-                              Properties connectionProperties,
-                              boolean durable)
+    public MessagingClient(String clientId, MessagingListener listener,
+            Properties connectionProperties, boolean durable)
             throws MessagingException {
         this(clientId, listener, connectionProperties, "", durable);
     }
@@ -162,11 +166,9 @@ public class MessagingClient implements MessageListener {
      * @param durable determines if the underlying JMS subscribers are durable
      * @throws MessagingException if listener is null or required properties are not set
      */
-    public MessagingClient(String clientId,
-                              MessagingListener listener,
-                              Properties connectionProperties,
-                              String messageSelector,
-                              boolean durable)
+    public MessagingClient(String clientId, MessagingListener listener,
+            Properties connectionProperties, String messageSelector,
+            boolean durable)
             throws MessagingException {
 
         // Check for a null listener
@@ -176,20 +178,22 @@ public class MessagingClient implements MessageListener {
 
         // Check for null properties
         if (connectionProperties == null) {
-            throw new MessagingException("Connection properties may not be null");
+            throw new MessagingException(
+                    "Connection properties may not be null");
         }
 
         // Check for required property values
         String initialContextFactory =
-            connectionProperties.getProperty(Context.INITIAL_CONTEXT_FACTORY);
+                connectionProperties
+                        .getProperty(Context.INITIAL_CONTEXT_FACTORY);
         String providerUrl =
-            connectionProperties.getProperty(Context.PROVIDER_URL);
+                connectionProperties.getProperty(Context.PROVIDER_URL);
         String connectionFactoryName =
-            connectionProperties.getProperty(JMSManager.CONNECTION_FACTORY_NAME);
+                connectionProperties
+                        .getProperty(JMSManager.CONNECTION_FACTORY_NAME);
 
-        if (initialContextFactory == null
-            || providerUrl == null
-            || connectionFactoryName == null) {
+        if (initialContextFactory == null || providerUrl == null ||
+                connectionFactoryName == null) {
             throw new MessagingException("Propery values for "
                     + "'java.naming.factory.initial', "
                     + "'java.naming.provider.url', and"
@@ -232,11 +236,11 @@ public class MessagingClient implements MessageListener {
         Thread connector = new JMSBrokerConnector();
         connector.start();
 
-        if(wait) {
+        if (wait) {
             int maxWait = RETRY_INTERVAL * MAX_RETRIES;
             int waitTime = 0;
-            while(!isConnected()) {
-                if(waitTime < maxWait) {
+            while (!isConnected()) {
+                if (waitTime < maxWait) {
                     try {
                         Thread.sleep(100);
                         waitTime += 100;
@@ -244,8 +248,8 @@ public class MessagingClient implements MessageListener {
                         Thread.currentThread().interrupt();
                     }
                 } else {
-                    throw new MessagingException("Timeout reached waiting " +
-                                           "for messaging client to start.");
+                    throw new MessagingException("Timeout reached waiting "
+                            + "for messaging client to start.");
                 }
             }
         }
@@ -268,12 +272,12 @@ public class MessagingClient implements MessageListener {
                     String destinationName =
                             m_connectionProperties.getProperty(propertyName);
                     m_jmsManager.createDestination(destinationName,
-                                                   DestinationType.Topic);
+                            DestinationType.Topic);
                 } else if (propertyName.startsWith("queue.")) {
                     String destinationName =
                             m_connectionProperties.getProperty(propertyName);
                     m_jmsManager.createDestination(destinationName,
-                                                   DestinationType.Queue);
+                            DestinationType.Queue);
                 }
             }
 
@@ -282,26 +286,25 @@ public class MessagingClient implements MessageListener {
 
             // If there are no Destinations, throw an exception
             if (destinations.size() == 0) {
-                throw new MessagingException("No destinations available for "
-                        + "subscription, make sure that there is at least one topic "
-                        + "or queue specified in the connection properties.");
+                throw new MessagingException(
+                        "No destinations available for "
+                                + "subscription, make sure that there is at least one topic "
+                                + "or queue specified in the connection properties.");
             }
 
             // Subscribe
             for (Destination destination : destinations) {
-                if (m_durable && (destination instanceof Topic)) {
+                if (m_durable && destination instanceof Topic) {
                     m_jmsManager.listenDurable((Topic) destination,
-                                               m_messageSelector,
-                                               this,
-                                               null);
+                            m_messageSelector, this, null);
                 } else {
                     m_jmsManager.listen(destination, m_messageSelector, this);
                 }
             }
         } catch (MessagingException me) {
-            logger.error("MessagingException encountered attempting to start "
-                    + "Messaging Client: " + m_clientId
-                    + ". Exception message: " + me.getMessage(), me);
+            logger.error("MessagingException encountered attempting to start " +
+                    "Messaging Client: " + m_clientId +
+                    ". Exception message: " + me.getMessage(), me);
             throw me;
         }
     }
@@ -321,9 +324,9 @@ public class MessagingClient implements MessageListener {
             m_jmsManager = null;
             m_connected = false;
         } catch (MessagingException me) {
-            logger.error("Messaging Exception encountered attempting to stop "
-                    + "Messaging Client: " + m_clientId
-                    + ". Exception message: " + me.getMessage(), me);
+            logger.error("Messaging Exception encountered attempting to stop " +
+                    "Messaging Client: " + m_clientId +
+                    ". Exception message: " + me.getMessage(), me);
             throw me;
         }
     }
@@ -334,6 +337,7 @@ public class MessagingClient implements MessageListener {
      *
      * {@inheritDoc}
      */
+    @Override
     public void onMessage(Message message) {
         m_listener.onMessage(m_clientId, message);
     }
@@ -357,16 +361,17 @@ public class MessagingClient implements MessageListener {
         private void connect() throws MessagingException {
             int retries = 0;
 
-            while(m_jmsManager == null && retries < MAX_RETRIES) {
+            while (m_jmsManager == null && retries < MAX_RETRIES) {
                 try {
-                    m_jmsManager = new JMSManager(m_connectionProperties, m_clientId);
-                } catch(MessagingException me) {
+                    m_jmsManager =
+                            new JMSManager(m_connectionProperties, m_clientId);
+                } catch (MessagingException me) {
                     Throwable rootCause = me.getCause();
-                    while(rootCause.getCause() != null) {
+                    while (rootCause.getCause() != null) {
                         rootCause = rootCause.getCause();
                     }
 
-                    if(rootCause instanceof java.net.ConnectException) {
+                    if (rootCause instanceof java.net.ConnectException) {
                         try {
                             sleep(RETRY_INTERVAL);
                         } catch (InterruptedException ie) {
@@ -379,13 +384,15 @@ public class MessagingClient implements MessageListener {
                 }
             }
 
-            if(m_jmsManager == null) {
+            if (m_jmsManager == null) {
                 String errorMessage =
-                    "Unable to start JMS Messaging Client, " + MAX_RETRIES +
-                    " attempts were made, each attempt resulted in a " +
-                    "java.net.ConnectException. The messaging broker at " +
-                    m_connectionProperties.getProperty(Context.PROVIDER_URL) +
-                    " is not available";
+                        "Unable to start JMS Messaging Client, " +
+                                MAX_RETRIES +
+                                " attempts were made, each attempt resulted in a " +
+                                "java.net.ConnectException. The messaging broker at " +
+                                m_connectionProperties
+                                        .getProperty(Context.PROVIDER_URL) +
+                                " is not available";
                 throw new RuntimeException(errorMessage);
             }
         }

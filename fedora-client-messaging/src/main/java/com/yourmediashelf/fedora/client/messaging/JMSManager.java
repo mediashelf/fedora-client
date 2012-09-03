@@ -63,11 +63,12 @@ import org.slf4j.LoggerFactory;
   */
 public class JMSManager {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(JMSManager.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(JMSManager.class);
 
     /** Connection Factory Lookup Name */
-    public static final String CONNECTION_FACTORY_NAME = "connection.factory.name";
+    public static final String CONNECTION_FACTORY_NAME =
+            "connection.factory.name";
 
     // Default connection factory name, used if no connection factory name is specified
     private final String defaultConnectionFactoryName = "ConnectionFactory";
@@ -140,26 +141,27 @@ public class JMSManager {
             } catch (MessagingException me) {
                 providerUrl = null;
             }
-            if(providerUrl == null) {
-                throw new MessagingException("JMS connection properties must either be "
-                        + "provided by the container or by a non-null properties file "
-                        + "containing, at minimum, a value for "
-                        + Context.INITIAL_CONTEXT_FACTORY + " and "
-                        + Context.PROVIDER_URL + ".");
+            if (providerUrl == null) {
+                throw new MessagingException(
+                        "JMS connection properties must either be " +
+                                "provided by the container or by a non-null properties file " +
+                                "containing, at minimum, a value for " +
+                                Context.INITIAL_CONTEXT_FACTORY + " and " +
+                                Context.PROVIDER_URL + ".");
             }
         } else {
             String icf = jndiProps.getProperty(Context.INITIAL_CONTEXT_FACTORY);
             if (icf == null) {
-                throw new MessagingException("A value for "
-                        + Context.INITIAL_CONTEXT_FACTORY
-                        + " must be included in the JNDI properties.");
+                throw new MessagingException("A value for " +
+                        Context.INITIAL_CONTEXT_FACTORY +
+                        " must be included in the JNDI properties.");
             }
 
             String pUrl = jndiProps.getProperty(Context.PROVIDER_URL);
             if (pUrl == null) {
-                throw new MessagingException("A value for "
-                        + Context.PROVIDER_URL
-                        + "must be included in the JNDI properties.");
+                throw new MessagingException("A value for " +
+                        Context.PROVIDER_URL +
+                        "must be included in the JNDI properties.");
             }
         }
 
@@ -176,7 +178,8 @@ public class JMSManager {
      */
     public Destination createDestination(String name, DestinationType type)
             throws MessagingException {
-        return this.createDestination(name, type, false, Session.AUTO_ACKNOWLEDGE);
+        return this.createDestination(name, type, false,
+                Session.AUTO_ACKNOWLEDGE);
     }
 
     /**
@@ -188,10 +191,8 @@ public class JMSManager {
      * @param ackMode - determines the session acknowledgment mode
      * @throws MessagingException
      */
-    public Destination createDestination(String name,
-                                  DestinationType type,
-                                  boolean fTransacted,
-                                  int ackMode) throws MessagingException {
+    public Destination createDestination(String name, DestinationType type,
+            boolean fTransacted, int ackMode) throws MessagingException {
         // If the destination already exists, just return it
         JMSDestination jmsDest = jmsDestinations.get(name);
         if (jmsDest != null) {
@@ -211,8 +212,8 @@ public class JMSManager {
         try {
             destination = (Destination) jndiLookup(name);
         } catch (MessagingException me) {
-            logger.debug("JNDI lookup for destination " + name + " failed. "
-                    + "Destination must be created.");
+            logger.debug("JNDI lookup for destination " + name + " failed. " +
+                    "Destination must be created.");
             destination = null;
         }
         if (destination == null) {
@@ -257,9 +258,11 @@ public class JMSManager {
      * @return the Message received for the given Destination
      * @throws Exception
      */
-    public Message listen(String destName, String messageSelector) throws MessagingException {
-        if(logger.isDebugEnabled()) {
-            logger.debug("listen() - Synchronous listen on destination " + destName);
+    public Message listen(String destName, String messageSelector)
+            throws MessagingException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("listen() - Synchronous listen on destination " +
+                    destName);
         }
 
         JMSDestination jmsDest = getJMSDestination(destName);
@@ -290,8 +293,9 @@ public class JMSManager {
      * @return the Message received for the given Destination
      * @throws Exception
      */
-    public Message listen(Destination dest, String messageSelector) throws MessagingException {
-        if(logger.isDebugEnabled()) {
+    public Message listen(Destination dest, String messageSelector)
+            throws MessagingException {
+        if (logger.isDebugEnabled()) {
             logger.debug("listen() - Synchronous listen on destination " + dest);
         }
         try {
@@ -311,7 +315,7 @@ public class JMSManager {
      * @see JMSManager#listen(String, String, int)
      */
     public Message listen(String destName, int timeout)
-    throws MessagingException {
+            throws MessagingException {
         return listen(destName, "", timeout);
     }
 
@@ -332,9 +336,9 @@ public class JMSManager {
      */
     public Message listen(String destName, String messageSelector, int timeout)
             throws MessagingException {
-        if(logger.isDebugEnabled()) {
-            logger.debug("listen() - Synchronous listen on destination "
-                      + destName + " with timeout " + timeout);
+        if (logger.isDebugEnabled()) {
+            logger.debug("listen() - Synchronous listen on destination " +
+                    destName + " with timeout " + timeout);
         }
 
         JMSDestination jmsDest = getJMSDestination(destName);
@@ -360,15 +364,16 @@ public class JMSManager {
      * are provided through the onMessage() callback method
      * Messages will be filtered based on the provided message selector.
      */
-    public void listen(String destName, String messageSelector, MessageListener callback)
-            throws MessagingException {
+    public void listen(String destName, String messageSelector,
+            MessageListener callback) throws MessagingException {
         JMSDestination jmsDest = getJMSDestination(destName);
 
         // Set the caller as a topic subscriber or queue receiver as appropriate
         setupAsynchConsumer(jmsDest, messageSelector, callback);
 
         if (logger.isDebugEnabled()) {
-            logger.debug("listen() - Asynchronous listen on destination " + destName);
+            logger.debug("listen() - Asynchronous listen on destination " +
+                    destName);
         }
     }
 
@@ -388,8 +393,8 @@ public class JMSManager {
      * are provided through the onMessage() callback method.
      * Messages will be filtered based on the provided message selector.
      */
-    public void listen(Destination dest, String messageSelector, MessageListener callback)
-            throws MessagingException {
+    public void listen(Destination dest, String messageSelector,
+            MessageListener callback) throws MessagingException {
         try {
             Session s =
                     connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -400,7 +405,8 @@ public class JMSManager {
         }
 
         if (logger.isDebugEnabled()) {
-            logger.debug("listen() - Asynchronous listen on destination " + dest);
+            logger.debug("listen() - Asynchronous listen on destination " +
+                    dest);
         }
     }
 
@@ -415,10 +421,8 @@ public class JMSManager {
     /**
      * @see JMSManager#listenDurable(Topic, String, MessageListener, String)
      */
-    public String listenDurable(String topicName,
-                                MessageListener callback,
-                                String subscriptionName)
-            throws MessagingException {
+    public String listenDurable(String topicName, MessageListener callback,
+            String subscriptionName) throws MessagingException {
         createDestination(topicName, DestinationType.Topic);
         Topic topic = (Topic) getDestination(topicName);
         return listenDurable(topic, "", callback, subscriptionName);
@@ -458,17 +462,16 @@ public class JMSManager {
      *         and reconnect to this topic
      * @throws MessagingException
      */
-    public String listenDurable(Topic topic,
-                                String messageSelector,
-                                MessageListener callback,
-                                String subscriptionName)
+    public String listenDurable(Topic topic, String messageSelector,
+            MessageListener callback, String subscriptionName)
             throws MessagingException {
         try {
             String clientId = connection.getClientID();
             if (clientId == null) {
-                throw new MessagingException("A non-null client ID must be provided upon "
-                        + "creation of a JMSManager in order to create a JMS connection "
-                        + "capable of creating durable subscriptions.");
+                throw new MessagingException(
+                        "A non-null client ID must be provided upon "
+                                + "creation of a JMSManager in order to create a JMS connection "
+                                + "capable of creating durable subscriptions.");
             }
             if (subscriptionName == null) {
                 subscriptionName = topic.getTopicName();
@@ -477,7 +480,8 @@ public class JMSManager {
             Session s =
                     connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageConsumer c =
-                    s.createDurableSubscriber(topic, subscriptionName, messageSelector, false);
+                    s.createDurableSubscriber(topic, subscriptionName,
+                            messageSelector, false);
             c.setMessageListener(callback);
             durableSubscriptions.put(subscriptionName, c);
         } catch (JMSException e) {
@@ -485,7 +489,8 @@ public class JMSManager {
         }
 
         if (logger.isDebugEnabled()) {
-            logger.debug("listen() - Asynchronous durable listen on topic " + topic);
+            logger.debug("listen() - Asynchronous durable listen on topic " +
+                    topic);
         }
 
         return subscriptionName;
@@ -507,7 +512,7 @@ public class JMSManager {
             throw new MessagingException(e.getMessage(), e);
         }
 
-        if(logger.isDebugEnabled()) {
+        if (logger.isDebugEnabled()) {
             logger.debug("send() - message sent to destination " + destName);
         }
     }
@@ -526,7 +531,7 @@ public class JMSManager {
             throw new MessagingException(e.getMessage(), e);
         }
 
-        if(logger.isDebugEnabled()) {
+        if (logger.isDebugEnabled()) {
             logger.debug("send() - message sent to destination " + dest);
         }
     }
@@ -549,7 +554,7 @@ public class JMSManager {
             throw new MessagingException(e.getMessage(), e);
         }
 
-        if(logger.isDebugEnabled()) {
+        if (logger.isDebugEnabled()) {
             logger.debug("send() - message sent to destination " + destName);
         }
     }
@@ -573,8 +578,7 @@ public class JMSManager {
         try {
             // Look for an existing destination for the given destination
             //
-            JMSDestination jmsDest =
-                    jmsDestinations.get(destName);
+            JMSDestination jmsDest = jmsDestinations.get(destName);
             if (jmsDest != null) {
                 // Close out all JMS related state
                 //
@@ -623,10 +627,11 @@ public class JMSManager {
                 durableSubscriber.close();
             }
         } catch (JMSException jmse) {
-            throw new MessagingException("Exception encountered attempting to "
-                    + "stop durable subscription with name: "
-                    + subscriptionName + ". Exception message: "
-                    + jmse.getMessage(), jmse);
+            throw new MessagingException(
+                    "Exception encountered attempting to " +
+                            "stop durable subscription with name: " +
+                            subscriptionName + ". Exception message: " +
+                            jmse.getMessage(), jmse);
         }
     }
 
@@ -640,16 +645,18 @@ public class JMSManager {
             throws MessagingException {
         try {
             Session session =
-                connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageConsumer consumer = durableSubscriptions.get(subscriptionName);
-            if(consumer != null) {
+                    connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageConsumer consumer =
+                    durableSubscriptions.get(subscriptionName);
+            if (consumer != null) {
                 consumer.close();
             }
             session.unsubscribe(subscriptionName);
         } catch (JMSException jmse) {
-            String errMsg = "Unable to unsubscribe from subscription with name: "
-                          + subscriptionName + " due to exception: "
-                          + jmse.getMessage();
+            String errMsg =
+                    "Unable to unsubscribe from subscription with name: " +
+                            subscriptionName + " due to exception: " +
+                            jmse.getMessage();
             logger.debug(errMsg, jmse);
             throw new MessagingException(errMsg, jmse);
         }
@@ -704,8 +711,7 @@ public class JMSManager {
     }
 
     public ObjectMessage createObjectMessage(String destName,
-                                             Serializable object)
-            throws MessagingException {
+            Serializable object) throws MessagingException {
         JMSDestination jmsDest = getJMSDestination(destName);
         try {
             ObjectMessage message = jmsDest.session.createObjectMessage();
@@ -748,7 +754,7 @@ public class JMSManager {
             throws MessagingException {
         Destination destination = null;
         JMSDestination jmsDest = getJMSDestination(destName);
-        if(jmsDest != null) {
+        if (jmsDest != null) {
             destination = jmsDest.destination;
         }
         return destination;
@@ -761,8 +767,8 @@ public class JMSManager {
     public List<Destination> getDestinations() {
         List<Destination> destinations = new ArrayList<Destination>();
         Iterator<JMSDestination> destinationIterator =
-            jmsDestinations.values().iterator();
-        while(destinationIterator.hasNext()) {
+                jmsDestinations.values().iterator();
+        while (destinationIterator.hasNext()) {
             destinations.add(destinationIterator.next().destination);
         }
         return destinations;
@@ -802,7 +808,8 @@ public class JMSManager {
      *
      * @param defaultDestinationType
      */
-    public void setDefaultDestinationType(DestinationType defaultDestinationType) {
+    public void
+            setDefaultDestinationType(DestinationType defaultDestinationType) {
         this.defaultDestinationType = defaultDestinationType;
     }
 
@@ -812,13 +819,15 @@ public class JMSManager {
     protected void connectToJMS(String clientId) throws MessagingException {
         // Check to see if already connected
         //
-        if (connected == true) return;
+        if (connected == true) {
+            return;
+        }
 
         try {
             // Get a JMS Connection
             //
             connection = getConnection();
-            if(clientId != null) {
+            if (clientId != null) {
                 connection.setClientID(clientId);
             }
             connection.start();
@@ -849,7 +858,9 @@ public class JMSManager {
 
     protected void setupProducer(JMSDestination jmsDest)
             throws MessagingException {
-        if (jmsDest.producer != null) return;
+        if (jmsDest.producer != null) {
+            return;
+        }
         try {
             jmsDest.producer =
                     jmsDest.session.createProducer(jmsDest.destination);
@@ -859,14 +870,13 @@ public class JMSManager {
     }
 
     protected void setupAsynchConsumer(JMSDestination jmsDest,
-                                       String messageSelector,
-                                       MessageListener callback)
+            String messageSelector, MessageListener callback)
             throws MessagingException {
         try {
             if (jmsDest.consumer == null) {
                 jmsDest.consumer =
                         jmsDest.session.createConsumer(jmsDest.destination,
-                                                       messageSelector);
+                                messageSelector);
             }
 
             jmsDest.consumer.setMessageListener(callback);
@@ -876,20 +886,19 @@ public class JMSManager {
     }
 
     protected Message setupSynchConsumer(JMSDestination jmsDest,
-                                         String messageSelector,
-                                         int timeout)
-            throws MessagingException {
+            String messageSelector, int timeout) throws MessagingException {
         try {
             if (jmsDest.consumer == null) {
                 jmsDest.consumer =
                         jmsDest.session.createConsumer(jmsDest.destination,
-                                                       messageSelector);
+                                messageSelector);
             }
 
-            if (timeout > 0)
+            if (timeout > 0) {
                 return jmsDest.consumer.receive(timeout);
-            else
+            } else {
                 return jmsDest.consumer.receive();
+            }
         } catch (JMSException e) {
             throw new MessagingException(e.getMessage(), e);
         }
@@ -913,7 +922,8 @@ public class JMSManager {
         if (jndiProps != null) {
             String connectionFactoryName =
                     jndiProps.getProperty(CONNECTION_FACTORY_NAME);
-            if(connectionFactoryName == null || connectionFactoryName.equals("")) {
+            if (connectionFactoryName == null ||
+                    connectionFactoryName.equals("")) {
                 connectionFactoryName = defaultConnectionFactoryName;
             }
             connectionFactory =
@@ -939,8 +949,8 @@ public class JMSManager {
         try {
             return jndi.lookup(name);
         } catch (NamingException e) {
-            throw new MessagingException("jndiLookup(" + name + ") failed: "
-                                         + e.getMessage(), e);
+            throw new MessagingException("jndiLookup(" + name + ") failed: " +
+                    e.getMessage(), e);
         }
     }
 
@@ -994,10 +1004,8 @@ public class JMSManager {
 
         MessageConsumer consumer = null;
 
-        public JMSDestination(Destination destination,
-                              Session session,
-                              MessageProducer producer,
-                              MessageConsumer consumer) {
+        public JMSDestination(Destination destination, Session session,
+                MessageProducer producer, MessageConsumer consumer) {
             this.destination = destination;
             this.session = session;
             this.producer = producer;

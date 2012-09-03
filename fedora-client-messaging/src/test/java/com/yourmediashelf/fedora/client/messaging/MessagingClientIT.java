@@ -312,7 +312,7 @@ public class MessagingClientIT implements MessagingListener {
                 break;
             } else { // Check for timeout
                 long currentTime = System.currentTimeMillis();
-                if (currentTime > (startTime + messageTimeout)) {
+                if (currentTime > startTime + messageTimeout) {
                     fail("Timeout reached waiting for message.");
                     break;
                 } else {
@@ -342,7 +342,7 @@ public class MessagingClientIT implements MessagingListener {
                 break;
             } else { // Check for timeout
                 long currentTime = System.currentTimeMillis();
-                if (currentTime > (startTime + messageTimeout)) {
+                if (currentTime > startTime + messageTimeout) {
                     break;
                 } else {
                     try {
@@ -359,6 +359,7 @@ public class MessagingClientIT implements MessagingListener {
         currentClientId = null;
     }
 
+    @Override
     public void onMessage(String clientId, Message message) {
         messageCount++;
         currentMessage = message;

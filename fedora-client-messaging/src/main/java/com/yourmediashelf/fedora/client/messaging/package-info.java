@@ -26,5 +26,7 @@
  * <p>In the future, this package may itself become a new Maven project rather
  * than integrated directly with fedora-client.</p>
  */
+
 package com.yourmediashelf.fedora.client.messaging;
+
 // TODO sort out licensing

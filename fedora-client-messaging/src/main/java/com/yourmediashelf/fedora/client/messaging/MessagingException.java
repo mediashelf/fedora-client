@@ -20,6 +20,7 @@
 /**
  *
  */
+
 package com.yourmediashelf.fedora.client.messaging;
 
 /**
@@ -27,10 +28,12 @@ package com.yourmediashelf.fedora.client.messaging;
  *
  */
 public class MessagingException extends Exception {
-	private static final long serialVersionUID = 1L;
-	private int status;
 
-	public MessagingException(String message) {
+    private static final long serialVersionUID = 1L;
+
+    private int status;
+
+    public MessagingException(String message) {
         super(message, null);
     }
 

@@ -19,7 +19,6 @@
 
 package com.yourmediashelf.fedora.client.messaging;
 
-
 import javax.jms.Message;
 
 /**
