@@ -60,10 +60,10 @@ Building from source
         cd fedora-client
         mvn install
         
-    fedora-client ships with a number of integration tests that require a 
-    running instance of Fedora that has the ResourceIndex module enabled. 
-    Set the testing properties (e.g. username, password) in pom.xml, or to 
-    skip the integration tests entirely:
+    fedora-client ships with a number of integration tests and will 
+automatically start and stop an instance of Fedora. 
+    Set the testing properties (e.g. port) in pom.xml, or to skip the 
+integration tests entirely:
    
         mvn install -DskipTests
         
