@@ -60,6 +60,12 @@
         <version>${slf4j.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.10</version>
@@ -72,6 +78,10 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -233,6 +243,9 @@
                       <exclude>org.slf4j:slf4j-nop</exclude>
                       <exclude>org.slf4j:slf4j-simple</exclude>
                     </excludes>
+                    <includes>
+                      <include>org.slf4j:slf4j-simple:*:*:test</include>
+                    </includes>
                   </bannedDependencies>
                 </rules>
               </configuration>
@@ -370,7 +383,7 @@
                   <pluginExecutionFilter>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <versionRange>[1.1.1,)</versionRange>
+                    <versionRange>[1.0,)</versionRange>
                     <goals>
                       <goal>enforce</goal>
                     </goals>

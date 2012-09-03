@@ -251,6 +251,8 @@
                   <type>zip</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${fedora.home}</outputDirectory>
+                  <!-- fedora-client doesn't need the client/ directory -->
+                  <excludes>client/**</excludes>
                 </artifactItem>
               </artifactItems>
               <overWriteReleases>false</overWriteReleases>

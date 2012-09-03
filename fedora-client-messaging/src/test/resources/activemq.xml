@@ -1,0 +1,41 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:amq="http://activemq.apache.org/schema/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+  <!-- ActiveMQ JMS Broker configuration -->
+  <amq:broker id="broker" useShutdownHook="false">
+    <amq:managementContext>
+      <amq:managementContext connectorPort="1093"
+        createConnector="false" />
+    </amq:managementContext>
+
+    <amq:persistenceAdapter>
+      <amq:amqPersistenceAdapter directory="file:${project.build.directory}/amq" />
+    </amq:persistenceAdapter>
+
+    <amq:transportConnectors>
+      <amq:transportConnector name="vm" uri="vm://localhost" />
+    </amq:transportConnectors>
+
+    <amq:systemUsage>
+      <amq:systemUsage>
+        <amq:memoryUsage>
+          <amq:memoryUsage limit="20 mb" />
+        </amq:memoryUsage>
+        <amq:storeUsage>
+          <amq:storeUsage limit="100 mb" />
+        </amq:storeUsage>
+        <amq:tempUsage>
+          <amq:tempUsage limit="100 mb" />
+        </amq:tempUsage>
+      </amq:systemUsage>
+    </amq:systemUsage>
+  </amq:broker>
+
+  <!-- Set this to prevent objects from being serialized when passed along to your 
+    embedded broker; saves some overhead processing -->
+  <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="objectMessageSerializationDefered" value="false" />
+  </bean>
+</beans>
