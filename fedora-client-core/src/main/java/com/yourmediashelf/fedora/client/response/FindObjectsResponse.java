@@ -44,7 +44,7 @@ import com.yourmediashelf.fedora.util.NamespaceContextImpl;
  */
 public class FindObjectsResponse extends FedoraResponseImpl {
 
-    private List<String> pids;
+    private final List<String> pids;
 
     private boolean hasNext;
 
@@ -54,7 +54,7 @@ public class FindObjectsResponse extends FedoraResponseImpl {
 
     private String expirationDate;
 
-    private XPath xpath;
+    private final XPath xpath;
 
     private Node root;
 

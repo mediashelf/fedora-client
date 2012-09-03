@@ -48,8 +48,11 @@ import com.carrotsearch.junitbenchmarks.annotation.BenchmarkMethodChart;
 @Ignore("Batch API is not included by default in Fedora")
 @BenchmarkMethodChart(filePrefix = "benchmark-mixed-lists")
 public class BatchMixedIT extends BatchIT {
+
     private static Set<String> ds10k = getDsidsWithDC("M10K");
+
     private static Set<String> ds100k = getDsidsWithDC("M100K");
+
     private static Set<String> ds1000k = getDsidsWithDC("M1000K");
 
     @Test
@@ -63,7 +66,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 1;
         getBatchDatastreams(getManagedPids(limit), ds10k);
     }
-    
+
     @Test
     public void serial10x10k() throws Exception {
         int limit = 10;
@@ -75,7 +78,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 10;
         getBatchDatastreams(getManagedPids(limit), ds10k);
     }
-    
+
     @Test
     public void serial20x10k() throws Exception {
         int limit = 20;
@@ -87,6 +90,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 20;
         getBatchDatastreams(getManagedPids(limit), ds10k);
     }
+
     //
     @Test
     public void serial1x100k() throws Exception {
@@ -99,7 +103,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 1;
         getBatchDatastreams(getManagedPids(limit), ds100k);
     }
-    
+
     @Test
     public void serial10x100k() throws Exception {
         int limit = 10;
@@ -111,7 +115,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 10;
         getBatchDatastreams(getManagedPids(limit), ds100k);
     }
-    
+
     @Test
     public void serial20x100k() throws Exception {
         int limit = 20;
@@ -123,6 +127,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 20;
         getBatchDatastreams(getManagedPids(limit), ds100k);
     }
+
     //
     @Test
     public void serial1x1000k() throws Exception {
@@ -135,7 +140,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 1;
         getBatchDatastreams(getManagedPids(limit), ds1000k);
     }
-    
+
     @Test
     public void serial10x1000k() throws Exception {
         int limit = 10;
@@ -147,7 +152,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 10;
         getBatchDatastreams(getManagedPids(limit), ds1000k);
     }
-    
+
     @Test
     public void serial20x1000k() throws Exception {
         int limit = 20;
@@ -159,7 +164,7 @@ public class BatchMixedIT extends BatchIT {
         int limit = 20;
         getBatchDatastreams(getManagedPids(limit), ds1000k);
     }
-    
+
     private static Set<String> getDsidsWithDC(String regex) {
         Set<String> s = getDsids(regex);
         s.add("DC");

@@ -39,7 +39,8 @@ import com.yourmediashelf.fedora.util.DateUtility;
  *
  * @author Edwin Shin
  */
-public class BatchDeleteDatastreams extends FedoraRequest<BatchDeleteDatastreams> {
+public class BatchDeleteDatastreams extends
+        FedoraRequest<BatchDeleteDatastreams> {
 
     public BatchDeleteDatastreams pids(Collection<String> pids) {
         for (String pid : pids) {

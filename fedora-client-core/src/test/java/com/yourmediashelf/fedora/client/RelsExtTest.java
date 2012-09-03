@@ -19,7 +19,6 @@
 
 package com.yourmediashelf.fedora.client;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -33,7 +32,6 @@ import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.FileUtils;
 
-
 public class RelsExtTest {
 
     @Test
@@ -43,17 +41,18 @@ public class RelsExtTest {
         String cmodel = "info:fedora/my:cmodel";
         String predicate = "some:thing";
         String literal = "hey";
-        String relsExt = new RelsExt.Builder(testPid)
-                            .addCModel(cmodel)
-                            .addRelationship(predicate, literal, true, null)
-                            .build().toString();
+        String relsExt =
+                new RelsExt.Builder(testPid).addCModel(cmodel).addRelationship(
+                        predicate, literal, true, null).build().toString();
 
         //System.out.println(relsExt);
 
         Model model = ModelFactory.createDefaultModel();
-        model.read(new ByteArrayInputStream(relsExt.getBytes("UTF-8")), null, FileUtils.langXML);
+        model.read(new ByteArrayInputStream(relsExt.getBytes("UTF-8")), null,
+                FileUtils.langXML);
 
-        ResIterator ri = model.listSubjectsWithProperty(model.createProperty(hasModel));
+        ResIterator ri =
+                model.listSubjectsWithProperty(model.createProperty(hasModel));
         Resource r = ri.next();
         assertEquals(testPid, r.toString());
         assertFalse(ri.hasNext());

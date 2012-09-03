@@ -76,7 +76,7 @@ public abstract class FedoraRequest<T> {
      * @return boolean
      */
     public static boolean isDefaultClientSet() {
-        return (DEFAULT_CLIENT != null);
+        return DEFAULT_CLIENT != null;
     }
 
     /**
@@ -110,7 +110,7 @@ public abstract class FedoraRequest<T> {
         addQueryParam(key, value);
         return (T) this;
     }
-    
+
     /**
      * Retrieves the current HTTP headers set on this request.
      * 
@@ -163,7 +163,6 @@ public abstract class FedoraRequest<T> {
     protected String getFirstQueryParam(String key) {
         return queryParams.getFirst(key);
     }
-
 
     protected MultivaluedMap<String, String> getQueryParams() {
         return queryParams;

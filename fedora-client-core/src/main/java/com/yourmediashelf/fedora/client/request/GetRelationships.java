@@ -45,6 +45,7 @@ public class GetRelationships extends RelationshipsRequest {
      * @return this builder
      * @deprecated use constructor
      */
+    @Deprecated
     public GetRelationships subject(String subject) {
         addQueryParam("subject", subject);
         return this;

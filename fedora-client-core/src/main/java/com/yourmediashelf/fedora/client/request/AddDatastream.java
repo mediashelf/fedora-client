@@ -229,9 +229,7 @@ public class AddDatastream extends FedoraRequest<AddDatastream> {
             response = wr.type(mediaType).post(ClientResponse.class, content);
         } else if (content instanceof InputStream) {
             mediaType = MediaType.valueOf(mimeType);
-            response =
-                    wr.type(mediaType).post(ClientResponse.class,
-                            (InputStream) content);
+            response = wr.type(mediaType).post(ClientResponse.class, content);
         } else if (content instanceof File) {
             File f = (File) content;
             if (mimeType == null) {

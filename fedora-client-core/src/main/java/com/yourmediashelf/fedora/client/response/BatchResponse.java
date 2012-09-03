@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.client.response;
+
 /**
  * Copyright (C) 2010 MediaShelf <http://www.yourmediashelf.com/>
  *
@@ -35,7 +37,6 @@ package com.yourmediashelf.fedora.client.response;
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 import java.util.List;
 
@@ -57,9 +58,9 @@ public class BatchResponse extends FedoraResponseImpl {
     }
 
     public MultiPart getMultiPart() {
-        return (MultiPart) getEntity(MultiPart.class);
+        return getEntity(MultiPart.class);
     }
-    
+
     public List<BodyPart> getBodyParts() {
         return getMultiPart().getBodyParts();
     }

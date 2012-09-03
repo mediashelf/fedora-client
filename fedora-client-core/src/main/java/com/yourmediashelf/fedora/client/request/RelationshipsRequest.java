@@ -32,7 +32,7 @@ public abstract class RelationshipsRequest extends
     protected final String pid;
 
     public RelationshipsRequest(String subject) {
-        this.pid = SubjectProcessor.getSubjectPID(subject);
+        pid = SubjectProcessor.getSubjectPID(subject);
         addQueryParam("subject", SubjectProcessor.getSubjectAsUri(subject));
     }
 

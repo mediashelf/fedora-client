@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  *
@@ -38,11 +38,8 @@ public class Parameter implements Constants {
 
     private final Map<String, String> m_profileValues;
 
-    public Parameter(String name,
-                     String value,
-                     boolean isFilePath,
-                     String comment,
-                     Map<String, String> profileValues) {
+    public Parameter(String name, String value, boolean isFilePath,
+            String comment, Map<String, String> profileValues) {
         m_name = name;
         m_value = value;
         m_isFilePath = isFilePath;
@@ -51,7 +48,7 @@ public class Parameter implements Constants {
     }
 
     public Parameter(String name) {
-        this(name, null, false, null, new HashMap<String,String>());
+        this(name, null, false, null, new HashMap<String, String>());
     }
 
     public String getName() {

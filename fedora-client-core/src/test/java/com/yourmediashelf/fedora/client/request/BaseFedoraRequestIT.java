@@ -126,7 +126,7 @@ public abstract class BaseFedoraRequestIT {
         nsMap.put(prefix, uri);
         return getXpathEngine(nsMap);
     }
-    
+
     /**
      * <p>Returns true if the server version (provided by 
      * FedoraClient.getServerVersion()) is greater than or equal to the 
@@ -140,8 +140,10 @@ public abstract class BaseFedoraRequestIT {
      * the supplied version
      * @throws FedoraClientException
      */
-    public static boolean isVersionGreaterThanOrEqualTo(String version) throws FedoraClientException {
-        ArtifactVersion a = new DefaultArtifactVersion(fedora.getServerVersion());
+    public static boolean isVersionGreaterThanOrEqualTo(String version)
+            throws FedoraClientException {
+        ArtifactVersion a =
+                new DefaultArtifactVersion(fedora.getServerVersion());
         ArtifactVersion b = new DefaultArtifactVersion(version);
         return a.compareTo(b) != -1;
     }

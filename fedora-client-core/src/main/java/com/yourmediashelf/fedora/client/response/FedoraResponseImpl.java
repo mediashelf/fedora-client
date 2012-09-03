@@ -66,7 +66,7 @@ public class FedoraResponseImpl implements FedoraResponse {
         nsCtx = new NamespaceContextImpl();
         nsCtx.addNamespace("f", "info:fedora/fedora-system:def/foxml#");
 
-        this.status = cr.getStatus();
+        status = cr.getStatus();
         if (status >= 400) {
             String msg = cr.getEntity(String.class);
             throw new FedoraClientException(status, String.format(

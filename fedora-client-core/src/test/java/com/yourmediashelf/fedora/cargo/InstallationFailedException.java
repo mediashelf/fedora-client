@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo;
 
 /**
  * Signals that installation failed.
  */
-public class InstallationFailedException
-        extends Exception {
+public class InstallationFailedException extends Exception {
 
     private static final long serialVersionUID = 1L;
 

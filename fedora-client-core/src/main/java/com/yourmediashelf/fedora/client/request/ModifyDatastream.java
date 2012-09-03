@@ -231,9 +231,7 @@ public class ModifyDatastream extends FedoraRequest<ModifyDatastream> {
             }
             response = wr.type(mimeType).put(ClientResponse.class, content);
         } else if (content instanceof InputStream) {
-            response =
-                    wr.type(mimeType).put(ClientResponse.class,
-                            (InputStream) content);
+            response = wr.type(mimeType).put(ClientResponse.class, content);
         } else if (content instanceof File) {
             File f = (File) content;
             if (mimeType == null) {

@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.client.request;
+
 /**
  * Copyright (C) 2010 MediaShelf <http://www.yourmediashelf.com/>
  *
@@ -35,7 +37,6 @@ package com.yourmediashelf.fedora.client.request;
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -74,7 +75,7 @@ public class BatchGetDatastreams extends FedoraRequest<BatchGetDatastreams> {
         }
         return this;
     }
-    
+
     /**
      * <p>Convenience method for {@link #pids(Collection)}.
      * 
@@ -84,7 +85,7 @@ public class BatchGetDatastreams extends FedoraRequest<BatchGetDatastreams> {
     public BatchGetDatastreams pids(String... pids) {
         return pids(Arrays.asList(pids));
     }
-    
+
     /**
      * 
      * @param dsids The datastream ids that will be requested of each object
@@ -96,7 +97,7 @@ public class BatchGetDatastreams extends FedoraRequest<BatchGetDatastreams> {
         }
         return this;
     }
-    
+
     /**
      * <p>Convenience method for {@link #dsids(Collection)}.
      * 

@@ -176,7 +176,7 @@ public class DateUtility {
         int day = Integer.parseInt(m.group(4));
 
         int hour = 0, minute = 0, second = 0, millis = 0;
-        boolean hasEndOfDayFrag = (m.group(11) != null);
+        boolean hasEndOfDayFrag = m.group(11) != null;
         if (!hasEndOfDayFrag) {
             hour = Integer.parseInt(m.group(6));
             minute = Integer.parseInt(m.group(7));

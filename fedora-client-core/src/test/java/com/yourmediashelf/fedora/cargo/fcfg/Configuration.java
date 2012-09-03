@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 import java.io.File;
@@ -98,7 +99,9 @@ public abstract class Configuration implements Constants {
      * @return The value, null if undefined.
      */
     public final String getParameter(String name, boolean asAbsolutePath) {
-        if (!m_parameters.containsKey(name)) return null;
+        if (!m_parameters.containsKey(name)) {
+            return null;
+        }
 
         String paramValue = m_parameters.get(name).getValue();
         if (asAbsolutePath && paramValue != null) {
@@ -146,7 +149,6 @@ public abstract class Configuration implements Constants {
     public Collection<Parameter> getParameters(Class<Parameter> type) {
         return m_parameters.values();
     }
-
 
     /**
      * Gets an Iterator over the names of parameters for this component.

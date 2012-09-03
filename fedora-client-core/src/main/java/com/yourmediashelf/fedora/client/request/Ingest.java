@@ -213,7 +213,7 @@ public class Ingest extends FedoraRequest<Ingest> {
         } else if (content instanceof InputStream) {
             response =
                     wr.type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class,
-                            (InputStream) content);
+                            content);
         } else if (content instanceof File) {
             File f = (File) content;
             MediaType mimeType = MediaType.TEXT_XML_TYPE;

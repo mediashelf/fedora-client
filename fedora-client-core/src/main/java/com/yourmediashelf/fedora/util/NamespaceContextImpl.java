@@ -48,7 +48,7 @@ public class NamespaceContextImpl implements NamespaceContext {
 
     public NamespaceContextImpl(String prefix, String namespaceURI) {
         this();
-        this.addNamespace(prefix, namespaceURI);
+        addNamespace(prefix, namespaceURI);
     }
 
     /**
@@ -70,6 +70,7 @@ public class NamespaceContextImpl implements NamespaceContext {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getNamespaceURI(String prefix) {
         if (prefix == null) {
             throw new IllegalArgumentException("null prefix not allowed.");
@@ -83,6 +84,7 @@ public class NamespaceContextImpl implements NamespaceContext {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getPrefix(String namespaceURI) {
         if (namespaceURI == null) {
             throw new IllegalArgumentException("null namespaceURI not allowed.");
@@ -98,6 +100,7 @@ public class NamespaceContextImpl implements NamespaceContext {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Iterator<String> getPrefixes(String namespaceURI) {
         List<String> prefixes = new ArrayList<String>();
         for (String prefix : prefix2ns.keySet()) {

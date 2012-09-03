@@ -36,7 +36,6 @@ import com.yourmediashelf.fedora.client.response.AddDatastreamResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import com.yourmediashelf.fedora.client.response.IngestResponse;
 
-
 /**
  * This is an integration test which requires a running Fedora server.
  *
@@ -44,49 +43,54 @@ import com.yourmediashelf.fedora.client.response.IngestResponse;
  *
  */
 public class FedoraClientIT {
-	private static FedoraCredentials credentials;
-	private FedoraClient client;
-	//private static String testPid = "test-rest:1";
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		String baseUrl = System.getProperty("fedora.test.baseUrl");
-		String username = System.getProperty("fedora.test.username");
-		String password = System.getProperty("fedora.test.password");
-		credentials = new FedoraCredentials(new URL(baseUrl), username, password);
-	}
+    private static FedoraCredentials credentials;
 
-	@Before
-	public void setUp() throws Exception {
-		client = new FedoraClient(credentials);
-		String debug = System.getProperty("test.debug");
-		client.debug(Boolean.parseBoolean(debug));
-	}
+    private FedoraClient client;
 
-	@Test
-	public void testGetMimeType() throws Exception {
-	    File f = new File("src/test/resources/testGetMimeType.xml");
-	    assertEquals("text/xml", client.getMimeType(f));
-	}
+    //private static String testPid = "test-rest:1";
 
-	@Test
-	public void testObjectCreationWithRelsExt() throws Exception {
-	    // create the object
-	    String pid = getNextPID().namespace("test").execute(client).getPid();
-	    IngestResponse response = new Ingest(pid).execute(client);
-	    assertEquals(pid, response.getPid());
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        String baseUrl = System.getProperty("fedora.test.baseUrl");
+        String username = System.getProperty("fedora.test.username");
+        String password = System.getProperty("fedora.test.password");
+        credentials =
+                new FedoraCredentials(new URL(baseUrl), username, password);
+    }
 
-	    // Create RELS-EXT using RelsExt.Builder
-	    String cmodel = "test:cmodel";
-	    String relsExt = new RelsExt.Builder(pid)
-                               .addCModel(cmodel).build().toString();
+    @Before
+    public void setUp() throws Exception {
+        client = new FedoraClient(credentials);
+        String debug = System.getProperty("test.debug");
+        client.debug(Boolean.parseBoolean(debug));
+    }
 
-	    AddDatastreamResponse addDS = new AddDatastream(pid, "RELS-EXT")
-	                                        .content(relsExt).execute(client);
-	    assertEquals(201, addDS.getStatus());
+    @Test
+    public void testGetMimeType() throws Exception {
+        File f = new File("src/test/resources/testGetMimeType.xml");
+        assertEquals("text/xml", client.getMimeType(f));
+    }
 
-	    // cleanup
-	    FedoraResponse purge = new PurgeObject(pid).execute(client);
-	    assertEquals(200, purge.getStatus());
-	}
+    @Test
+    public void testObjectCreationWithRelsExt() throws Exception {
+        // create the object
+        String pid = getNextPID().namespace("test").execute(client).getPid();
+        IngestResponse response = new Ingest(pid).execute(client);
+        assertEquals(pid, response.getPid());
+
+        // Create RELS-EXT using RelsExt.Builder
+        String cmodel = "test:cmodel";
+        String relsExt =
+                new RelsExt.Builder(pid).addCModel(cmodel).build().toString();
+
+        AddDatastreamResponse addDS =
+                new AddDatastream(pid, "RELS-EXT").content(relsExt).execute(
+                        client);
+        assertEquals(201, addDS.getStatus());
+
+        // cleanup
+        FedoraResponse purge = new PurgeObject(pid).execute(client);
+        assertEquals(200, purge.getStatus());
+    }
 }

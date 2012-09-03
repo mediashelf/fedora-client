@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo;
 
 /**
  * Signals that an option's value was not valid.
  */
-public class OptionValidationException
-        extends Exception {
+public class OptionValidationException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,9 +33,8 @@ public class OptionValidationException
         _id = optionId;
     }
 
-    public OptionValidationException(String msg,
-                                     String optionId,
-                                     Throwable cause) {
+    public OptionValidationException(String msg, String optionId,
+            Throwable cause) {
         super(msg, cause);
         _id = optionId;
     }

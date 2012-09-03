@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 import java.util.List;
@@ -23,16 +24,14 @@ import java.util.List;
 /**
  *
  */
-public class DatastoreConfiguration
-        extends DatastoreConfig {
+public class DatastoreConfiguration extends DatastoreConfig {
 
     private final String m_id;
 
     private final String m_comment;
 
-    public DatastoreConfiguration(List<Parameter> parameters,
-                                  String id,
-                                  String comment) {
+    public DatastoreConfiguration(List<Parameter> parameters, String id,
+            String comment) {
         super(parameters);
         m_id = id;
         m_comment = comment;

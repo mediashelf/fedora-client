@@ -48,10 +48,9 @@ public class BatchDeleteDatastreamsIT extends BaseFedoraRequestIT {
         // now delete it
         BatchResponse response =
                 new BatchDeleteDatastreams().pids(testPid).dsids(dsids)
-                        .logMessage("testBatchDeleteDatasteams")
-                        .execute();
+                        .logMessage("testBatchDeleteDatasteams").execute();
         assertEquals(200, response.getStatus());
-        
+
         List<BodyPart> bps = response.getBodyParts();
         for (BodyPart bp : bps) {
             System.out.println(bp.getEntityAs(String.class));

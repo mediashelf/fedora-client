@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 import java.io.ByteArrayInputStream;
@@ -31,14 +32,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-
 /**
  * Fedora server configuration.
  *
  * @author Chris Wilper
  */
-public class ServerConfiguration
- extends Configuration {
+public class ServerConfiguration extends Configuration {
 
     private String m_className;
 
@@ -46,10 +45,9 @@ public class ServerConfiguration
 
     private final List<DatastoreConfiguration> m_datastoreConfigurations;
 
-    public ServerConfiguration(String className,
-                               List<Parameter> parameters,
-                               List<ModuleConfiguration> moduleConfigurations,
-                               List<DatastoreConfiguration> datastoreConfigurations) {
+    public ServerConfiguration(String className, List<Parameter> parameters,
+            List<ModuleConfiguration> moduleConfigurations,
+            List<DatastoreConfiguration> datastoreConfigurations) {
         super(parameters);
         m_className = className;
         m_moduleConfigurations = moduleConfigurations;
@@ -75,8 +73,8 @@ public class ServerConfiguration
         while (iter.hasNext()) {
             String fullName = (String) iter.next();
             String value = props.getProperty(fullName).trim();
-            if (fullName.indexOf(":") != -1 && value != null
-                    && value.length() > 0) {
+            if (fullName.indexOf(":") != -1 && value != null &&
+                    value.length() > 0) {
                 String name = fullName.substring(fullName.lastIndexOf(":") + 1);
                 if (fullName.startsWith("server:")) {
                     if (name.endsWith(".class")) {
@@ -90,10 +88,9 @@ public class ServerConfiguration
                     ModuleConfiguration module = getModuleConfiguration(role);
                     if (module == null) {
                         module =
-                                new ModuleConfiguration(new ArrayList<Parameter>(),
-                                                        role,
-                                                        null,
-                                                        null);
+                                new ModuleConfiguration(
+                                        new ArrayList<Parameter>(), role, null,
+                                        null);
                         m_moduleConfigurations.add(module);
                     }
                     if (name.endsWith(".class")) {
@@ -108,9 +105,8 @@ public class ServerConfiguration
                             getDatastoreConfiguration(id);
                     if (datastore == null) {
                         datastore =
-                                new DatastoreConfiguration(new ArrayList<Parameter>(),
-                                                           id,
-                                                           null);
+                                new DatastoreConfiguration(
+                                        new ArrayList<Parameter>(), id, null);
                         m_datastoreConfigurations.add(datastore);
                     }
                     datastore.setParameterValue(name, value, true);
@@ -123,17 +119,17 @@ public class ServerConfiguration
         PrintStream out = new PrintStream(xmlStream);
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         out.println("<server xmlns=\"http://www.fedora.info/definitions/1/0/config/\" class=\"" +
-                m_className
-                + "\">");
+                m_className + "\">");
 
         // do server parameters first
         serializeParameters(getParameters(Parameter.class), 2, out);
         // next, modules
-        Iterator<ModuleConfiguration> mIter = getModuleConfigurations().iterator();
+        Iterator<ModuleConfiguration> mIter =
+                getModuleConfigurations().iterator();
         while (mIter.hasNext()) {
             ModuleConfiguration mc = mIter.next();
-            out.println("  <module role=\"" + mc.getRole() + "\" class=\""
-                    + mc.getClassName() + "\">");
+            out.println("  <module role=\"" + mc.getRole() + "\" class=\"" +
+                    mc.getClassName() + "\">");
             String comment = strip(mc.getComment());
             if (comment != null) {
                 out.println("    <comment>" + comment + "</comment>");
@@ -142,7 +138,8 @@ public class ServerConfiguration
             out.println("  </module>");
         }
         // finally, datastores
-        Iterator<DatastoreConfiguration> dIter = getDatastoreConfigurations().iterator();
+        Iterator<DatastoreConfiguration> dIter =
+                getDatastoreConfigurations().iterator();
         while (dIter.hasNext()) {
             DatastoreConfiguration dc = dIter.next();
             out.println("  <datastore id=\"" + dc.getId() + "\">");
@@ -158,11 +155,11 @@ public class ServerConfiguration
         out.close();
     }
 
-    private void serializeParameters(Collection<Parameter> params, int indentBy, PrintStream out) {
+    private void serializeParameters(Collection<Parameter> params,
+            int indentBy, PrintStream out) {
         Iterator<Parameter> paramIter = params.iterator();
         while (paramIter.hasNext()) {
-            out.println(getParamXMLString(paramIter.next(),
-                                          indentBy));
+            out.println(getParamXMLString(paramIter.next(), indentBy));
         }
     }
 
@@ -176,8 +173,8 @@ public class ServerConfiguration
 
     private String getParamXMLString(Parameter p, int indentBy) {
         StringBuffer out = new StringBuffer();
-        out.append(spaces(indentBy) + "<param name=\"" + p.getName()
-                + "\" value=\"" + enc(p.getValue()) + "\"");
+        out.append(spaces(indentBy) + "<param name=\"" + p.getName() +
+                "\" value=\"" + enc(p.getValue()) + "\"");
         if (p.getIsFilePath() != false) {
             out.append(" isFilePath=\"true\"");
         }
@@ -185,17 +182,16 @@ public class ServerConfiguration
             Iterator<String> iter = p.getProfileValues().keySet().iterator();
             while (iter.hasNext()) {
                 String profileName = iter.next();
-                String profileVal =
-                        p.getProfileValues().get(profileName);
-                out.append(" " + profileName + "value=\"" + enc(profileVal)
-                        + "\"");
+                String profileVal = p.getProfileValues().get(profileName);
+                out.append(" " + profileName + "value=\"" + enc(profileVal) +
+                        "\"");
             }
         }
         String comment = strip(p.getComment());
         if (comment != null) {
-            out.append(">\n" + spaces(indentBy + 2) + "<comment>"
-                    + enc(comment) + "</comment>\n" + spaces(indentBy)
-                    + "</param>");
+            out.append(">\n" + spaces(indentBy + 2) + "<comment>" +
+                    enc(comment) + "</comment>\n" + spaces(indentBy) +
+                    "</param>");
         } else {
             out.append("/>");
         }
@@ -313,8 +309,8 @@ public class ServerConfiguration
             throw new IOException("One or two arguments expected.");
         }
         ServerConfiguration config =
-                new ServerConfigurationParser(new FileInputStream(new File(args[0])))
-                        .parse();
+                new ServerConfigurationParser(new FileInputStream(new File(
+                        args[0]))).parse();
         if (args.length == 2) {
             Properties props = new Properties();
             props.load(new FileInputStream(new File(args[1])));

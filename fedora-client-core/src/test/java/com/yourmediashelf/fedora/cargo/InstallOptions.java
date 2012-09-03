@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo;
 
 import java.io.IOException;
@@ -33,12 +34,13 @@ public class InstallOptions {
 
     public static final String FEDORA_SERVERHOST = "fedora.serverHost";
 
-    public static final String FEDORA_APP_SERVER_CONTEXT = "fedora.serverContext";
+    public static final String FEDORA_APP_SERVER_CONTEXT =
+            "fedora.serverContext";
 
     public static final String APIA_AUTH_REQUIRED = "apia.auth.required";
 
     public static final String UPSTREAM_AUTH_ENABLED = "upstream.auth.enabled";
-    
+
     public static final String SSL_AVAILABLE = "ssl.available";
 
     public static final String APIA_SSL_REQUIRED = "apia.ssl.required";

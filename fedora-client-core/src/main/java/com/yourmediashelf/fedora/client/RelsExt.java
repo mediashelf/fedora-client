@@ -56,7 +56,7 @@ public class RelsExt {
             this.pid = pid;
             model.setNsPrefix("fedora-model",
                     "info:fedora/fedora-system:def/model#");
-            this.subject =
+            subject =
                     model.createResource(String.format("info:fedora/%s", pid));
             addCModel("info:fedora/fedora-system:ContentModel-3.0");
         }

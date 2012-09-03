@@ -78,21 +78,23 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
 
     @Rule
     public MethodRule benchmarkRun = new BenchmarkRule();
-    
+
     private static String pidNamespace = "test-batch";
+
     private static Set<String> pids = new HashSet<String>();
+
     private static Set<String> dsids = new HashSet<String>();
-    
+
     @BeforeClass
     public static void createFixtures() throws FedoraClientException {
-        
+
         int[] dsSizes = {10, 100, 1000};
-        
+
         //String[] dsTypes = {"X", "M"};
         String[] dsTypes = {"M"};
-        
+
         int pidCountPerDsType = 20;
-        
+
         String pid, dsid;
 
         Map<String, String> contents = new HashMap<String, String>();
@@ -115,17 +117,17 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
                     dsid = String.format("%s%sK", dsType, size); // e.g. X100K or M10K
                     addDatastream(pid, dsid).controlGroup(dsType).content(
                             contents.get(String.valueOf(size))).execute();
-                    
+
                     dsids.add(dsid);
                 }
             }
         }
         System.out.println();
-        
+
         System.out.println("* Ingested pids:\n\t" + listAsCSV(pids));
         System.out.println("* Added dsids:\n\t" + listAsCSV(dsids));
     }
-    
+
     @AfterClass
     public static void purgeFixtures() throws FedoraClientException {
         System.out.print("Purging fixtures, this may take some time ");
@@ -135,19 +137,25 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
         }
         System.out.println();
     }
-    
+
+    @Override
     @Before
-    public void setUp() {}
+    public void setUp() {
+    }
 
+    @Override
     @After
-    public void tearDown(){}
+    public void tearDown() {
+    }
 
+    @Override
     @Ignore
     @Test
     public void testNoDefaultClientRequest() throws FedoraClientException {
     }
 
-    protected void getBatchDatastreams(Set<String> pids, Set<String> dsids) throws Exception {
+    protected void getBatchDatastreams(Set<String> pids, Set<String> dsids)
+            throws Exception {
         BatchResponse response =
                 new BatchGetDatastreams().pids(pids).dsids(dsids).execute();
         assertEquals(200, response.getStatus());
@@ -160,7 +168,8 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
         response.close();
     }
 
-    protected void naiveGetDatastreams(Set<String> pids, Set<String> dsids) throws Exception {
+    protected void naiveGetDatastreams(Set<String> pids, Set<String> dsids)
+            throws Exception {
         FedoraResponse response = null;
         for (String pid : pids) {
             for (String dsid : dsids) {
@@ -175,12 +184,13 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
     protected static Set<String> matchIds(Collection<String> ids, String regex) {
         return matchIds(ids, regex, 0);
     }
-    
+
     /**
      * Build a List of identifiers that match the provided regex.
      *
      */
-    protected static Set<String> matchIds(Collection<String> ids, String regex, int limit) {
+    protected static Set<String> matchIds(Collection<String> ids, String regex,
+            int limit) {
         Set<String> matchedIds = new HashSet<String>();
         for (String id : ids) {
             if (id.matches(regex)) {
@@ -192,15 +202,15 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
         }
         return matchedIds;
     }
-    
+
     protected static Set<String> getManagedPids(int limit) {
         return matchIds(pids, "test-batch:M.*", limit);
     }
-    
+
     protected static Set<String> getDsids(String regex) {
         return matchIds(dsids, regex);
     }
-    
+
     /**
      * Create a String of the requested size (in kilobytes).
      * 
@@ -217,7 +227,7 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
         }
         return sb.toString();
     }
-    
+
     private static String listAsCSV(Collection<String> list) {
         String separator = ",";
         StringBuilder sb = new StringBuilder();
@@ -225,6 +235,6 @@ abstract public class BatchIT extends BaseFedoraRequestIT {
             sb.append(s);
             sb.append(separator);
         }
-        return sb.toString().substring(0, sb.length()-separator.length());
+        return sb.toString().substring(0, sb.length() - separator.length());
     }
 }

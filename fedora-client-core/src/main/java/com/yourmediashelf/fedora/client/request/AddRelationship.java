@@ -47,6 +47,7 @@ public class AddRelationship extends RelationshipsRequest {
      * @return this builder
      * @deprecated use constructor
      */
+    @Deprecated
     public AddRelationship subject(String subject) {
         addQueryParam("subject", subject);
         return this;
@@ -114,6 +115,7 @@ public class AddRelationship extends RelationshipsRequest {
      * @return this builder
      * @deprecated use {@link #object(String, boolean)}
      */
+    @Deprecated
     public AddRelationship isLiteral(boolean isLiteral) {
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
         return this;
@@ -128,6 +130,7 @@ public class AddRelationship extends RelationshipsRequest {
      * @return this builder
      * @deprecated use {@link #object(String, String)}
      */
+    @Deprecated
     public AddRelationship datatype(String datatype) {
         addQueryParam("datatype", datatype);
         return this;

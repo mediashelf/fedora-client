@@ -46,7 +46,9 @@ public class ChecksumUtility {
             int read;
             do {
                 read = bis.read(buffer);
-                if (read > 0) md.update(buffer, 0, read);
+                if (read > 0) {
+                    md.update(buffer, 0, read);
+                }
             } while (read != -1);
         } finally {
             is.close();

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 /**
@@ -33,7 +34,6 @@ public interface Constants {
      * </p>
      */
     public static final String FEDORA_HOME = FedoraHome.getValue();
-
 
     //---
     // Static helpers

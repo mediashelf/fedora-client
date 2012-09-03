@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo;
 
 import java.io.BufferedReader;
@@ -49,18 +50,14 @@ public class OptionDefinition {
             _PROPS = new Properties();
             _PROPS.load(in);
         } catch (Exception e) {
-            System.err.println("ERROR: Unable to load required resource: "
-                    + path);
+            System.err.println("ERROR: Unable to load required resource: " +
+                    path);
             System.exit(1);
         }
     }
 
-    private OptionDefinition(String id,
-                             String label,
-                             String description,
-                             String[] validValues,
-                             String defaultValue,
-                             InstallOptions options) {
+    private OptionDefinition(String id, String label, String description,
+            String[] validValues, String defaultValue, InstallOptions options) {
         _id = id;
         _label = label;
 
@@ -103,20 +100,16 @@ public class OptionDefinition {
             String eCH = System.getenv("CATALINA_HOME");
             if (eCH != null && eCH.length() != 0) {
                 defaultValue = eCH;
-            } else if (options.getValue(InstallOptions.SERVLET_ENGINE)
-                    .equals(InstallOptions.INCLUDED)) {
+            } else if (options.getValue(InstallOptions.SERVLET_ENGINE).equals(
+                    InstallOptions.INCLUDED)) {
                 defaultValue =
-                        options.getValue(InstallOptions.FEDORA_HOME)
-                                + File.separator + "tomcat";
+                        options.getValue(InstallOptions.FEDORA_HOME) +
+                                File.separator + "tomcat";
             }
         }
 
-        return new OptionDefinition(id,
-                                    label,
-                                    description,
-                                    validValues,
-                                    defaultValue,
-                                    options);
+        return new OptionDefinition(id, label, description, validValues,
+                defaultValue, options);
     }
 
     private static String[] getArray(String propName) {
@@ -167,35 +160,38 @@ public class OptionDefinition {
                 }
             }
             if (!isValid) {
-                throw new OptionValidationException("Not a valid value: "
-                        + value, _id);
+                throw new OptionValidationException("Not a valid value: " +
+                        value, _id);
             }
         } else {
             if (_id.equals(InstallOptions.FEDORA_HOME)) {
                 File dir = new File(value);
                 if (dir.isDirectory()) {
                     if (dir.listFiles().length != 0) {
-                    	// check if we're on a Mac
-                    	String lcOSName = System.getProperty("os.name").toLowerCase();
-                    	boolean MAC_OS_X = lcOSName.startsWith("mac os x");
-                    	File dsStore = new File(dir, ".DS_Store");
+                        // check if we're on a Mac
+                        String lcOSName =
+                                System.getProperty("os.name").toLowerCase();
+                        boolean MAC_OS_X = lcOSName.startsWith("mac os x");
+                        File dsStore = new File(dir, ".DS_Store");
 
                         if (unattended) {
                             System.out
-                                    .println("WARNING: Overwriting existing directory: "
-                                            + dir.getAbsolutePath());
-                        } else if (dir.listFiles().length == 1 && dsStore.exists() && MAC_OS_X) {
-                        	// assume we are on Mac OS X and can safely ignore
+                                    .println("WARNING: Overwriting existing directory: " +
+                                            dir.getAbsolutePath());
+                        } else if (dir.listFiles().length == 1 &&
+                                dsStore.exists() && MAC_OS_X) {
+                            // assume we are on Mac OS X and can safely ignore
                         } else {
-                            System.out.println("WARNING: "
-                                    + dir.getAbsolutePath() + " is not empty.");
+                            System.out.println("WARNING: " +
+                                    dir.getAbsolutePath() + " is not empty.");
                             System.out
                                     .print("WARNING: Overwrite? (yes or no) [default is no] ==> ");
                             String confirm = readLine().trim();
-                            if (confirm.length() == 0
-                                    || confirm.equalsIgnoreCase("no")) {
-                                throw new OptionValidationException("Directory is not empty; delete it or choose another",
-                                                                    _id);
+                            if (confirm.length() == 0 ||
+                                    confirm.equalsIgnoreCase("no")) {
+                                throw new OptionValidationException(
+                                        "Directory is not empty; delete it or choose another",
+                                        _id);
                             }
                         }
                     }
@@ -203,29 +199,30 @@ public class OptionDefinition {
                     // must be creatable
                     boolean created = dir.mkdirs();
                     if (!created) {
-                        throw new OptionValidationException("Unable to create specified directory",
-                                                            _id);
+                        throw new OptionValidationException(
+                                "Unable to create specified directory", _id);
                     } else {
                         dir.delete();
                     }
                 }
             } else if (_id.equals(InstallOptions.TOMCAT_HOME)) {
                 File dir = new File(value);
-                if (dir.exists()
-                        && _options.getValue(InstallOptions.SERVLET_ENGINE)
+                if (dir.exists() &&
+                        _options.getValue(InstallOptions.SERVLET_ENGINE)
                                 .equals(InstallOptions.EXISTING_TOMCAT)) {
                     // must have webapps subdir
                     File webapps = new File(dir, "webapps");
                     if (!webapps.exists()) {
-                        throw new OptionValidationException("Directory exists but does not contain a webapps subdirectory",
-                                                            _id);
+                        throw new OptionValidationException(
+                                "Directory exists but does not contain a webapps subdirectory",
+                                _id);
                     }
                 } else if (!dir.exists()) {
                     // must be creatable
                     boolean created = dir.mkdirs();
                     if (!created) {
-                        throw new OptionValidationException("Unable to create specified directory",
-                                                            _id);
+                        throw new OptionValidationException(
+                                "Unable to create specified directory", _id);
                     } else {
                         dir.delete();
                     }
@@ -241,8 +238,8 @@ public class OptionDefinition {
                         .equals(InstallOptions.DEFAULT))) {
                     validateExistingFile(value);
                 }
-            } else if (_id.startsWith(InstallOptions.DATABASE)
-                    && _id.endsWith(".driver")) {
+            } else if (_id.startsWith(InstallOptions.DATABASE) &&
+                    _id.endsWith(".driver")) {
                 if (!value.equals(InstallOptions.INCLUDED)) {
                     validateExistingFile(value);
                 }
@@ -273,7 +270,7 @@ public class OptionDefinition {
             int port = Integer.parseInt(val);
             if (port < 0 || port > 65535) {
                 throw new OptionValidationException("Not a valid port number",
-                                                    _id);
+                        _id);
             }
         } catch (NumberFormatException e) {
             throw new OptionValidationException("Not an integer", _id);

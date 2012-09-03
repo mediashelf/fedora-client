@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 import java.util.List;
@@ -33,8 +34,7 @@ import java.util.Map;
  *
  * @author Chris Wilper
  */
-public class DatastoreConfig
-        extends Configuration {
+public class DatastoreConfig extends Configuration {
 
     /**
      * Creates and initializes the <code>DatastoreConfig</code>.
@@ -48,9 +48,10 @@ public class DatastoreConfig
      *        A pre-loaded Map of name-value pairs comprising the intended
      *        configuration for the datastore.
      */
-    public DatastoreConfig(Map<String,String> parameters) {
+    public DatastoreConfig(Map<String, String> parameters) {
         super(parameters);
     }
+
     public DatastoreConfig(List<Parameter> parameters) {
         super(parameters);
     }

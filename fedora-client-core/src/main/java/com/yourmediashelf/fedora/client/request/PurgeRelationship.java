@@ -96,6 +96,7 @@ public class PurgeRelationship extends RelationshipsRequest {
      * @return this builder
      * @deprecated use {@link #object(String, boolean)}
      */
+    @Deprecated
     public PurgeRelationship isLiteral(boolean isLiteral) {
         addQueryParam("isLiteral", Boolean.toString(isLiteral));
         return this;
@@ -107,6 +108,7 @@ public class PurgeRelationship extends RelationshipsRequest {
      * @return this builder
      * @deprecated use {@link #object(String, String)}
      */
+    @Deprecated
     public PurgeRelationship datatype(String datatype) {
         addQueryParam("datatype", datatype);
         return this;

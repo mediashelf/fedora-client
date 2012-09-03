@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with fedora-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.yourmediashelf.fedora.cargo.fcfg;
 
 import java.util.List;
@@ -23,8 +24,7 @@ import java.util.List;
 /**
  *
  */
-public class ModuleConfiguration
-        extends Configuration {
+public class ModuleConfiguration extends Configuration {
 
     private final String m_roleName;
 
@@ -32,10 +32,8 @@ public class ModuleConfiguration
 
     private final String m_comment;
 
-    public ModuleConfiguration(List<Parameter> parameters,
-                               String roleName,
-                               String className,
-                               String comment) {
+    public ModuleConfiguration(List<Parameter> parameters, String roleName,
+            String className, String comment) {
         super(parameters);
         m_roleName = roleName;
         m_className = className;
