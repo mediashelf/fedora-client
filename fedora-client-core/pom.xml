@@ -117,6 +117,12 @@
       </dependency>
       <!-- Test dependencies for running Fedora w/ Cargo -->
       <dependency>
+        <groupId>com.yourmediashelf.fedora</groupId>
+        <artifactId>fedora-cargo</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.fcrepo</groupId>
         <artifactId>fcrepo-installer</artifactId>
         <version>${fcrepo.version}</version>
@@ -201,6 +207,10 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yourmediashelf.fedora</groupId>
+      <artifactId>fedora-cargo</artifactId>
     </dependency>
     <dependency>
       <groupId>org.fcrepo</groupId>
@@ -330,16 +340,6 @@
               <generateDirectory>${project.build.directory}/generated-sources/foxml</generateDirectory>
               <episode>false</episode>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
