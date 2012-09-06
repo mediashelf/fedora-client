@@ -343,14 +343,9 @@
           <version>1.9.0</version>
         </plugin>
         <plugin>
-          <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven2-plugin</artifactId>
-          <version>1.2.4</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>1.2.1</version>
+          <groupId>com.yourmediashelf.fedora</groupId>
+          <artifactId>fedora-cargo-plugin</artifactId>
+          <version>0.1</version>
         </plugin>
         <plugin>
           <groupId>org.jvnet.jaxb2.maven2</groupId>
