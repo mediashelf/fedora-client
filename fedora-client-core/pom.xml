@@ -11,7 +11,7 @@
   <description>Java client library for Fedora</description>
   <url>http://mediashelf.github.com/${project.artifactId}</url>
   <properties>
-    <jersey.version>1.13</jersey.version>
+    <jersey.version>1.17</jersey.version>
     <fcrepo.version>3.6.1</fcrepo.version>
     <fedora.home>${project.build.directory}/fedora-home</fedora.home>
     <fedora.port>9090</fedora.port>
@@ -73,7 +73,7 @@
       <dependency>
         <groupId>org.apache.santuario</groupId>
         <artifactId>xmlsec</artifactId>
-        <version>1.4.6</version>
+        <version>1.5.3</version>
         <exclusions>
           <exclusion>
             <groupId>commons-logging</groupId>
@@ -84,7 +84,7 @@
       <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-mapper-lgpl</artifactId>
-        <version>1.9.9</version>
+        <version>1.9.11</version>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>
@@ -100,19 +100,19 @@
       <dependency>
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
-        <version>1.3.168</version>
+        <version>1.3.170</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-all</artifactId>
-        <version>1.9.0</version>
+        <version>1.9.5</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>xmlunit</groupId>
         <artifactId>xmlunit</artifactId>
-        <version>1.3</version>
+        <version>1.4</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -181,7 +181,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-artifact</artifactId>
-      <version>3.0.4</version>
+      <version>3.0.5</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
