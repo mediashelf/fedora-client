@@ -5,7 +5,6 @@ html {
   background: #6c7989 -webkit-linear-gradient(#6c7989, #434b55) fixed;
   background: #6c7989 -moz-linear-gradient(#6c7989, #434b55) fixed;
   background: #6c7989 -o-linear-gradient(#6c7989, #434b55) fixed;
-  background: #6c7989 -ms-linear-gradient(#6c7989, #434b55) fixed;
   background: #6c7989 linear-gradient(#6c7989, #434b55) fixed;
 }
 
@@ -22,15 +21,13 @@ body {
   width: 640px;
   margin: 0 auto;
   background: #DEDEDE;
-  -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
-  -o-border-radius: 8px;
+  -moz-border-radius: 8px;
   -ms-border-radius: 8px;
-  -khtml-border-radius: 8px;
+  -o-border-radius: 8px;
   border-radius: 8px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
-  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
 }
 
@@ -54,22 +51,20 @@ strong {
 }
 
 header {
-  -moz-border-radius: 8px 8px 0 0;
   -webkit-border-radius: 8px 8px 0 0;
-  -o-border-radius: 8px 8px 0 0;
+  -moz-border-radius: 8px 8px 0 0;
   -ms-border-radius: 8px 8px 0 0;
-  -khtml-border-radius: 8px 8px 0 0;
+  -o-border-radius: 8px 8px 0 0;
   border-radius: 8px 8px 0 0;
   background: #C6EAFA;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ddfbfc), color-stop(100%, #c6eafa));
   background: -webkit-linear-gradient(#ddfbfc, #c6eafa);
   background: -moz-linear-gradient(#ddfbfc, #c6eafa);
   background: -o-linear-gradient(#ddfbfc, #c6eafa);
-  background: -ms-linear-gradient(#ddfbfc, #c6eafa);
   background: linear-gradient(#ddfbfc, #c6eafa);
   position: relative;
   padding: 15px 20px;
-  border-bottom: 1px solid #B2D2E1;
+  border-bottom: 1px solid #b2d2e1;
 }
 header h1 {
   margin: 0;
@@ -115,12 +110,10 @@ header ul {
   background: -webkit-linear-gradient(#77b9fb, #3782cd);
   background: -moz-linear-gradient(#77b9fb, #3782cd);
   background: -o-linear-gradient(#77b9fb, #3782cd);
-  background: -ms-linear-gradient(#77b9fb, #3782cd);
   background: linear-gradient(#77b9fb, #3782cd);
   border-radius: 5px;
-  -moz-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
   -webkit-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
-  -o-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
+  -moz-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
   box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
   width: 240px;
 }
@@ -133,26 +126,24 @@ header ul:before {
   right: -5px;
   bottom: -6px;
   background: rgba(0, 0, 0, 0.1);
-  -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
-  -o-border-radius: 8px;
+  -moz-border-radius: 8px;
   -ms-border-radius: 8px;
-  -khtml-border-radius: 8px;
+  -o-border-radius: 8px;
   border-radius: 8px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
   -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
-  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
 }
 header ul li {
   width: 79px;
   float: left;
-  border-right: 1px solid #3A7CBE;
+  border-right: 1px solid #3a7cbe;
   height: 38px;
 }
 header ul li + li {
   width: 78px;
-  border-left: 1px solid #8BBEF3;
+  border-left: 1px solid #8bbef3;
 }
 header ul li + li + li {
   border-right: none;
@@ -180,18 +171,16 @@ header ul a strong {
 section {
   padding: 15px 20px;
   font-size: 15px;
-  border-top: 1px solid #fff;
+  border-top: 1px solid white;
   background: -webkit-gradient(linear, 50% 0%, 50% 700, color-stop(0%, #fafafa), color-stop(100%, #dedede));
   background: -webkit-linear-gradient(#fafafa, #dedede 700px);
   background: -moz-linear-gradient(#fafafa, #dedede 700px);
   background: -o-linear-gradient(#fafafa, #dedede 700px);
-  background: -ms-linear-gradient(#fafafa, #dedede 700px);
   background: linear-gradient(#fafafa, #dedede 700px);
-  -moz-border-radius: 0 0 8px 8px;
   -webkit-border-radius: 0 0 8px 8px;
-  -o-border-radius: 0 0 8px 8px;
+  -moz-border-radius: 0 0 8px 8px;
   -ms-border-radius: 0 0 8px 8px;
-  -khtml-border-radius: 0 0 8px 8px;
+  -o-border-radius: 0 0 8px 8px;
   border-radius: 0 0 8px 8px;
   position: relative;
 }
@@ -233,13 +222,14 @@ blockquote {
 }
 
 img {
-  max-width:100%;
+  max-width: 100%;
 }
 
 code, pre {
   font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   color: #333;
   font-size: 12px;
+  overflow-x: auto;
 }
 
 pre {
@@ -247,7 +237,6 @@ pre {
   background: #3A3C42;
   color: #f8f8f2;
   margin: 0 -20px 20px;
-  overflow-x:auto;
 }
 pre code {
   color: #f8f8f2;
@@ -265,7 +254,7 @@ table {
 th, td {
   text-align: left;
   padding: 5px 10px;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid #aaaaaa;
 }
 
 dt {
@@ -312,25 +301,22 @@ footer p + p {
   }
 
   .wrapper {
-    -moz-border-radius: 0;
     -webkit-border-radius: 0;
-    -o-border-radius: 0;
+    -moz-border-radius: 0;
     -ms-border-radius: 0;
-    -khtml-border-radius: 0;
+    -o-border-radius: 0;
     border-radius: 0;
-    -moz-box-shadow: none;
     -webkit-box-shadow: none;
-    -o-box-shadow: none;
+    -moz-box-shadow: none;
     box-shadow: none;
     width: 100%;
   }
 
   footer {
-    -moz-border-radius: 0;
     -webkit-border-radius: 0;
-    -o-border-radius: 0;
+    -moz-border-radius: 0;
     -ms-border-radius: 0;
-    -khtml-border-radius: 0;
+    -o-border-radius: 0;
     border-radius: 0;
     padding: 20px;
     width: auto;
@@ -343,7 +329,7 @@ footer p + p {
     float: none;
   }
 }
-@media print, screen and (max-width:580px) {
+@media print, screen and (max-width: 580px) {
   header ul {
     display: none;
   }
