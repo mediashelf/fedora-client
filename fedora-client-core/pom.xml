@@ -12,7 +12,7 @@
   <url>http://mediashelf.github.com/${project.artifactId}</url>
   <properties>
     <jersey.version>1.17</jersey.version>
-    <fcrepo.version>3.6.1</fcrepo.version>
+    <fcrepo.version>3.6.2</fcrepo.version>
     <fedora.home>${project.build.directory}/fedora-home</fedora.home>
     <fedora.port>9090</fedora.port>
     <javax.net.ssl.trustStore>${fedora.home}/server/truststore</javax.net.ssl.trustStore>
