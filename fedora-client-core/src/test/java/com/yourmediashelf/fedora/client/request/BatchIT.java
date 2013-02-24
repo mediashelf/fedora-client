@@ -58,7 +58,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.MethodRule;
+import org.junit.rules.TestRule;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
@@ -69,7 +69,6 @@ import com.yourmediashelf.fedora.client.FedoraClientException;
 import com.yourmediashelf.fedora.client.response.BatchResponse;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 
-@SuppressWarnings("deprecation")
 @AxisRange(min = 0, max = 1)
 @BenchmarkMethodChart(filePrefix = "benchmark-lists")
 @BenchmarkOptions(benchmarkRounds = 20, warmupRounds = 5)
@@ -77,7 +76,7 @@ import com.yourmediashelf.fedora.client.response.FedoraResponse;
 abstract public class BatchIT extends BaseFedoraRequestIT {
 
     @Rule
-    public MethodRule benchmarkRun = new BenchmarkRule();
+    public TestRule benchmarkRun = new BenchmarkRule();
 
     private static String pidNamespace = "test-batch";
 
