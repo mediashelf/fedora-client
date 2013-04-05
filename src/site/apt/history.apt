@@ -5,7 +5,14 @@
     ---
 
 History
-
+    * 0.7 (5 April 2013)
+    
+        * Fixes Error retrieving tomcat dependency in fedora-client tests
+        {{{https://jira.duraspace.org/browse/FCREPO-1189}FCREPO-1189}}
+        
+        * Use Cargo Maven plugin to start/stop Fedora for fedora-client 
+        integration tests {{{https://jira.duraspace.org/browse/FCREPO-1110}FCREPO-1110}}
+        
     * 0.6 (31 August 2012)
     
         * Support for ApimMessage#getMethodParamVal 

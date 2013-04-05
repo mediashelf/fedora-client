@@ -94,11 +94,6 @@ ingest.execute(f2);
 
 * Including fedora-client in your Maven project
 
-    As of 0.1.7, fedora-client is now available via 
-{{{http://search.maven.org/#search|ga|1|fedora-client}Maven Central}}. Prior 
-versions are available in the 
-{{{https://m2.duraspace.org/content/repositories/thirdparty}DuraSpace Third-Party Maven Repository}} .
-
     As of 0.1.8, fedora-client is now a Maven multi-module project, producing 
 fedora-client-core and fedora-client-messaging artifacts. Unless you 
 specifically require support for Fedora Messaging, fedora-client-core is all you 
