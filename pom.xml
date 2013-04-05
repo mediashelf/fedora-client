@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -11,7 +10,7 @@
 
   <groupId>com.yourmediashelf.fedora.client</groupId>
   <artifactId>fedora-client</artifactId>
-  <version>0.7-SNAPSHOT</version>
+  <version>0.7</version>
   <packaging>pom</packaging>
   <name>MediaShelf ${project.artifactId}</name>
   <description>Java client library for Fedora</description>
@@ -149,7 +148,7 @@
     <developerConnection>scm:git:git@github.com:mediashelf/${project_name}.git
     </developerConnection>
     <url>https://github.com/mediashelf/${project_name}</url>
-    <tag>HEAD</tag>
+    <tag>fedora-client-0.7</tag>
   </scm>
 
   <prerequisites>
@@ -325,8 +324,7 @@
                 <shadedArtifactAttached>true</shadedArtifactAttached>
                 <shadedClassifierName>with-dependencies</shadedClassifierName>
                 <transformers>
-                  <transformer
-                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                 </transformers>
               </configuration>
             </execution>
