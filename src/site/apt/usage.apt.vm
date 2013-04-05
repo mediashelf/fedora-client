@@ -132,6 +132,4 @@ non-Maven-based projects.
 
     These artifacts are available via 
 {{{http://search.maven.org/#search|ga|1|fedora-client}Maven Central}} and its 
-mirrors or on the 
-{{{https://github.com/mediashelf/fedora-client/downloads}fedora-client Github Downloads}} 
-page.
+mirrors.
