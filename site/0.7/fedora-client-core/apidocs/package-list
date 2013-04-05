@@ -1,0 +1,7 @@
+com.yourmediashelf.fedora.client
+com.yourmediashelf.fedora.client.request
+com.yourmediashelf.fedora.client.response
+com.yourmediashelf.fedora.generated.access
+com.yourmediashelf.fedora.generated.foxml
+com.yourmediashelf.fedora.generated.management
+com.yourmediashelf.fedora.util
